@@ -1,0 +1,15 @@
+name: CI (release)
+
+on:
+  push:
+    branches:
+      - v1
+  schedule:
+    - cron: '0 6 * * 6'
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: oprypin/install-crystal@v1
+      - run: crystal eval "puts 1337"

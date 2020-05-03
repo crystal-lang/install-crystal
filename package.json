@@ -1,0 +1,35 @@
+{
+  "name": "install-crystal",
+  "description": "GitHub Action: Install Crystal programming language",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint .",
+    "test": "eslint . && jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oprypin/install-crystal.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "Crystal",
+    "Setup"
+  ],
+  "author": "Oleh Prypin <oleh@pryp.in>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oprypin/install-crystal/issues"
+  },
+  "homepage": "https://github.com/oprypin/install-crystal",
+  "dependencies": {
+    "@actions/core": "^1.2",
+    "@actions/tool-cache": "^1.3",
+    "@octokit/request": "^5.4"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "jest": "^25.5.4"
+  }
+}

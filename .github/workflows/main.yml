@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - v1
+  schedule:
+    - cron: '0 6 * * 6'
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - uses: ./
+      - run: crystal eval "puts 1337"
+      - run: npm test
+      - run: npm audit --audit-level=moderate

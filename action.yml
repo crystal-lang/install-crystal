@@ -1,0 +1,14 @@
+name: Install Crystal
+description: Install Crystal programming language
+inputs:
+  token:
+    description: Personal access token (auto-populated)
+    default: ${{ github.token }}
+  destination:
+    description: The directory to store Crystal in
+runs:
+  using: node12
+  main: index.js
+branding:
+  icon: octagon
+  color: gray-dark
