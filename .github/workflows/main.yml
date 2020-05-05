@@ -18,5 +18,8 @@ jobs:
       - run: npm install
       - uses: ./
       - run: crystal eval "puts 1337"
+      - uses: ./
+        with:
+          crystal: nightly
       - run: npm test
       - run: npm audit --audit-level=moderate

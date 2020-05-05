@@ -17,3 +17,6 @@ jobs:
     steps:
       - uses: oprypin/install-crystal@v1
       - run: crystal eval "puts 1337"
+      - uses: oprypin/install-crystal@v1
+        with:
+          crystal: nightly

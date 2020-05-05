@@ -15,4 +15,4 @@ git add -f node_modules package.json package-lock.json
 git diff --quiet
 git commit -m "v$1"
 git tag "v$1"
-echo git push --follow-tags
+echo git push origin master v1 --tags

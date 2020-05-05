@@ -25,7 +25,7 @@ steps:
 
   Install the latest released version of Crystal.
 
-* **`crystal: nightly`** (default on Windows; not supported on other systems)
+* **`crystal: nightly`** (default on Windows)
 
   Install Crystal from the latest continuous build on [crystal.git][] master.
 
