@@ -8,11 +8,140 @@ const FS = require("fs").promises;
 
 async function run() {
     try {
-        const path = await downloadCrystalForWindows();
-        await setupCrystalForWindows(path);
+        const params = {};
+        for (const key of ["crystal", "arch", "destination"]) {
+            let value;
+            if ((value = Core.getInput(key))) {
+                params[key] = value;
+            }
+        }
+        const func = {
+            [Linux]: installCrystalForLinux,
+            [Mac]: installCrystalForMac,
+            [Windows]: installCrystalForWindows,
+        }[getPlatform()];
+        if (!func) {
+            throw `Platform "${getPlatform()}" is not supported`;
+        }
+        await func(params);
     } catch (error) {
         Core.setFailed(error);
+        process.exit(1);
     }
+}
+
+const Linux = "Linux", Mac = "macOS", Windows = "Windows";
+
+function getPlatform() {
+    const platform = process.env["INSTALL_CRYSTAL_PLATFORM"] || process.platform;
+    return {"linux": Linux, "darwin": Mac, "win32": Windows}[platform] || platform;
+}
+
+function getArch() {
+    return {"ia32": "x86", "x64": "x86_64"}[process.arch] || process.arch;
+}
+
+function checkArch(arch, allowed) {
+    if (!allowed.includes(arch)) {
+        throw `Architecture "${arch}" is not supported on ${getPlatform()}`;
+    }
+}
+
+const Latest = "latest";
+const Nightly = "nightly";
+const NumericVersion = /^\d[.\d]+\d$/;
+
+function checkVersion(version, allowed) {
+    const numericVersion = version.match(NumericVersion) && version;
+    allowed[allowed.indexOf(NumericVersion)] = numericVersion;
+
+    if (allowed.includes(version)) {
+        return version;
+    }
+    if ([Latest, Nightly, numericVersion].includes(version)) {
+        throw `Version "${version}" is not supported on ${getPlatform()}`;
+    }
+    throw `Version "${version}" is invalid`;
+}
+
+async function installCrystalForLinux({
+    crystal = Latest,
+    arch = getArch(),
+    destination = null,
+}) {
+    checkVersion(crystal, [Latest, NumericVersion]);
+    const suffixes = {"x86_64": "linux-x86_64", "x86": "linux-i686"};
+    checkArch(arch, Object.keys(suffixes));
+
+    return Promise.all([
+        installAptPackages(
+            "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
+        ),
+        installBinaryRelease({crystal, suffix: suffixes[arch], destination}),
+    ]);
+}
+
+async function installCrystalForMac({
+    crystal = Latest,
+    arch = "x86_64",
+    destination = null,
+}) {
+    checkVersion(crystal, [Latest, NumericVersion]);
+    checkArch(arch, ["x86_64"]);
+    return installBinaryRelease({crystal, suffix: "darwin-x86_64", destination});
+}
+
+async function installAptPackages(packages) {
+    const execFile = Util.promisify(ChildProcess.execFile);
+    Core.info("Installing package dependencies");
+    const args = [
+        "-n", "apt-get", "install", "-qy", "--no-install-recommends", "--no-upgrade", "--",
+    ].concat(packages);
+    Core.info("[command]sudo " + args.join(" "));
+    const {stdout} = await execFile("sudo", args);
+    Core.startGroup("Finished installing package dependencies");
+    Core.info(stdout);
+    Core.endGroup();
+}
+
+async function installBinaryRelease({crystal, suffix, destination}) {
+    if (crystal === Latest) {
+        crystal = null;
+    }
+    const path = await downloadCrystalRelease({suffix, tag: crystal, destination});
+
+    Core.info("Setting up environment");
+    Core.addPath(Path.join(path, "bin"));
+}
+
+async function downloadCrystalRelease({suffix, tag = null, destination = null}) {
+    Core.info("Looking for latest Crystal release");
+
+    const releasesResp = await githubGet({
+        url: "/repos/crystal-lang/crystal/releases/" + (tag ? "tags/" + tag : "latest"),
+    });
+    const release = releasesResp.data;
+    Core.info("Found " + release["html_url"]);
+    Core.setOutput("crystal", release["tag_name"]);
+
+    const asset = release["assets"].find((a) => a["name"].endsWith([`-${suffix}.tar.gz`]));
+
+    Core.info("Downloading Crystal build");
+    const downloadedPath = await ToolCache.downloadTool(asset["browser_download_url"]);
+
+    Core.info("Extracting Crystal build");
+    return onlySubdir(await ToolCache.extractTar(downloadedPath, destination));
+}
+
+async function installCrystalForWindows({
+    crystal = Nightly,
+    arch = "x86_64",
+    destination = null,
+}) {
+    checkVersion(crystal, [Nightly]);
+    checkArch(arch, ["x86_64"]);
+    const path = await downloadCrystalForWindows(destination);
+    await setupCrystalForWindows(path);
 }
 
 async function setupCrystalForWindows(path) {
@@ -21,6 +150,7 @@ async function setupCrystalForWindows(path) {
     addPathToVars(vars, "PATH", path);
     addPathToVars(vars, "LIB", path);
     addPathToVars(vars, "CRYSTAL_PATH", Path.join(path, "src"));
+    addPathToVars(vars, "CRYSTAL_PATH", "lib");
     for (const [k, v] of vars.entries()) {
         Core.exportVariable(k, v);
     }
@@ -41,6 +171,7 @@ const vcvarsPath = String.raw`C:\Program Files (x86)\Microsoft Visual Studio\201
 async function variablesForVCBuildTools() {
     const exec = Util.promisify(ChildProcess.exec);
     const command = `set && echo ${outputSep} && "${vcvarsPath}" >nul && set`;
+    Core.info(`[command]cmd /c "${command}"`);
     const {stdout} = await exec(command, {shell: "cmd"});
     Core.debug(JSON.stringify(stdout));
     return new Map(getChangedVars(stdout.trimEnd().split(/\r?\n/)));
@@ -66,7 +197,7 @@ function* getChangedVars(lines) {
     }
 }
 
-async function downloadCrystalForWindows() {
+async function downloadCrystalForWindows(destination = null) {
     Core.info("Looking for latest Crystal build");
 
     const runsResp = await githubGet({
@@ -91,9 +222,7 @@ async function downloadCrystalForWindows() {
         const downloadedPath = await ToolCache.downloadTool(downloadUrl);
 
         Core.info("Extracting Crystal source");
-        const extractedPath = await ToolCache.extractZip(downloadedPath, destDir);
-        const [subDir] = await FS.readdir(extractedPath);
-        return Path.join(extractedPath, subDir);
+        return onlySubdir(await ToolCache.extractZip(downloadedPath, destDir));
     };
 
     const fetchExeTask = async () => {
@@ -106,7 +235,6 @@ async function downloadCrystalForWindows() {
         const artifactLinkResp = await githubGet({
             url: "/repos/crystal-lang/crystal/actions/artifacts/:artifact_id/zip",
             "artifact_id": artifact.id,
-            headers: {"authorization": "token " + Core.getInput("token")},
             request: {redirect: "manual"},
         });
         const downloadUrl = artifactLinkResp.headers["location"];
@@ -116,7 +244,7 @@ async function downloadCrystalForWindows() {
     };
 
     const [srcPath, exeDownloadedPath] = await Promise.all([
-        fetchSrcTask(Core.getInput("destination")),
+        fetchSrcTask(destination),
         fetchExeTask(),
     ]);
 
@@ -126,7 +254,14 @@ async function downloadCrystalForWindows() {
 
 function githubGet(request) {
     Core.debug(request);
-    return Octokit.request(request);
+    return Octokit.request.defaults({
+        headers: {"authorization": "token " + Core.getInput("token")},
+    })(request);
+}
+
+async function onlySubdir(path) {
+    const [subDir] = await FS.readdir(path);
+    return Path.join(path, subDir);
 }
 
 if (require.main === module) {

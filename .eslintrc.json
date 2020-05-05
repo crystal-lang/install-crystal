@@ -28,7 +28,6 @@
         "no-self-compare": "error",
         "no-sequences": "error",
         "no-useless-return": "error",
-        "require-await": "error",
         "yoda": "error",
 
         "brace-style": "error",

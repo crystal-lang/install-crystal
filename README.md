@@ -3,7 +3,7 @@ install-crystal
 
 [GitHub Action][] to **install [Crystal][] programming language**
 
-Currently works only on Windows, always downloads the latest "nightly" build.
+Works on Ubuntu, macOS, Windows.
 
 ## Examples
 
@@ -17,13 +17,29 @@ steps:
 
 ### Inputs
 
-* **`token: ${{ github.token }}`**
+* **`crystal: 0.34.0`** (not supported on Windows)
 
-  Personal access token (auto-populated).
+  Install a particular release of Crystal.
+
+* **`crystal: latest`** (default; not supported on Windows)
+
+  Install the latest released version of Crystal.
+
+* **`crystal: nightly`** (default on Windows; not supported on other systems)
+
+  Install Crystal from the latest continuous build on [crystal.git][] master.
+
+* **`arch: x86_64`**, **`arch: x86`** (defaults to current OS arch)
+
+  The architecture of the build of Crystal to download.
 
 * **`destination: some/path`**
 
   The directory to store Crystal in, after extracting.
+
+* **`token: ${{ github.token }}`**
+
+  Personal access token (auto-populated).
 
 ### Outputs
 
