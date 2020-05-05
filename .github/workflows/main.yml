@@ -1,17 +1,18 @@
 name: CI
 
 on:
-  pull_request:
   push:
-    branches:
-      - master
-      - v1
+  pull_request:
   schedule:
     - cron: '0 6 * * 6'
 
 jobs:
   test:
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - run: npm install
