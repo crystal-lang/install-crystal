@@ -5,6 +5,8 @@ install-crystal
 
 Works on Ubuntu, macOS, Windows.
 
+On Ubuntu and macOS this also installs `shards`. This will be expanded in the future.
+
 ## Examples
 
 ```yaml
@@ -12,6 +14,19 @@ steps:
   - uses: oprypin/install-crystal@v1
   - run: crystal eval "puts 1337"
 ```
+
+```yaml
+steps:
+  - uses: actions/checkout@v2
+  - uses: oprypin/install-crystal@v1
+    with:
+      crystal: 0.34.0
+  - run: crystal spec
+```
+
+Also see [.github/workflows/release.yml](.github/workflows/release.yml) as an example.
+
+Alternatively you can use the container-based approach [as in the starter workflow][crystal-starter] (without this action), but the advantage here is the unified approach to installation across 3 systems.
 
 ## Usage
 
@@ -51,3 +66,4 @@ steps:
 [github action]: https://github.com/features/actions
 [crystal]: https://crystal-lang.org/
 [crystal.git]: https://github.com/crystal-lang/crystal
+[crystal-starter]: https://github.com/actions/starter-workflows/blob/master/ci/crystal.yml

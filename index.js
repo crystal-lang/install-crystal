@@ -123,6 +123,7 @@ async function installBinaryRelease({crystal, suffix, destination}) {
     }
 
     Core.info("Setting up environment");
+    Core.addPath(Path.join(path, "embedded", "bin"));
     Core.addPath(Path.join(path, "bin"));
 }
 

@@ -18,6 +18,8 @@ jobs:
       - run: npm install
       - uses: ./
       - run: crystal eval "puts 1337"
+      - run: shards --version
+        if: runner.os != 'Windows'
       - uses: ./
         with:
           crystal: nightly
