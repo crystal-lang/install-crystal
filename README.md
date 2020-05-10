@@ -5,6 +5,8 @@ install-crystal
 
 Works on Ubuntu, macOS, Windows.
 
+On Ubuntu and macOS this also installs `shards`. This will be expanded in the future.
+
 ## Examples
 
 ```yaml
