@@ -11,7 +11,11 @@ Works on Ubuntu, macOS, Windows.
 steps:
   - uses: oprypin/install-crystal@v1
   - run: crystal eval "puts 1337"
+  - uses: actions/checkout@v2
+  - run: crystal spec
 ```
+
+Also see [.github/workflows/release.yml](.github/workflows/release.yml) as an example.
 
 ## Usage
 
