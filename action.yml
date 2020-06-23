@@ -1,11 +1,18 @@
 name: Install Crystal
 description: Install Crystal programming language
 inputs:
+  crystal:
+    description: The version of crystal to install ("latest", "nightly", "0.34.0" etc)
+  arch:
+    description: The architecture of the build of Crystal ("x86_64")
+  destination:
+    description: The directory to store Crystal in
   token:
     description: Personal access token (auto-populated)
     default: ${{ github.token }}
-  destination:
-    description: The directory to store Crystal in
+outputs:
+  crystal:
+    description: The actual version of Crystal that was installed
 runs:
   using: node12
   main: index.js
