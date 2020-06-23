@@ -10,6 +10,9 @@ inputs:
   token:
     description: Personal access token (auto-populated)
     default: ${{ github.token }}
+outputs:
+  crystal:
+    description: The actual version of Crystal that was installed
 runs:
   using: node12
   main: index.js
