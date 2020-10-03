@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/oprypin/install-crystal",
   "dependencies": {
-    "@actions/core": "^1.2",
+    "@actions/core": "^1.2.6",
     "@actions/tool-cache": "^1.6.0",
     "@octokit/request": "^5.4.9",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "eslint": "^7.9.0",
+    "eslint": "^7.10.0",
     "jest": "^26.4.2"
   }
 }
