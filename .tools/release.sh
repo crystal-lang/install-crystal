@@ -14,5 +14,5 @@ npm install --production
 git add -f node_modules package.json package-lock.json
 git diff --quiet
 git commit -m "v$1"
-git tag "v$1"
+git tag -a -m "" "v$1"
 echo git push origin master v1 --tags
