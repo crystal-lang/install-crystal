@@ -3,10 +3,70 @@ name: CI
 on:
   push:
   pull_request:
+
   schedule:
     - cron: '0 6 * * 6'
 
 jobs:
+  try:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        config:
+          - {}
+          - {shards: false}
+          - {shards: true}
+          - {shards: '0.12.0', crystal: '0.35.1'}
+          - {shards: latest, crystal: latest}
+          - {shards: nightly, crystal: nightly}
+        exclude:
+          - os: windows-latest
+            config: {shards: '0.12.0', crystal: '0.35.1'}
+          - os: windows-latest
+            config: {shards: latest, crystal: latest}
+
+    name: crystal ${{ matrix.config.crystal }} + shards ${{ matrix.config.shards }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - uses: ./
+        with: ${{ matrix.config }}
+        id: install
+
+      - run: |
+          crystal eval 'puts "test" + "ing"' | grep 'testing'
+      - run: |
+          crystal --version
+      - run: |
+          v='${{ steps.install.outputs.crystal }}'
+          crystal --version | grep "${v:0:9}"
+        if: ${{ runner.os != 'Windows' }}
+      - run: |
+          v='${{ matrix.config.crystal }}'
+          crystal --version | grep "$v"
+        if: ${{ contains(matrix.config.crystal, '.') }}
+
+      - run: |
+          shards --version
+        if: ${{ !contains('false', matrix.config.shards) }}
+      - run: |
+          v='${{ steps.install.outputs.shards }}'
+          v="${v#v}"
+          shards --version | grep "${v:0:9}"
+        if: ${{ !contains('true|false|nightly', matrix.config.shards) }}
+      - run: |
+          v='${{ matrix.config.shards }}'
+          shards --version | grep "$v"
+        if: ${{ contains(matrix.config.shards, '.') }}
+      - run: |
+          ! shards --version
+        if: ${{ matrix.config.shards == 'false' }}
+
   test:
     strategy:
       fail-fast: false
@@ -16,37 +76,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-
-      - uses: ./
-        with:
-          shards: false
-      - run: crystal eval "puts 1337"
-      - run: '! shards --version'
-
-      - uses: ./
-        with:
-          shards: true
-      - run: crystal eval "puts 1337"
-      - run: shards --version
-
-      - uses: ./
-        with:
-          shards: latest
-        if: runner.os != 'Windows'
-      - run: crystal eval "puts 1337"
-        if: runner.os != 'Windows'
-      - run: shards --version
-        if: runner.os != 'Windows'
-
-      - uses: ./
-        with:
-          shards: nightly
-      - run: crystal eval "puts 1337"
-      - run: shards --version
-
-      - uses: ./
-        with:
-          crystal: nightly
-
       - run: npm test
       - run: npm audit --audit-level=moderate
