@@ -207,7 +207,8 @@ async function findRelease({name, apiBase, tag}) {
 async function findLatestCommit({name, apiBase, branch = "master"}) {
     Core.info(`Looking for latest ${name} commit`);
     const commitsResp = await githubGet({
-        url: apiBase + "/commits/" + branch,
+        url: apiBase + "/commits/:branch",
+        "branch": branch,
     });
     const commit = commitsResp.data;
     Core.info(`Found ${name} commit ${commit["html_url"]}`);
@@ -220,8 +221,11 @@ async function downloadCrystalRelease(suffix, version = null, destination = null
 
     const asset = release["assets"].find((a) => a["name"].endsWith([`-${suffix}.tar.gz`]));
 
-    Core.info(`Downloading Crystal build from ${asset["browser_download_url"]}`);
-    const downloadedPath = await ToolCache.downloadTool(asset["browser_download_url"]);
+    Core.info(`Downloading Crystal build from ${asset["url"]}`);
+    const downloadedPath = await githubDownloadViaRedirect({
+        url: asset["url"],
+        headers: {"accept": "application/octet-stream"},
+    });
 
     Core.info("Extracting Crystal build");
     return onlySubdir(await ToolCache.extractTar(downloadedPath, destination));
@@ -236,15 +240,11 @@ async function downloadSource({name, apiBase, version = null, destination = null
         ref = release["tag_name"];
     }
 
-    const zipballLinkResp = await githubGet({
+    Core.info(`Downloading ${name} source for ${ref}`);
+    const downloadedPath = await githubDownloadViaRedirect({
         url: apiBase + "/zipball/:ref",
         "ref": ref,
-        request: {redirect: "manual"},
     });
-    const downloadUrl = zipballLinkResp.headers["location"];
-
-    Core.info(`Downloading ${name} source from ${downloadUrl}`);
-    const downloadedPath = await ToolCache.downloadTool(downloadUrl);
     Core.info(`Extracting ${name} source`);
     const path = await onlySubdir(await ToolCache.extractZip(downloadedPath, destination));
 
@@ -361,15 +361,11 @@ async function downloadCrystalNightlyForWindows(destination = null) {
         });
         const artifact = artifactsResp.data["artifacts"].find((x) => x.name === "crystal");
 
-        const artifactLinkResp = await githubGet({
+        Core.info("Downloading Crystal build");
+        return githubDownloadViaRedirect({
             url: GitHubApiBase + "/actions/artifacts/:artifact_id/zip",
             "artifact_id": artifact.id,
-            request: {redirect: "manual"},
         });
-        const downloadUrl = artifactLinkResp.headers["location"];
-
-        Core.info("Downloading Crystal build");
-        return ToolCache.downloadTool(downloadUrl);
     };
 
     const [{path: srcPath}, exeDownloadedPath] = await Promise.all([
@@ -386,6 +382,12 @@ function githubGet(request) {
     return Octokit.request.defaults({
         headers: {"authorization": "token " + Core.getInput("token")},
     })(request);
+}
+
+async function githubDownloadViaRedirect(request) {
+    request.request = {redirect: "manual"};
+    const resp = await githubGet(request);
+    return ToolCache.downloadTool(resp.headers["location"]);
 }
 
 async function onlySubdir(path) {
