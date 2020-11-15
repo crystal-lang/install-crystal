@@ -16,7 +16,32 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: oprypin/install-crystal@v1
+        with:
+          shards: false
       - run: crystal eval "puts 1337"
+      - run: '! shards --version'
+
+      - uses: oprypin/install-crystal@v1
+        with:
+          shards: true
+      - run: crystal eval "puts 1337"
+      - run: shards --version
+
+      - uses: oprypin/install-crystal@v1
+        with:
+          shards: latest
+        if: runner.os != 'Windows'
+      - run: crystal eval "puts 1337"
+        if: runner.os != 'Windows'
+      - run: shards --version
+        if: runner.os != 'Windows'
+
+      - uses: oprypin/install-crystal@v1
+        with:
+          shards: nightly
+      - run: crystal eval "puts 1337"
+      - run: shards --version
+
       - uses: oprypin/install-crystal@v1
         with:
           crystal: nightly

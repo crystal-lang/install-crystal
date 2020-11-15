@@ -16,12 +16,37 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
+
       - uses: ./
+        with:
+          shards: false
+      - run: crystal eval "puts 1337"
+      - run: '! shards --version'
+
+      - uses: ./
+        with:
+          shards: true
       - run: crystal eval "puts 1337"
       - run: shards --version
+
+      - uses: ./
+        with:
+          shards: latest
         if: runner.os != 'Windows'
+      - run: crystal eval "puts 1337"
+        if: runner.os != 'Windows'
+      - run: shards --version
+        if: runner.os != 'Windows'
+
+      - uses: ./
+        with:
+          shards: nightly
+      - run: crystal eval "puts 1337"
+      - run: shards --version
+
       - uses: ./
         with:
           crystal: nightly
+
       - run: npm test
       - run: npm audit --audit-level=moderate
