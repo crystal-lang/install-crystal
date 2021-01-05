@@ -121,6 +121,12 @@ async function installCrystalForMac({
             await FS.unlink(Path.join(path, "embedded", "bin", "shards"));
         } catch (e) {}
     }
+
+    let pkgConfigPath = "/usr/local/opt/openssl/lib/pkgconfig";
+    if (process.env["PKG_CONFIG_PATH"]) {
+        pkgConfigPath += Path.delimiter + process.env["PKG_CONFIG_PATH"];
+    }
+    Core.exportVariable("PKG_CONFIG_PATH", pkgConfigPath);
 }
 
 async function installAptPackages(packages) {
