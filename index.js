@@ -12,8 +12,10 @@ const execFile = Util.promisify(ChildProcess.execFile);
 
 async function run() {
     try {
-        const params = {};
-        for (const key of ["crystal", "arch", "destination"]) {
+        const params = getPlatform() === Windows ?
+            {crystal: "nightly", shards: "false"} :
+            {crystal: "latest", shards: "true"};
+        for (const key of ["crystal", "shards", "arch", "destination"]) {
             let value;
             if ((value = Core.getInput(key))) {
                 params[key] = value;
@@ -27,7 +29,7 @@ async function run() {
         if (!func) {
             throw `Platform "${getPlatform()}" is not supported`;
         }
-        await func(params);
+        await maybeInstallShards(params, func(params));
 
         Core.info("[command]crystal --version");
         const {stdout} = await execFile("crystal", ["--version"]);
@@ -57,10 +59,12 @@ function checkArch(arch, allowed) {
 
 const Latest = "latest";
 const Nightly = "nightly";
+const Any = "true";
+const None = "false";
 const NumericVersion = /^\d[.\d]+\d$/;
 
 function checkVersion(version, allowed) {
-    const numericVersion = version.match(NumericVersion) && version;
+    const numericVersion = NumericVersion.test(version) && version;
     allowed[allowed.indexOf(NumericVersion)] = numericVersion;
 
     if (allowed.includes(version)) {
@@ -73,7 +77,8 @@ function checkVersion(version, allowed) {
 }
 
 async function installCrystalForLinux({
-    crystal = Latest,
+    crystal,
+    shards,
     arch = getArch(),
     destination = null,
 }) {
@@ -81,22 +86,47 @@ async function installCrystalForLinux({
     const suffixes = {"x86_64": "linux-x86_64", "x86": "linux-i686"};
     checkArch(arch, Object.keys(suffixes));
 
-    return Promise.all([
-        installAptPackages(
-            "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
-        ),
-        installBinaryRelease({crystal, suffix: suffixes[arch], destination}),
-    ]);
+    const p = installAptPackages(
+        "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
+    );
+    const path = await installBinaryRelease({crystal, shards, suffix: suffixes[arch], destination});
+
+    Core.info("Setting up environment for Crystal");
+    Core.addPath(Path.join(path, "bin"));
+    if (shards === None) {
+        try {
+            await FS.unlink(Path.join(path, "bin", "shards"));
+        } catch (e) {}
+    }
+    await p;
 }
 
 async function installCrystalForMac({
-    crystal = Latest,
+    crystal,
+    shards,
     arch = "x86_64",
     destination = null,
 }) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion]);
     checkArch(arch, ["x86_64"]);
-    return installBinaryRelease({crystal, suffix: "darwin-x86_64", destination});
+    const path = await installBinaryRelease({
+        crystal, shards, suffix: "darwin-x86_64", destination,
+    });
+
+    Core.info("Setting up environment for Crystal");
+    Core.addPath(Path.join(path, "embedded", "bin"));
+    Core.addPath(Path.join(path, "bin"));
+    if (shards === None) {
+        try {
+            await FS.unlink(Path.join(path, "embedded", "bin", "shards"));
+        } catch (e) {}
+    }
+
+    let pkgConfigPath = "/usr/local/opt/openssl/lib/pkgconfig";
+    if (process.env["PKG_CONFIG_PATH"]) {
+        pkgConfigPath += Path.delimiter + process.env["PKG_CONFIG_PATH"];
+    }
+    Core.exportVariable("PKG_CONFIG_PATH", pkgConfigPath);
 }
 
 async function installAptPackages(packages) {
@@ -112,41 +142,119 @@ async function installAptPackages(packages) {
 }
 
 async function installBinaryRelease({crystal, suffix, destination}) {
-    let path;
     if (crystal === Nightly) {
-        path = await downloadCrystalNightly(suffix, destination);
+        return downloadCrystalNightly(suffix, destination);
     } else {
         if (crystal === Latest) {
             crystal = null;
         }
-        path = await downloadCrystalRelease(suffix, crystal, destination);
+        return downloadCrystalRelease(suffix, crystal, destination);
     }
+}
 
-    Core.info("Setting up environment");
-    Core.addPath(Path.join(path, "embedded", "bin"));
+async function maybeInstallShards({shards, destination}, crystalPromise) {
+    const allowed = [Nightly, NumericVersion, Any, None];
+    if (getPlatform() !== Windows) {
+        allowed.push(Latest);
+    } else if (shards === Any) {
+        shards = Nightly;
+    }
+    checkVersion(shards, allowed);
+    if (![Any, None].includes(shards)) {
+        if (destination) {
+            destination = Path.join(destination, "shards");
+        }
+        await installShards({shards, destination}, crystalPromise);
+    } else {
+        await crystalPromise;
+    }
+    if (shards !== None) {
+        Core.info("[command]shards --version");
+        const {stdout} = await execFile("shards", ["--version"]);
+        Core.info(stdout);
+    }
+}
+
+async function installShards({shards, destination}, crystalPromise) {
+    if (NumericVersion.test(shards)) {
+        shards = "v" + shards;
+    }
+    const {ref, path} = await downloadSource({
+        name: "Shards", apiBase: GitHubApiBaseShards, version: shards, destination,
+    });
+    Core.setOutput("shards", ref);
+    await crystalPromise;
+
+    Core.info("Building Shards");
+    Core.info("[command]make");
+    const {stdout} = await execFile("make", {cwd: path});
+    Core.startGroup("Finished building Shards");
+    Core.info(stdout);
+    Core.endGroup();
+
+    Core.info("Setting up environment for Shards");
     Core.addPath(Path.join(path, "bin"));
 }
 
 const GitHubApiBase = "/repos/crystal-lang/crystal";
+const GitHubApiBaseShards = "/repos/crystal-lang/shards";
 const CircleApiBase = "https://circleci.com/api/v1.1/project/github/crystal-lang/crystal";
 
-async function downloadCrystalRelease(suffix, tag = null, destination = null) {
-    Core.info("Looking for latest Crystal release");
-
+async function findRelease({name, apiBase, tag}) {
+    Core.info(`Looking for latest ${name} release`);
     const releasesResp = await githubGet({
-        url: GitHubApiBase + "/releases/" + (tag ? "tags/" + tag : "latest"),
+        url: apiBase + "/releases/" + (tag ? "tags/" + tag : "latest"),
     });
     const release = releasesResp.data;
-    Core.info("Found " + release["html_url"]);
+    Core.info(`Found ${name} release ${release["html_url"]}`);
+    return release;
+}
+
+async function findLatestCommit({name, apiBase, branch = "master"}) {
+    Core.info(`Looking for latest ${name} commit`);
+    const commitsResp = await githubGet({
+        url: apiBase + "/commits/:branch",
+        "branch": branch,
+    });
+    const commit = commitsResp.data;
+    Core.info(`Found ${name} commit ${commit["html_url"]}`);
+    return commit["sha"];
+}
+
+async function downloadCrystalRelease(suffix, version = null, destination = null) {
+    const release = await findRelease({name: "Crystal", apiBase: GitHubApiBase, version});
     Core.setOutput("crystal", release["tag_name"]);
 
     const asset = release["assets"].find((a) => a["name"].endsWith([`-${suffix}.tar.gz`]));
 
-    Core.info("Downloading Crystal build");
-    const downloadedPath = await ToolCache.downloadTool(asset["browser_download_url"]);
+    Core.info(`Downloading Crystal build from ${asset["url"]}`);
+    const downloadedPath = await githubDownloadViaRedirect({
+        url: asset["url"],
+        headers: {"accept": "application/octet-stream"},
+    });
 
     Core.info("Extracting Crystal build");
     return onlySubdir(await ToolCache.extractTar(downloadedPath, destination));
+}
+
+async function downloadSource({name, apiBase, version = null, destination = null}) {
+    let ref = version;
+    if (version === Nightly) {
+        ref = await findLatestCommit({name, apiBase});
+    } else if (version === Latest) {
+        const release = await findRelease({name, apiBase});
+        ref = release["tag_name"];
+    }
+
+    Core.info(`Downloading ${name} source for ${ref}`);
+    const downloadedPath = await githubDownloadViaRedirect({
+        url: apiBase + "/zipball/:ref",
+        "ref": ref,
+    });
+    Core.info(`Extracting ${name} source`);
+    const path = await onlySubdir(await ToolCache.extractZip(downloadedPath, destination));
+
+    return {ref, path};
 }
 
 async function downloadCrystalNightly(suffix, destination = null) {
@@ -166,18 +274,16 @@ async function downloadCrystalNightly(suffix, destination = null) {
             throw "Could not find a matching nightly build";
         }
     }
-    Core.info("Found " + build["build_url"]);
+    Core.info(`Found Crystal build ${build["build_url"]}`);
     Core.setOutput("crystal", build["vcs_revision"]);
 
     const req = `/${build["build_num"]}/artifacts`;
     const resp = await fetch(CircleApiBase + req);
     const artifacts = await resp.json();
     const artifact = artifacts.find((a) => a["path"].endsWith(`-${suffix}.tar.gz`));
-    Core.info("Found " + artifact["url"]);
 
-    Core.info("Downloading Crystal build");
+    Core.info(`Downloading Crystal build from ${artifact["url"]}`);
     const downloadedPath = await ToolCache.downloadTool(artifact["url"]);
-
     Core.info("Extracting Crystal build");
     return onlySubdir(await ToolCache.extractTar(downloadedPath, destination));
 }
@@ -190,11 +296,8 @@ async function installCrystalForWindows({
     checkVersion(crystal, [Nightly]);
     checkArch(arch, ["x86_64"]);
     const path = await downloadCrystalNightlyForWindows(destination);
-    await setupCrystalForWindows(path);
-}
 
-async function setupCrystalForWindows(path) {
-    Core.info("Setting up environment");
+    Core.info("Setting up environment for Crystal");
     const vars = await variablesForVCBuildTools();
     addPathToVars(vars, "PATH", path);
     addPathToVars(vars, "LIB", path);
@@ -253,25 +356,9 @@ async function downloadCrystalNightlyForWindows(destination = null) {
         "per_page": 1,
     });
     const [workflowRun] = runsResp.data["workflow_runs"];
-    const {"head_sha": ref, "id": runId} = workflowRun;
-    Core.info("Found " + workflowRun["html_url"]);
-    Core.setOutput("crystal", ref);
-
-    const fetchSrcTask = async (destDir) => {
-        const zipballLinkResp = await githubGet({
-            url: GitHubApiBase + "/zipball/:ref",
-            "ref": ref,
-            request: {redirect: "manual"},
-        });
-        const downloadUrl = zipballLinkResp.headers["location"];
-        Core.info("Found " + downloadUrl);
-
-        Core.info("Downloading Crystal source");
-        const downloadedPath = await ToolCache.downloadTool(downloadUrl);
-
-        Core.info("Extracting Crystal source");
-        return onlySubdir(await ToolCache.extractZip(downloadedPath, destDir));
-    };
+    const {"head_sha": version, "id": runId} = workflowRun;
+    Core.info(`Found Crystal release ${workflowRun["html_url"]}`);
+    Core.setOutput("crystal", version);
 
     const fetchExeTask = async () => {
         const artifactsResp = await githubGet({
@@ -280,19 +367,15 @@ async function downloadCrystalNightlyForWindows(destination = null) {
         });
         const artifact = artifactsResp.data["artifacts"].find((x) => x.name === "crystal");
 
-        const artifactLinkResp = await githubGet({
+        Core.info("Downloading Crystal build");
+        return githubDownloadViaRedirect({
             url: GitHubApiBase + "/actions/artifacts/:artifact_id/zip",
             "artifact_id": artifact.id,
-            request: {redirect: "manual"},
         });
-        const downloadUrl = artifactLinkResp.headers["location"];
-
-        Core.info("Downloading Crystal build");
-        return ToolCache.downloadTool(downloadUrl);
     };
 
-    const [srcPath, exeDownloadedPath] = await Promise.all([
-        fetchSrcTask(destination),
+    const [{path: srcPath}, exeDownloadedPath] = await Promise.all([
+        downloadSource({name: "Crystal", apiBase: GitHubApiBase, version, destination}),
         fetchExeTask(),
     ]);
 
@@ -305,6 +388,12 @@ function githubGet(request) {
     return Octokit.request.defaults({
         headers: {"authorization": "token " + Core.getInput("token")},
     })(request);
+}
+
+async function githubDownloadViaRedirect(request) {
+    request.request = {redirect: "manual"};
+    const resp = await githubGet(request);
+    return ToolCache.downloadTool(resp.headers["location"]);
 }
 
 async function onlySubdir(path) {
