@@ -14,7 +14,7 @@ const execFile = Util.promisify(ChildProcess.execFile);
 async function run() {
     try {
         const params = getPlatform() === Windows ?
-            {crystal: "nightly", shards: "false"} :
+            {crystal: "nightly", shards: "true"} :
             {crystal: "latest", shards: "true"};
         for (const key of ["crystal", "shards", "arch", "destination"]) {
             let value;
@@ -161,11 +161,9 @@ async function installBinaryRelease({crystal, suffix, destination}) {
 }
 
 async function maybeInstallShards({shards, destination}, crystalPromise) {
-    const allowed = [Nightly, NumericVersion, Any, None];
-    if (getPlatform() !== Windows) {
-        allowed.push(Latest);
-    } else if (shards === Any) {
-        shards = Nightly;
+    const allowed = [Latest, Nightly, NumericVersion, Any, None];
+    if (getPlatform() === Windows && shards === Any) {
+        shards = Latest;
     }
     checkVersion(shards, allowed);
     if (![Any, None].includes(shards)) {
@@ -294,11 +292,7 @@ async function downloadCrystalNightly(suffix, destination = null) {
     return onlySubdir(await ToolCache.extractTar(downloadedPath, destination));
 }
 
-async function installCrystalForWindows({
-    crystal = Nightly,
-    arch = "x86_64",
-    destination = null,
-}) {
+async function installCrystalForWindows({crystal, arch = "x86_64", destination = null}) {
     checkVersion(crystal, [Nightly]);
     checkArch(arch, ["x86_64"]);
     const path = await downloadCrystalNightlyForWindows(destination);

@@ -54,18 +54,18 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
 * * **`shards: true`** (default)
 
-    Ensure that *some* released version of [Shards][] is available (or `nightly` on Windows).  
+    Ensure that *some* released version of [Shards][] is available.
     This uses the build that's bundled with Crystal's releases. Other options are slower, as building Shards is a necessary step then.
-    
-  * **`shards: false`** (default on Windows)
-    
+
+  * **`shards: false`**
+
     Ensure that `shards` executable is *not* available.
 
-  * **`shards: latest`** (not supported on Windows)
+  * **`shards: latest`**
 
     Build and install the latest released version of Shards.
 
-  * **`shards: 0.12.0`** (not supported on Windows)
+  * **`shards: 0.13.0`**
 
     Build and install a particular release of Shards.
 
