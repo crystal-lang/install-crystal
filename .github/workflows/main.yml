@@ -33,7 +33,7 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v2
-      - run: npm install
+      - run: npm install --only=prod
       - uses: ./
         with: ${{ matrix.config }}
         id: install
