@@ -15,6 +15,8 @@ inputs:
 outputs:
   crystal:
     description: The actual version of Crystal that was installed
+  shards:
+    description: The actual version of Shards that was installed
   path:
     description: The directory where Crystal was installed
 runs:

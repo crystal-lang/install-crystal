@@ -18,19 +18,31 @@ steps:
   - uses: actions/checkout@v2
   - uses: oprypin/install-crystal@v1
     with:
-      crystal: 0.35.0
+      crystal: 0.35.1
+  - run: shards install
   - run: crystal spec
 ```
 
 ```yaml
-steps:
-  - uses: actions/checkout@v2
-  - uses: oprypin/install-crystal@v1
-    with:
-      shards: true
-  - run: shards install
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: ubuntu-latest, crystal: latest}
+          - {os: ubuntu-latest, crystal: nightly}
+          - {os: macos-latest}
+          - {os: windows-latest}
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: oprypin/install-crystal@v1
+        with:
+          crystal: ${{matrix.crystal}}
+      - uses: actions/checkout@v2
+      - run: shards install
+      - run: crystal spec
+      - run: crystal tool format --check
+        if: matrix.crystal == 'latest'
 ```
-
 
 [Find usages in the wild!](https://github.com/search?l=YAML&q=%22oprypin%2Finstall-crystal%22&type=Code)
 
@@ -40,7 +52,7 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
 ### Inputs
 
-* * **`crystal: 0.35.0`** (not supported on Windows)
+* * **`crystal: 0.35.1`** (not supported on Windows)
 
     Install a particular release of Crystal.
 
@@ -79,7 +91,7 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
 * **`destination: some/path`**
 
-  The directory to store Crystal in, after extracting.
+  The directory to store Crystal in, after extracting. Will directly affect `outputs.path` (the default is in a temporary location).
 
 * **`token: ${{ github.token }}`**
 
@@ -91,6 +103,13 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
   The actual version of Crystal (as a ref in crystal-lang/[crystal.git][]) that was installed.
 
+* **`shards`** (`${{ steps.some_step_id.outputs.shards }}`)
+
+  The actual version of Shards (as a ref in crystal-lang/[shards.git][]) that was installed.
+
+* **`path`** (`${{ steps.some_step_id.outputs.path }}`)
+
+  The path where Crystal was extracted to, so you can use '[path]/bin/crystal', '[path]/src' etc.
 
 [github action]: https://github.com/features/actions
 [crystal]: https://crystal-lang.org/
