@@ -1,5 +1,6 @@
 const Core = require("@actions/core");
 const ToolCache = require("@actions/tool-cache");
+const IO = require("@actions/io");
 const Octokit = require("@octokit/request");
 const fetch = require("node-fetch");
 const Path = require("path");
@@ -31,8 +32,7 @@ async function run() {
         }
         await maybeInstallShards(params, func(params));
 
-        Core.info("[command]crystal --version");
-        const {stdout} = await execFile("crystal", ["--version"]);
+        const {stdout} = await subprocess(["crystal", "--version"]);
         Core.info(stdout);
     } catch (error) {
         Core.setFailed(error);
@@ -76,6 +76,12 @@ function checkVersion(version, allowed) {
     throw `Version "${version}" is invalid`;
 }
 
+async function subprocess(command, options) {
+    Core.info("[command]" + command.join(" "));
+    const [file, ...args] = command;
+    return execFile(file, args, options);
+}
+
 async function installCrystalForLinux({
     crystal,
     shards,
@@ -86,7 +92,7 @@ async function installCrystalForLinux({
     const suffixes = {"x86_64": "linux-x86_64", "x86": "linux-i686"};
     checkArch(arch, Object.keys(suffixes));
 
-    const p = installAptPackages(
+    const depsTask = installAptPackages(
         "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
     );
     const path = await installBinaryRelease({crystal, shards, suffix: suffixes[arch], destination});
@@ -98,7 +104,7 @@ async function installCrystalForLinux({
             await FS.unlink(Path.join(path, "bin", "shards"));
         } catch (e) {}
     }
-    await p;
+    await depsTask;
 }
 
 async function installCrystalForMac({
@@ -131,11 +137,13 @@ async function installCrystalForMac({
 
 async function installAptPackages(packages) {
     Core.info("Installing package dependencies");
-    const args = [
-        "-n", "apt-get", "install", "-qy", "--no-install-recommends", "--no-upgrade", "--",
+    const command = [
+        "apt-get", "install", "-qy", "--no-install-recommends", "--no-upgrade", "--",
     ].concat(packages);
-    Core.info("[command]sudo " + args.join(" "));
-    const {stdout} = await execFile("sudo", args);
+    if (await IO.which("sudo")) {
+        command.unshift("sudo", "-n");
+    }
+    const {stdout} = await subprocess(command);
     Core.startGroup("Finished installing package dependencies");
     Core.info(stdout);
     Core.endGroup();
@@ -169,8 +177,7 @@ async function maybeInstallShards({shards, destination}, crystalPromise) {
         await crystalPromise;
     }
     if (shards !== None) {
-        Core.info("[command]shards --version");
-        const {stdout} = await execFile("shards", ["--version"]);
+        const {stdout} = await subprocess(["shards", "--version"]);
         Core.info(stdout);
     }
 }
@@ -186,8 +193,7 @@ async function installShards({shards, destination}, crystalPromise) {
     await crystalPromise;
 
     Core.info("Building Shards");
-    Core.info("[command]make");
-    const {stdout} = await execFile("make", {cwd: path});
+    const {stdout} = await subprocess(["make"], {cwd: path});
     Core.startGroup("Finished building Shards");
     Core.info(stdout);
     Core.endGroup();

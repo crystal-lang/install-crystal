@@ -25,6 +25,7 @@
   "homepage": "https://github.com/oprypin/install-crystal",
   "dependencies": {
     "@actions/core": "^1.2.6",
+    "@actions/io": "^1.0.2",
     "@actions/tool-cache": "^1.6.1",
     "@octokit/request": "^5.4.12",
     "node-fetch": "^2.6.1"
