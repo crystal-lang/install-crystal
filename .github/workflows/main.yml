@@ -71,6 +71,10 @@ jobs:
       - run: |
           ! shards --version
         if: ${{ matrix.config.shards == 'false' }}
+      - run: |
+          shards build
+        working-directory: test-project
+        if: ${{ !contains('false', matrix.config.shards) }}
 
   test:
     runs-on: ubuntu-latest
