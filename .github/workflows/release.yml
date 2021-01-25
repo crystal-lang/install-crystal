@@ -37,11 +37,15 @@ jobs:
       - uses: oprypin/install-crystal@v1
         with: ${{ matrix.config }}
         id: install
+      - run: |
+          echo 'crystal "${{ steps.install.outputs.crystal }}" | shards "${{ steps.install.outputs.shards }}"'
 
       - run: |
           crystal eval 'puts "test" + "ing"' | grep 'testing'
       - run: |
-          crystal --version
+          '${{ steps.install.outputs.path }}/bin/crystal' --version
+      - run: |
+          ls '${{ steps.install.outputs.path }}/src/prelude.cr'
       - run: |
           v='${{ steps.install.outputs.crystal }}'
           crystal --version | grep "${v:0:9}"

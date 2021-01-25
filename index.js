@@ -30,6 +30,7 @@ async function run() {
         if (params.shards === Any && getPlatform() === Windows) {
             params.shards = Latest;
         }
+        Core.setOutput("path", params.path);
 
         const func = {
             [Linux]: installCrystalForLinux,
@@ -106,6 +107,7 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "bin"));
+    await FS.symlink("share/crystal/src", Path.join(path, "src"));
     if (shards === None) {
         try {
             await FS.unlink(Path.join(path, "bin", "shards"));
@@ -167,8 +169,14 @@ async function maybeInstallShards({shards, path}, crystalPromise) {
         await installShards({shards, path}, crystalPromise);
     }
     if (shards !== None) {
-        await crystalPromise;
+        if (shards === Any) {
+            await crystalPromise;
+        }
         const {stdout} = await subprocess(["shards", "--version"]);
+        const [ver] = stdout.match(/\d[^ ]+/);
+        if (shards === Any && ver) {
+            Core.setOutput("shards", "v" + ver);
+        }
         Core.info(stdout);
     }
 }
