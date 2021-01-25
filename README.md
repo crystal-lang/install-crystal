@@ -46,7 +46,7 @@ steps:
 
 [Find usages in the wild!](https://github.com/search?l=YAML&q=%22oprypin%2Finstall-crystal%22&type=Code)
 
-Alternatively, you can use the container-based approach [as in the starter workflow][crystal-starter] (without this action), but the advantage here is the unified approach to installation across 3 systems.
+Alternatively, you can use the container-based approach [as in the starter workflow][crystal-starter] (without this action), but the advantage here is the unified approach to installation across 3 systems. [Using a custom container has disadvantages on its own, too](https://forum.crystal-lang.org/t//2837).
 
 ## Usage
 
