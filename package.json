@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "lint": "eslint .",
-    "test": "eslint . && jest"
+    "test": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -25,13 +25,14 @@
   },
   "homepage": "https://github.com/oprypin/install-crystal",
   "dependencies": {
+    "@actions/cache": "^1.0.5",
     "@actions/core": "^1.2.6",
+    "@actions/io": "^1.0.2",
     "@actions/tool-cache": "^1.6.1",
-    "@octokit/request": "^5.4.12",
+    "@octokit/request": "^5.4.13",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "eslint": "^7.17.0",
-    "jest": "^26.6.3"
+    "eslint": "^7.18.0"
   }
 }

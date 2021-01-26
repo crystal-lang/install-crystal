@@ -2,9 +2,9 @@ name: Install Crystal
 description: Install Crystal programming language
 inputs:
   crystal:
-    description: The version of Crystal to install ("latest", "nightly", "0.34.0" etc)
+    description: The version of Crystal to install ("latest", "nightly", "0.35.1" etc)
   shards:
-    description: The version of Shards to install (true, "latest", "nightly", "0.12.0" etc)
+    description: The version of Shards to install (true, "latest", "nightly", "0.13.0" etc)
   arch:
     description: The architecture of the build of Crystal ("x86_64")
   destination:
@@ -15,6 +15,10 @@ inputs:
 outputs:
   crystal:
     description: The actual version of Crystal that was installed
+  shards:
+    description: The actual version of Shards that was installed
+  path:
+    description: The directory where Crystal was installed
 runs:
   using: node12
   main: index.js

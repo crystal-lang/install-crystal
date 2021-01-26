@@ -1,0 +1,10 @@
+name: test-project
+version: 0.1.0
+
+dependencies:
+  spec_assert:
+    github: oprypin/spec-assert
+
+targets:
+  test:
+    main: test.cr
