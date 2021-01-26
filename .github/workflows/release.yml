@@ -17,12 +17,12 @@ jobs:
           - {}
           - {shards: false}
           - {shards: true}
-          - {shards: '0.13.0', crystal: '0.35.1'}
+          - {shards: '0.12.0', crystal: '0.35.1'}
           - {shards: latest, crystal: latest}
           - {shards: nightly, crystal: nightly}
         exclude:
           - os: windows-latest
-            config: {shards: '0.13.0', crystal: '0.35.1'}
+            config: {shards: '0.12.0', crystal: '0.35.1'}
           - os: windows-latest
             config: {shards: latest, crystal: latest}
 

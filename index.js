@@ -227,7 +227,7 @@ const GitHubApiBaseShards = "/repos/crystal-lang/shards";
 const CircleApiBase = "https://circleci.com/api/v1.1/project/github/crystal-lang/crystal";
 
 async function findRelease({name, apiBase, tag}) {
-    Core.info(`Looking for latest ${name} release`);
+    Core.info(`Looking for ${name} release (${tag || "latest"})`);
     const releasesResp = await githubGet({
         url: apiBase + "/releases/" + (tag ? "tags/" + tag : "latest"),
     });
@@ -248,7 +248,7 @@ async function findLatestCommit({name, apiBase, branch = "master"}) {
 }
 
 async function downloadCrystalRelease(suffix, version = null) {
-    const release = await findRelease({name: "Crystal", apiBase: GitHubApiBase, version});
+    const release = await findRelease({name: "Crystal", apiBase: GitHubApiBase, tag: version});
     Core.setOutput("crystal", release["tag_name"]);
 
     const asset = release["assets"].find((a) => a["name"].endsWith([`-${suffix}.tar.gz`]));
