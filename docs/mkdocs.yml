@@ -1,0 +1,31 @@
+site_name: install-crystal action
+site_url: "https://oprypin.github.io/install-crystal"
+repo_url: "https://github.com/oprypin/install-crystal"
+edit_uri: blob/master/docs/
+use_directory_urls: false
+docs_dir: .
+site_dir: ../site
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    primary: teal
+    accent: purple
+
+plugins:
+  - search
+  - same-dir
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.snippets:
+      check_paths: true
+  - admonition
+  - def_list
+  - toc:
+      permalink: "#"
