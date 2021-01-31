@@ -5,11 +5,11 @@
 <br>
 I want to support Linux, <input type="checkbox" id="os-mac"><label for="os-mac">macOS</label>, <input type="checkbox" id="os-win"><label for="os-win">Windows</label>.
 <br>
-I want to support latest Crystal, <input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label> <input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal nightly</label>.
+I want to support latest Crystal, <input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label> <input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal <abbr title="Unreleased builds from the latest commit on master">nightlies</abbr></label>.
 <br>
 <input type="checkbox" id="tool-format"><label for="tool-format">I format code with <code>crystal tool format</code></label>.
 <br>
-<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many).</label>
+<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many)</label>.
 
 {% for is_app in false, true %}
 {% for os_win in false, true %}
@@ -71,14 +71,14 @@ jobs:
       SHARDS_OPTS: --ignore-crystal-version
     {%- endif %}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         {%- if crystal_nightly or crystal_ver %}
         with:
           crystal: {{ "${{ matrix.crystal }}" }}
         {%- endif %}
-      - name: Download source
-        uses: actions/checkout@v2
       {%- if cache_shards %}
       - name: Cache shards
         uses: actions/cache@v2
@@ -92,7 +92,7 @@ jobs:
           restore-keys: {{ "${{ runner.os }}-shards-" }}
           {%- endif %}
       {%- endif %}
-      - name: Install Shards
+      - name: Install shards
         {%- if is_app %}
         run: {% if cache_shards %}shards check || {% endif %}shards install
         {%- else %}
