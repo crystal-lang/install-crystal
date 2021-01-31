@@ -132,3 +132,30 @@ jobs:
 {% endfor %}
 
 </div>
+
+<div class="configurator">
+<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> a third-party action</label>.
+
+<div class="c1">
+Copy the commit hash of the latest <a href="https://github.com/oprypin/install-crystal/tags">release</a> instead of the "v1" part in <code>oprypin/install-crystal@<strong>v1</strong></code>.
+</div>
+</div>
+
+<script>
+var fixedRef = document.getElementById('fixed-ref');
+
+function fixedRefChange() {
+    var codes = document.querySelectorAll('.configurator .hljs-string');
+    var rev = fixedRef.checked ? '{{ latest_rev }}' : 'v1';
+    for (var i = 0; i < codes.length; ++i) {
+        if (codes[i].innerHTML.includes('install-crystal')) {
+            codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+/g, '@' + rev);
+        }
+    }
+}
+
+if (fixedRef) {
+    document.addEventListener('DOMContentLoaded', fixedRefChange);
+    fixedRef.addEventListener('change', fixedRefChange);
+}
+</script>
