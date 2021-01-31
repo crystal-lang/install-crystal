@@ -16,6 +16,9 @@ theme:
 
 extra_css:
   - assets/style.css
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js
+  - assets/script.js
 
 plugins:
   - search
@@ -26,7 +29,8 @@ plugins:
         - gen_pages.py
 
 markdown_extensions:
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      use_pygments: false
   - pymdownx.magiclink
   - pymdownx.superfences
   - pymdownx.details

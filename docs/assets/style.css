@@ -1,3 +1,10 @@
+.hljs-string, .hljs-literal, .hljs-number {
+    color: var(--md-code-hl-string-color);
+}
+.hljs-comment {
+    color: var(--md-code-hl-comment-color);
+}
+
 label {
     cursor: pointer;
 }
