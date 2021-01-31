@@ -200,7 +200,7 @@
   
     <li class="md-nav__item">
       <a href="index.html" class="md-nav__link">
-        Index
+        Introduction
       </a>
     </li>
   
@@ -254,11 +254,11 @@
 <br>
 I want to support Linux, <input type="checkbox" id="os-mac"><label for="os-mac">macOS</label>, <input type="checkbox" id="os-win"><label for="os-win">Windows</label>.
 <br>
-I want to support latest Crystal, <input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label> <input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal nightly</label>.
+I want to support latest Crystal, <input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label> <input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal <abbr title="Unreleased builds from the latest commit on master">nightlies</abbr></label>.
 <br>
 <input type="checkbox" id="tool-format"><label for="tool-format">I format code with <code>crystal tool format</code></label>.
 <br>
-<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many).</label>
+<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many)</label>.
 
 
 
@@ -282,11 +282,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -309,17 +309,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -344,11 +344,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -373,17 +373,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -418,13 +418,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -453,19 +453,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -496,13 +496,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -534,19 +534,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -582,13 +582,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -615,19 +615,19 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -656,13 +656,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -692,19 +692,19 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -745,13 +745,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -785,19 +785,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -833,13 +833,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -876,19 +876,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -926,11 +926,11 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -957,17 +957,17 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -996,11 +996,11 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1029,17 +1029,17 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1075,13 +1075,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1111,19 +1111,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1155,13 +1155,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1194,19 +1194,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1243,13 +1243,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1277,19 +1277,19 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1319,13 +1319,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1356,19 +1356,19 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1410,13 +1410,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1451,19 +1451,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1500,13 +1500,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1544,19 +1544,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1598,11 +1598,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1631,17 +1631,17 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1672,11 +1672,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1708,17 +1708,17 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1758,13 +1758,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1797,19 +1797,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1844,13 +1844,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1886,19 +1886,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -1938,13 +1938,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -1975,19 +1975,19 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2020,13 +2020,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2060,19 +2060,19 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2114,13 +2114,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2155,19 +2155,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2204,13 +2204,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2248,19 +2248,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2301,11 +2301,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2335,17 +2335,17 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2377,11 +2377,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2414,17 +2414,17 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2465,13 +2465,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2505,19 +2505,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2553,13 +2553,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2596,19 +2596,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2649,13 +2649,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2687,19 +2687,19 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2733,13 +2733,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2774,19 +2774,19 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2829,13 +2829,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2871,19 +2871,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec</code></pre>
@@ -2921,13 +2921,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -2966,19 +2966,19 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: ~/.cache/shards
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
-      - name: Install Shards
+      - name: Install shards
         run: shards update
       - name: Run tests
         run: crystal spec
@@ -3014,11 +3014,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3042,16 +3042,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3077,11 +3077,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3107,16 +3107,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3154,13 +3154,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3192,18 +3192,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3237,13 +3237,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3278,18 +3278,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3326,13 +3326,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3360,18 +3360,18 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3401,13 +3401,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3438,18 +3438,18 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ubuntu-latest
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3493,13 +3493,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3536,18 +3536,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3586,13 +3586,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3632,18 +3632,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3682,11 +3682,11 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3714,16 +3714,16 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3753,11 +3753,11 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3787,16 +3787,16 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3835,13 +3835,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3874,18 +3874,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -3920,13 +3920,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -3962,18 +3962,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4011,13 +4011,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4046,18 +4046,18 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4088,13 +4088,13 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4126,18 +4126,18 @@ jobs:
         crystal: [0.35.1, latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4182,13 +4182,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4226,18 +4226,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4277,13 +4277,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4324,18 +4324,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4378,11 +4378,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4412,16 +4412,16 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4453,11 +4453,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4490,16 +4490,16 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4542,13 +4542,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4584,18 +4584,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4633,13 +4633,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4678,18 +4678,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4730,13 +4730,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4768,18 +4768,18 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4813,13 +4813,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4854,18 +4854,18 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -4910,13 +4910,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -4954,18 +4954,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5005,13 +5005,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5052,18 +5052,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5105,11 +5105,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5140,16 +5140,16 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5182,11 +5182,11 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5220,16 +5220,16 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Install Crystal
-        uses: oprypin/install-crystal@v1
       - name: Download source
         uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5273,13 +5273,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5316,18 +5316,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5366,13 +5366,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5412,18 +5412,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5465,13 +5465,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5504,18 +5504,18 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5550,13 +5550,13 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5592,18 +5592,18 @@ jobs:
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5649,13 +5649,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5694,18 +5694,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5746,13 +5746,13 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
-      - name: Install Shards
+      - name: Install shards
         run: shards install
       - name: Run tests
         run: crystal spec
@@ -5794,18 +5794,18 @@ jobs:
     env:
       SHARDS_OPTS: --ignore-crystal-version
     steps:
+      - name: Download source
+        uses: actions/checkout@v2
       - name: Install Crystal
         uses: oprypin/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Download source
-        uses: actions/checkout@v2
       - name: Cache shards
         uses: actions/cache@v2
         with:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
-      - name: Install Shards
+      - name: Install shards
         run: shards check || shards install
       - name: Run tests
         run: crystal spec
@@ -5827,6 +5827,33 @@ jobs:
 
 
 </div>
+
+<div class="configurator">
+<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> a third-party action</label>.
+
+<div class="c1">
+Copy the commit hash of the latest <a href="https://github.com/oprypin/install-crystal/tags">release</a> instead of the "v1" part in <code>oprypin/install-crystal@<strong>v1</strong></code>.
+</div>
+</div>
+
+<script>
+var fixedRef = document.getElementById('fixed-ref');
+
+function fixedRefChange() {
+    var codes = document.querySelectorAll('.configurator .hljs-string');
+    var rev = fixedRef.checked ? 'f0b2ce0d9d45075b6da31d7130c26cfb51744ead' : 'v1';
+    for (var i = 0; i < codes.length; ++i) {
+        if (codes[i].innerHTML.includes('install-crystal')) {
+            codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+/g, '@' + rev);
+        }
+    }
+}
+
+if (fixedRef) {
+    document.addEventListener('DOMContentLoaded', fixedRefChange);
+    fixedRef.addEventListener('change', fixedRefChange);
+}
+</script>
                 
               
               
@@ -5854,7 +5881,7 @@ jobs:
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Index
+                Introduction
               </div>
             </div>
           </a>
