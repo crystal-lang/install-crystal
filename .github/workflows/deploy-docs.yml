@@ -1,7 +1,10 @@
 name: Deploy docs
 on:
   push:
+    paths: ['docs/**', '*.md']
   pull_request:
+    paths: ['docs/**', '*.md']
+    branches: [master]
   schedule:
     - cron: '0 6 * * 6'
 jobs:

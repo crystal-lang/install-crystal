@@ -2,8 +2,10 @@ name: CI (release)
 
 on:
   push:
-    branches:
-      - v1
+    branches: [v1]
+
+
+
   schedule:
     - cron: '0 6 * * 6'
 
