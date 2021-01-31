@@ -1,0 +1,7 @@
+label {
+    cursor: pointer;
+}
+
+.configurator input:not(:checked) + label {
+    opacity: 0.7;
+}

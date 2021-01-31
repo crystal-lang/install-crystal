@@ -1,3 +1,5 @@
 mkdocs
 mkdocs-material
+mkdocs-macros-plugin
 mkdocs-same-dir
+mkdocs-gen-files

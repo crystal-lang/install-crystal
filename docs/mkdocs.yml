@@ -14,9 +14,16 @@ theme:
     primary: teal
     accent: purple
 
+extra_css:
+  - assets/style.css
+
 plugins:
   - search
+  - macros
   - same-dir
+  - gen-files:
+      scripts:
+        - gen_pages.py
 
 markdown_extensions:
   - pymdownx.highlight
