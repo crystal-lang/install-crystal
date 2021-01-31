@@ -5,6 +5,10 @@ install-crystal
 
 Works on Ubuntu, macOS, Windows.
 
+### Quickstart
+
+**[Configurator][]**: get a pre-made config for your exact use case!
+
 ## Examples
 
 ```yaml
@@ -117,3 +121,4 @@ Alternatively, you can use the container-based approach [as in the starter workf
 [shards]: https://github.com/crystal-lang/shards
 [shards.git]: https://github.com/crystal-lang/shards
 [crystal-starter]: https://github.com/actions/starter-workflows/blob/master/ci/crystal.yml
+[configurator]: https://oprypin.github.io/install-crystal/configurator.html
