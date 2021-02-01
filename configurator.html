@@ -384,7 +384,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 
 </div>
 
@@ -419,7 +419,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 
 </div>
 
@@ -538,7 +538,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -582,7 +582,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -698,7 +698,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -740,7 +740,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -875,7 +875,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -924,7 +924,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -1036,7 +1036,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 
 </div>
 
@@ -1075,7 +1075,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 
 </div>
 
@@ -1197,7 +1197,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1242,7 +1242,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1361,7 +1361,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1404,7 +1404,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1542,7 +1542,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -1592,7 +1592,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -1712,7 +1712,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -1754,7 +1754,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -1886,7 +1886,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -1934,7 +1934,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2062,7 +2062,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2108,7 +2108,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2246,7 +2246,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2296,7 +2296,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2417,7 +2417,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2460,7 +2460,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2595,7 +2595,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2644,7 +2644,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2775,7 +2775,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2822,7 +2822,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2963,7 +2963,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -3014,7 +3014,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -3119,7 +3119,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3154,7 +3154,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3281,7 +3281,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3327,7 +3327,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3445,7 +3445,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3487,7 +3487,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3630,7 +3630,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3681,7 +3681,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3795,7 +3795,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3834,7 +3834,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check</code></pre>
+        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3964,7 +3964,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4011,7 +4011,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4132,7 +4132,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4175,7 +4175,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4321,7 +4321,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4373,7 +4373,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4495,7 +4495,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4537,7 +4537,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4677,7 +4677,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4727,7 +4727,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4857,7 +4857,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4903,7 +4903,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5049,7 +5049,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5101,7 +5101,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5224,7 +5224,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5267,7 +5267,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5410,7 +5410,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5461,7 +5461,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5594,7 +5594,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5641,7 +5641,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5790,7 +5790,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5843,7 +5843,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 

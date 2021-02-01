@@ -414,7 +414,7 @@
       - uses: actions/checkout@v2
       - run: shards install
       - run: crystal spec
-      - run: crystal tool format --check
+      - run: crystal tool format &amp;&amp; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p><a href="https://github.com/search?l=YAML&amp;q=%22oprypin%2Finstall-crystal%22&amp;type=Code">Find usages in the wild!</a></p>
 <p>Alternatively, you can use the container-based approach <a href="https://github.com/actions/starter-workflows/blob/master/ci/crystal.yml">as in the starter workflow</a> (without this action), but the advantage here is the unified approach to installation across 3 systems. <a href="https://forum.crystal-lang.org/t//2837">Using a custom container has disadvantages on its own, too</a>.</p>
