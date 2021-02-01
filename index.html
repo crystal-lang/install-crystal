@@ -27,7 +27,7 @@
         
           
           
-          <meta name="theme-color" content="#009485">
+          <meta name="theme-color" content="#000000">
         
       
     
@@ -56,7 +56,9 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="purple">
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="black" data-md-color-accent="purple">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
       
   
     
@@ -488,6 +490,11 @@ This uses the build that's bundled with Crystal's releases. Other options are sl
 <p>The path where Crystal was extracted to, so you can use '[path]/bin/crystal', '[path]/src' etc.</p>
 </li>
 </ul>
+<style>
+#__code_2 {
+    display: none;
+}
+</style>
                 
               
               

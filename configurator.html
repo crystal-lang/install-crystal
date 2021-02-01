@@ -27,7 +27,7 @@
         
           
           
-          <meta name="theme-color" content="#009485">
+          <meta name="theme-color" content="#000000">
         
       
     
@@ -56,7 +56,9 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="purple">
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="black" data-md-color-accent="purple">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
       
   
     
@@ -64,6 +66,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#quick-start-for-install-crystal-github-action" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -219,6 +226,8 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+        
+      
       
       <a href="configurator.html" class="md-nav__link md-nav__link--active">
         Configurator
@@ -235,6 +244,22 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -245,20 +270,26 @@
                   </a>
                 
                 
-                  <h1>Configurator</h1>
-                
-                <div class="configurator">
+                <h1 id="quick-start-for-install-crystal-github-action">Quick start for <a href="https://github.com/oprypin/install-crystal/">install-crystal</a> GitHub Action<a class="headerlink" href="#quick-start-for-install-crystal-github-action" title="Permanent link">#</a></h1>
+<p>Set up your Crystal project on GitHub for continuous testing.</p>
+<div class="configurator">
+<hr>
 <strong>I am developing</strong>
 <input type="radio" name="software-kind" id="software-kind-app"><label for="software-kind-app"><strong>an application</strong></label>
-<input type="radio" name="software-kind" id="software-kind-lib"><label for="software-kind-lib"><strong>a library</strong> (also track updates of deps)</label>.
+<input type="radio" name="software-kind" id="software-kind-lib"><label for="software-kind-lib"><strong>a library</strong> (also track updates of deps).</label>
+<hr>
+<span>I want to support <label>Linux,</label></span>
+<input type="checkbox" id="os-mac"><label for="os-mac">macOS,</label>
+<input type="checkbox" id="os-win"><label for="os-win">Windows.</label>
 <br>
-I want to support Linux, <input type="checkbox" id="os-mac"><label for="os-mac">macOS</label>, <input type="checkbox" id="os-win"><label for="os-win">Windows</label>.
+<span>I want to support <label>latest Crystal,</label></span>
+<input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label>
+<input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal <abbr title="Unreleased builds from the latest commit on master">nightlies</abbr>.</label>
 <br>
-I want to support latest Crystal, <input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label> <input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal <abbr title="Unreleased builds from the latest commit on master">nightlies</abbr></label>.
+<input type="checkbox" id="tool-format"><label for="tool-format">I format code with <code>crystal tool format</code>.</label>
 <br>
-<input type="checkbox" id="tool-format"><label for="tool-format">I format code with <code>crystal tool format</code></label>.
-<br>
-<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many)</label>.
+<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many).</label>
+<hr>
 
 
 
@@ -5829,10 +5860,10 @@ jobs:
 </div>
 
 <div class="configurator">
-<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> a third-party action</label>.
+<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a target="_blank" href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> a third-party action</label>.
 
 <div class="c1">
-Copy the commit hash of the latest <a href="https://github.com/oprypin/install-crystal/tags">release</a> instead of the "v1" part in <code>oprypin/install-crystal@<strong>v1</strong></code>.
+Copy the commit hash of the latest <a target="_blank" href="https://github.com/oprypin/install-crystal/tags">release</a> instead of the "v1" part in <code>oprypin/install-crystal@<strong>v1</strong></code>.
 </div>
 </div>
 
