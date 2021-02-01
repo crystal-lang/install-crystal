@@ -4,6 +4,23 @@
 .hljs-comment {
     color: var(--md-code-hl-comment-color);
 }
+.hljs-bullet {
+    margin-top: 0.4em !important;
+    display: inline-block;
+}
+.hljs-attr + .hljs-bullet {
+    display: inline;
+}
+pre {
+    line-height: 1.5 !important;
+}
+
+.configurator {
+    line-height: 2;
+}
+.configurator hr {
+    margin: 0.5em 0 !important;
+}
 
 h1 {
     color: var(--md-default-fg-color) !important;
@@ -13,15 +30,6 @@ h1 {
 }
 input + label {
     cursor: pointer;
-}
-pre {
-    line-height: 1.6 !important;
-}
-.configurator {
-    line-height: 2;
-}
-.configurator hr {
-    margin: 0.5em 0 !important;
 }
 
 .configurator input:not(:checked) + label {
