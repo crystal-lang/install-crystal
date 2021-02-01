@@ -44,7 +44,7 @@ steps:
       - uses: actions/checkout@v2
       - run: shards install
       - run: crystal spec
-      - run: crystal tool format --check
+      - run: crystal tool format && git diff --exit-code
         if: matrix.crystal == 'latest'
 ```
 

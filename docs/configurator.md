@@ -115,7 +115,7 @@ jobs:
       {%- endif %}
       {%- if tool_format %}
       - name: Check formatting
-        run: crystal tool format --check
+        run: crystal tool format && git diff --exit-code
         {%- set latest = "== 'latest'" if not unroll else "!= 'nightly'" if not crystal_ver else "== null" -%}
         {%- if os_win and (crystal_nightly or crystal_ver) %}
         if: matrix.crystal {{ latest }} && matrix.os == 'ubuntu-latest'
