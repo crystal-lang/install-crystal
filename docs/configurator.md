@@ -1,15 +1,24 @@
+# Quick start for [install-crystal](https://github.com/oprypin/install-crystal/) GitHub Action
+
+Set up your Crystal project on GitHub for continuous testing.
 <div class="configurator">
+<hr>
 <strong>I am developing</strong>
 <input type="radio" name="software-kind" id="software-kind-app"><label for="software-kind-app"><strong>an application</strong></label>
-<input type="radio" name="software-kind" id="software-kind-lib"><label for="software-kind-lib"><strong>a library</strong> (also track updates of deps)</label>.
+<input type="radio" name="software-kind" id="software-kind-lib"><label for="software-kind-lib"><strong>a library</strong> (also track updates of deps).</label>
+<hr>
+<span>I want to support <label>Linux,</label></span>
+<input type="checkbox" id="os-mac"><label for="os-mac">macOS,</label>
+<input type="checkbox" id="os-win"><label for="os-win">Windows.</label>
 <br>
-I want to support Linux, <input type="checkbox" id="os-mac"><label for="os-mac">macOS</label>, <input type="checkbox" id="os-win"><label for="os-win">Windows</label>.
+<span>I want to support <label>latest Crystal,</label></span>
+<input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label>
+<input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal <abbr title="Unreleased builds from the latest commit on master">nightlies</abbr>.</label>
 <br>
-I want to support latest Crystal, <input type="checkbox" id="crystal-ver"><label for="crystal-ver">a particular older version</label> <input type="checkbox" id="crystal-nightly"><label for="crystal-nightly">and follow Crystal <abbr title="Unreleased builds from the latest commit on master">nightlies</abbr></label>.
+<input type="checkbox" id="tool-format"><label for="tool-format">I format code with <code>crystal tool format</code>.</label>
 <br>
-<input type="checkbox" id="tool-format"><label for="tool-format">I format code with <code>crystal tool format</code></label>.
-<br>
-<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many)</label>.
+<input type="checkbox" id="cache-shards"><label for="cache-shards">Cache dependencies (worth only if there are many).</label>
+<hr>
 
 {% for is_app in false, true %}
 {% for os_win in false, true %}
@@ -134,10 +143,10 @@ jobs:
 </div>
 
 <div class="configurator">
-<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> a third-party action</label>.
+<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a target="_blank" href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> a third-party action</label>.
 
 <div class="c1">
-Copy the commit hash of the latest <a href="https://github.com/oprypin/install-crystal/tags">release</a> instead of the "v1" part in <code>oprypin/install-crystal@<strong>v1</strong></code>.
+Copy the commit hash of the latest <a target="_blank" href="https://github.com/oprypin/install-crystal/tags">release</a> instead of the "v1" part in <code>oprypin/install-crystal@<strong>v1</strong></code>.
 </div>
 </div>
 

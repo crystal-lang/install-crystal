@@ -5,10 +5,32 @@
     color: var(--md-code-hl-comment-color);
 }
 
-label {
+h1 {
+    color: var(--md-default-fg-color) !important;
+}
+.configurator input {
+    vertical-align: text-top;
+}
+input + label {
     cursor: pointer;
+}
+pre {
+    line-height: 1.6 !important;
+}
+.configurator {
+    line-height: 2;
+}
+.configurator hr {
+    margin: 0.5em 0 !important;
 }
 
 .configurator input:not(:checked) + label {
-    opacity: 0.7;
+    opacity: 0.85;
+}
+.configurator label {
+    text-decoration: underline;
+    text-decoration-color: var(--md-default-fg-color--light);
+}
+.configurator input:not(:checked) + label {
+    text-decoration: none;
 }

@@ -11,7 +11,8 @@ theme:
   icon:
     repo: fontawesome/brands/github
   palette:
-    primary: teal
+    scheme: preference
+    primary: black
     accent: purple
 
 extra_css:
