@@ -75,9 +75,10 @@ jobs:
         {%- endif %}
     {%- endif %}
     runs-on: {% if os_mac or os_win %}{{ "${{ matrix.os }}" }}{% else %}ubuntu-latest{% endif %}
-    {%- if crystal_nightly %}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    {%- if os_win and cache_shards and is_app %}
+    defaults:
+      run:
+        shell: bash
     {%- endif %}
     steps:
       - name: Download source
@@ -103,9 +104,9 @@ jobs:
       {%- endif %}
       - name: Install shards
         {%- if is_app %}
-        run: {% if cache_shards %}shards check || {% endif %}shards install
+        run: {% if cache_shards %}shards check || {% endif %}shards install{% if crystal_nightly %} --ignore-crystal-version{% endif %}
         {%- else %}
-        run: shards update
+        run: shards update{% if crystal_nightly %} --ignore-crystal-version{% endif %}
         {%- endif %}
       - name: Run tests
         run: crystal spec
@@ -115,7 +116,7 @@ jobs:
       {%- endif %}
       {%- if tool_format %}
       - name: Check formatting
-        run: crystal tool format && git diff --exit-code
+        run: crystal tool format{% if is_app %}; git diff --exit-code{% else %} --check{% endif %}
         {%- set latest = "== 'latest'" if not unroll else "!= 'nightly'" if not crystal_ver else "== null" -%}
         {%- if os_win and (crystal_nightly or crystal_ver) %}
         if: matrix.crystal {{ latest }} && matrix.os == 'ubuntu-latest'
