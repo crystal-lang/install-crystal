@@ -12,7 +12,7 @@
         <link rel="canonical" href="https://oprypin.github.io/install-crystal/configurator.html">
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.7">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -384,7 +384,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format --check</code></pre>
 
 </div>
 
@@ -419,7 +419,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format --check</code></pre>
 
 </div>
 
@@ -446,8 +446,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -456,7 +454,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -481,8 +479,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -497,7 +493,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -524,8 +520,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -534,11 +528,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -562,8 +556,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -578,11 +570,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -698,7 +690,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -740,7 +732,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -773,8 +765,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -783,7 +773,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -813,8 +803,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -829,7 +817,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -861,8 +849,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -871,11 +857,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -904,8 +890,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -920,11 +904,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -1036,7 +1020,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format --check</code></pre>
 
 </div>
 
@@ -1075,7 +1059,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format --check</code></pre>
 
 </div>
 
@@ -1103,8 +1087,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1113,7 +1095,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -1139,8 +1121,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1155,7 +1135,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -1183,8 +1163,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1193,11 +1171,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1222,8 +1200,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1238,11 +1214,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1361,7 +1337,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1404,7 +1380,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == 'latest'</code></pre>
 
 </div>
@@ -1438,8 +1414,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1448,7 +1422,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -1479,8 +1453,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1495,7 +1467,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -1528,8 +1500,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1538,11 +1508,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -1572,8 +1542,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1588,11 +1556,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null</code></pre>
 
 </div>
@@ -1712,7 +1680,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -1754,7 +1722,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -1786,8 +1754,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1796,7 +1762,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -1825,8 +1791,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1841,7 +1805,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -1872,8 +1836,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1882,11 +1844,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -1914,8 +1876,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -1930,11 +1890,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2062,7 +2022,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2108,7 +2068,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2142,8 +2102,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2152,7 +2110,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -2183,8 +2141,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2199,7 +2155,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -2232,8 +2188,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2242,11 +2196,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2276,8 +2230,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2292,11 +2244,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2417,7 +2369,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2460,7 +2412,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2493,8 +2445,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2503,7 +2453,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -2533,8 +2483,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2549,7 +2497,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -2581,8 +2529,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2591,11 +2537,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2624,8 +2570,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2640,11 +2584,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2775,7 +2719,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2822,7 +2766,7 @@ jobs:
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2857,8 +2801,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2867,7 +2809,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -2899,8 +2841,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2915,7 +2855,7 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec</code></pre>
 
@@ -2949,8 +2889,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -2959,11 +2897,11 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -2994,8 +2932,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3010,11 +2946,11 @@ jobs:
           key: ${{ runner.os }}-shards-${{ hashFiles('shard.yml') }}
           restore-keys: ${{ runner.os }}-shards-
       - name: Install shards
-        run: shards update
+        run: shards update --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format --check
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 
 </div>
@@ -3119,7 +3055,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3154,7 +3090,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3182,8 +3118,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3192,7 +3126,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -3220,8 +3154,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3235,7 +3167,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -3265,8 +3197,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3275,13 +3205,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3306,8 +3236,6 @@ jobs:
       matrix:
         crystal: [latest, nightly]
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3321,13 +3249,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3445,7 +3373,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3487,7 +3415,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3521,8 +3449,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3531,7 +3457,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -3564,8 +3490,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3579,7 +3503,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -3614,8 +3538,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3624,13 +3546,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3660,8 +3582,6 @@ jobs:
           - os: ubuntu-latest
             crystal: nightly
     runs-on: ubuntu-latest
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3675,13 +3595,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3795,7 +3715,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3834,7 +3754,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code</code></pre>
+        run: crystal tool format; git diff --exit-code</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
 </div>
@@ -3863,8 +3783,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3873,7 +3791,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -3902,8 +3820,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3917,7 +3833,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -3948,8 +3864,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -3958,13 +3872,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -3990,8 +3904,6 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4005,13 +3917,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4132,7 +4044,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4175,7 +4087,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == 'latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4210,8 +4122,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4220,7 +4130,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -4254,8 +4164,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4269,7 +4177,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -4305,8 +4213,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4315,13 +4221,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4352,8 +4258,6 @@ jobs:
             crystal: nightly
           - os: macos-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4367,13 +4271,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4442,6 +4346,9 @@ jobs:
           - os: ubuntu-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4495,7 +4402,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4520,6 +4427,9 @@ jobs:
           - os: ubuntu-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4537,7 +4447,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4570,8 +4480,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4580,7 +4488,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -4612,8 +4520,9 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4627,7 +4536,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -4661,8 +4570,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4671,13 +4578,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4706,8 +4613,9 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4721,13 +4629,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4798,6 +4706,9 @@ jobs:
             crystal: 0.35.1
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4857,7 +4768,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4884,6 +4795,9 @@ jobs:
             crystal: 0.35.1
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4903,7 +4817,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -4938,8 +4852,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4948,7 +4860,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -4982,8 +4894,9 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -4997,7 +4910,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -5033,8 +4946,6 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5043,13 +4954,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5080,8 +4991,9 @@ jobs:
             crystal: nightly
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5095,13 +5007,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5170,6 +5082,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5224,7 +5139,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5250,6 +5165,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5267,7 +5185,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5301,8 +5219,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5311,7 +5227,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -5344,8 +5260,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5359,7 +5276,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -5394,8 +5311,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5404,13 +5319,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5440,8 +5355,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5455,13 +5371,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal != 'nightly' &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5534,6 +5450,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5594,7 +5513,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5622,6 +5541,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5641,7 +5563,7 @@ jobs:
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5677,8 +5599,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5687,7 +5607,7 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -5722,8 +5642,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5737,7 +5658,7 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
@@ -5774,8 +5695,6 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5784,13 +5703,13 @@ jobs:
         with:
           crystal: ${{ matrix.crystal }}
       - name: Install shards
-        run: shards install
+        run: shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5822,8 +5741,9 @@ jobs:
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
-    env:
-      SHARDS_OPTS: --ignore-crystal-version
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Download source
         uses: actions/checkout@v2
@@ -5837,13 +5757,13 @@ jobs:
           path: lib
           key: ${{ runner.os }}-shards-${{ hashFiles('**/shard.lock') }}
       - name: Install shards
-        run: shards check || shards install
+        run: shards check || shards install --ignore-crystal-version
       - name: Run tests
         run: crystal spec
       - name: Build
         run: shards build
       - name: Check formatting
-        run: crystal tool format &amp;&amp; git diff --exit-code
+        run: crystal tool format; git diff --exit-code
         if: matrix.crystal == null &amp;&amp; matrix.os == 'ubuntu-latest'</code></pre>
 <p>Make sure to check <code>shard.lock</code> in to source control. And <code>shard.yml</code> should be checked in, of course.</p>
 
@@ -5937,8 +5857,8 @@ if (fixedRef) {
       
     </div>
     
-      <script src="assets/javascripts/vendor.53cc9318.min.js"></script>
-      <script src="assets/javascripts/bundle.e9c9f54f.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      <script src="assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
