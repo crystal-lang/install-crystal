@@ -43,7 +43,7 @@ on:
   {%- endif %}
 jobs:
   build:
-    {%- set unroll = os_win or (crystal_ver and crystal_nightly) %}
+    {%- set unroll = os_win or (crystal_ver and crystal_nightly and os_mac) %}
     {%- if os_mac or os_win or crystal_nightly or crystal_ver %}
     strategy:
       fail-fast: false
