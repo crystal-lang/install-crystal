@@ -109,7 +109,7 @@ jobs:
         run: shards update --ignore-crystal-version
         {%- endif %}
       - name: Run tests
-        run: crystal spec
+        run: crystal spec --order=random
       {%- if is_app %}
       - name: Build
         run: shards build
