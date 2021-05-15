@@ -1,5 +1,6 @@
-mkdocs
-mkdocs-material
-mkdocs-macros-plugin
-mkdocs-same-dir
-mkdocs-gen-files
+mkdocs>=1.1.2
+mkdocs-gen-files>=0.3.2
+mkdocs-macros-plugin>=0.5.5
+mkdocs-material>=7.1.4
+mkdocs-same-dir>=0.1.0
+pymdown-extensions>=8.2
