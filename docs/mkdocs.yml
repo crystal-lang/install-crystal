@@ -1,6 +1,6 @@
 site_name: install-crystal action
-site_url: "https://oprypin.github.io/install-crystal"
-repo_url: "https://github.com/oprypin/install-crystal"
+site_url: "https://crystal-lang.github.io/install-crystal"
+repo_url: "https://github.com/crystal-lang/install-crystal"
 edit_uri: blob/master/docs/
 use_directory_urls: false
 docs_dir: .

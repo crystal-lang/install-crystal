@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oprypin/install-crystal.git"
+    "url": "git+https://github.com/crystal-lang/install-crystal.git"
   },
   "keywords": [
     "GitHub",
@@ -20,9 +20,9 @@
   "author": "Oleh Prypin <oleh@pryp.in>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/oprypin/install-crystal/issues"
+    "url": "https://github.com/crystal-lang/install-crystal/issues"
   },
-  "homepage": "https://github.com/oprypin/install-crystal",
+  "homepage": "https://github.com/crystal-lang/install-crystal",
   "dependencies": {
     "@actions/cache": "^1.0.7",
     "@actions/core": "^1.2.6",

@@ -1,4 +1,4 @@
-# Quick start for [install-crystal](https://github.com/oprypin/install-crystal/) GitHub Action
+# Quick start for [install-crystal](https://github.com/crystal-lang/install-crystal/) GitHub Action
 
 Set up your Crystal project on GitHub for continuous testing.
 <div class="configurator">
@@ -84,7 +84,7 @@ jobs:
       - name: Download source
         uses: actions/checkout@v2
       - name: Install Crystal
-        uses: oprypin/install-crystal@v1
+        uses: crystal-lang/install-crystal@v1
         {%- if crystal_nightly or crystal_ver %}
         with:
           crystal: {{ "${{ matrix.crystal }}" }}
@@ -144,10 +144,10 @@ jobs:
 </div>
 
 <div class="configurator">
-<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a target="_blank" href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> a third-party action</label>.
+<input type="checkbox" id="fixed-ref"><label for="fixed-ref">I don't <a target="_blank" href="https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#using-third-party-actions">trust</a> an external action</label>.
 
 <div class="c1">
-Copy the commit hash of the latest <a target="_blank" href="https://github.com/oprypin/install-crystal/tags">release</a> instead of the "v1" part in <code>oprypin/install-crystal@<strong>v1</strong></code>.
+Copy the commit hash of the latest <a target="_blank" href="https://github.com/crystal-lang/install-crystal/tags">release</a> instead of the "v1" part in <code>crystal-lang/install-crystal@<strong>v1</strong></code>.
 </div>
 </div>
 

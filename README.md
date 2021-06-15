@@ -13,14 +13,14 @@ Works on Ubuntu, macOS, Windows.
 
 ```yaml
 steps:
-  - uses: oprypin/install-crystal@v1
+  - uses: crystal-lang/install-crystal@v1
   - run: crystal eval "puts 1337"
 ```
 
 ```yaml
 steps:
   - uses: actions/checkout@v2
-  - uses: oprypin/install-crystal@v1
+  - uses: crystal-lang/install-crystal@v1
     with:
       crystal: 0.35.1
   - run: shards install
@@ -38,7 +38,7 @@ steps:
           - {os: windows-latest}
     runs-on: ${{matrix.os}}
     steps:
-      - uses: oprypin/install-crystal@v1
+      - uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{matrix.crystal}}
       - uses: actions/checkout@v2
@@ -121,4 +121,4 @@ Alternatively, you can use the container-based approach [as in the starter workf
 [shards]: https://github.com/crystal-lang/shards
 [shards.git]: https://github.com/crystal-lang/shards
 [crystal-starter]: https://github.com/actions/starter-workflows/blob/master/ci/crystal.yml
-[configurator]: https://oprypin.github.io/install-crystal/configurator.html
+[configurator]: https://crystal-lang.github.io/install-crystal/configurator.html
