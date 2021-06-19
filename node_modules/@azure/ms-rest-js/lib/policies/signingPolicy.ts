@@ -4,19 +4,29 @@
 import { ServiceClientCredentials } from "../credentials/serviceClientCredentials";
 import { HttpOperationResponse } from "../httpOperationResponse";
 import { WebResourceLike } from "../webResource";
-import { BaseRequestPolicy, RequestPolicyFactory, RequestPolicy, RequestPolicyOptionsLike } from "./requestPolicy";
+import {
+  BaseRequestPolicy,
+  RequestPolicyFactory,
+  RequestPolicy,
+  RequestPolicyOptionsLike,
+} from "./requestPolicy";
 
-export function signingPolicy(authenticationProvider: ServiceClientCredentials): RequestPolicyFactory {
+export function signingPolicy(
+  authenticationProvider: ServiceClientCredentials
+): RequestPolicyFactory {
   return {
     create: (nextPolicy: RequestPolicy, options: RequestPolicyOptionsLike) => {
       return new SigningPolicy(nextPolicy, options, authenticationProvider);
-    }
+    },
   };
 }
 
 export class SigningPolicy extends BaseRequestPolicy {
-
-  constructor(nextPolicy: RequestPolicy, options: RequestPolicyOptionsLike, public authenticationProvider: ServiceClientCredentials) {
+  constructor(
+    nextPolicy: RequestPolicy,
+    options: RequestPolicyOptionsLike,
+    public authenticationProvider: ServiceClientCredentials
+  ) {
     super(nextPolicy, options);
   }
 
@@ -25,6 +35,8 @@ export class SigningPolicy extends BaseRequestPolicy {
   }
 
   public sendRequest(request: WebResourceLike): Promise<HttpOperationResponse> {
-    return this.signRequest(request).then(nextRequest => this._nextPolicy.sendRequest(nextRequest));
+    return this.signRequest(request).then((nextRequest) =>
+      this._nextPolicy.sendRequest(nextRequest)
+    );
   }
 }

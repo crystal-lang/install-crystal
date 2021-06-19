@@ -39,7 +39,10 @@ export class TokenCredentials implements ServiceClientCredentials {
    */
   signRequest(webResource: WebResourceLike) {
     if (!webResource.headers) webResource.headers = new HttpHeaders();
-    webResource.headers.set(HeaderConstants.AUTHORIZATION, `${this.authorizationScheme} ${this.token}`);
+    webResource.headers.set(
+      HeaderConstants.AUTHORIZATION,
+      `${this.authorizationScheme} ${this.token}`
+    );
     return Promise.resolve(webResource);
   }
 }

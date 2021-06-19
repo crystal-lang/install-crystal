@@ -5,20 +5,21 @@
 Runtime for isomorphic javascript libraries (that work in the browser and node.js environment) generated via [Autorest](https://github.com/Azure/Autorest).
 
 ## Requirements
-- node.js version > 6.x
-- npm install -g typescript
+- Node.js version > 6.x
+- `npm install -g typescript`
 
 ## Installation
 - After cloning the repo, execute `npm install`
 
 ## Execution
 
-### node.js
-- Set the subscriptionId and token
-- Run `node samples/node-sample.js`
+### Node.js
+- Set the subscriptionId and token as instructed in `samples/node-samples.ts`
+- Run `npx ts-node samples/node-sample.js`
 
 ### In the browser
-- Set the subscriptionId and token and then run
+- Run `npm run build`
+- Set the subscriptionId and token then
 - Open index.html file in the browser. It should show the response from GET request on the storage account. From Chrome type Ctrl + Shift + I and you can see the logs in console.
 
 ## Architecture Overview

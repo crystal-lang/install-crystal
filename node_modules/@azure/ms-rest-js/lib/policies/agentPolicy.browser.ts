@@ -2,7 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { AgentSettings } from "../serviceClient";
-import { BaseRequestPolicy, RequestPolicy, RequestPolicyFactory, RequestPolicyOptionsLike } from "./requestPolicy";
+import {
+  BaseRequestPolicy,
+  RequestPolicy,
+  RequestPolicyFactory,
+  RequestPolicyOptionsLike,
+} from "./requestPolicy";
 import { HttpOperationResponse } from "../httpOperationResponse";
 import { WebResourceLike } from "../webResource";
 
@@ -12,7 +17,7 @@ export function agentPolicy(_agentSettings?: AgentSettings): RequestPolicyFactor
   return {
     create: (_nextPolicy: RequestPolicy, _options: RequestPolicyOptionsLike) => {
       throw agentNotSupportedInBrowser;
-    }
+    },
   };
 }
 
