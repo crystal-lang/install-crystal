@@ -1,0 +1,47 @@
+site_name: install-crystal action
+site_url: "https://crystal-lang.github.io/install-crystal"
+repo_url: "https://github.com/crystal-lang/install-crystal"
+edit_uri: blob/master/docs/
+use_directory_urls: false
+docs_dir: .
+site_dir: ../site
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    scheme: preference
+    primary: black
+    accent: purple
+
+extra_css:
+  - assets/style.css
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js
+  - assets/script.js
+
+plugins:
+  - search
+  - macros
+  - same-dir
+  - gen-files:
+      scripts:
+        - gen_pages.py
+
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: false
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.snippets:
+      check_paths: true
+  - admonition
+  - def_list
+  - toc:
+      permalink: "#"
+
+nav:
+  - Introduction: index.md
+  - Configurator: configurator.md

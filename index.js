@@ -108,7 +108,7 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "bin"));
     await FS.symlink("share/crystal/src", Path.join(path, "src"));
-    if (shards === None) {
+    if (shards !== Any) {
         try {
             await FS.unlink(Path.join(path, "bin", "shards"));
         } catch (e) {}
@@ -124,7 +124,7 @@ async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "embedded", "bin"));
     Core.addPath(Path.join(path, "bin"));
-    if (shards === None) {
+    if (shards !== Any) {
         try {
             await FS.unlink(Path.join(path, "embedded", "bin", "shards"));
         } catch (e) {}
@@ -162,17 +162,31 @@ async function installBinaryRelease({crystal, suffix, path}) {
     }
 }
 
-async function maybeInstallShards({shards, path}, crystalPromise) {
+async function maybeInstallShards({shards, path, allowCache = true}, crystalPromise) {
     const allowed = [Latest, Nightly, NumericVersion, Any, None];
+    let cached = false;
     checkVersion(shards, allowed);
     if (![Any, None].includes(shards)) {
-        await installShards({shards, path}, crystalPromise);
+        cached = await installShards({shards, path, allowCache}, crystalPromise);
     }
     if (shards !== None) {
         if (shards === Any) {
             await crystalPromise;
         }
-        const {stdout} = await subprocess(["shards", "--version"]);
+        let result = null;
+        try {
+            result = await subprocess(["shards", "--version"]);
+        } catch (error) {
+            if (!cached) {
+                throw error;
+            }
+            Core.warning(error);
+            Core.info("Will try to rebuild");
+            await crystalPromise;
+            await rebuildShards({path});
+            result = await subprocess(["shards", "--version"]);
+        }
+        const {stdout} = result;
         const [ver] = stdout.match(/\d[^ ]+/);
         if (shards === Any && ver) {
             Core.setOutput("shards", "v" + ver);
@@ -201,12 +215,7 @@ async function installShards({shards, path}, crystalPromise) {
         const fetchSrcTask = downloadSource({name: "Shards", apiBase: GitHubApiBaseShards, ref});
         await IO.mv(await fetchSrcTask, path);
         await crystalPromise;
-
-        Core.info("Building Shards");
-        const {stdout} = await subprocess(["make"], {cwd: path});
-        Core.startGroup("Finished building Shards");
-        Core.info(stdout);
-        Core.endGroup();
+        await rebuildShards({path});
     }
     if (restored !== cacheKey) {
         Core.info(`Saving cache: '${cacheKey}'`);
@@ -217,9 +226,18 @@ async function installShards({shards, path}, crystalPromise) {
         }
     }
 
-    await crystalPromise;
     Core.info("Setting up environment for Shards");
     Core.addPath(Path.join(path, "bin"));
+    return !!restored;
+}
+
+async function rebuildShards({path}) {
+    Core.info("Building Shards");
+    await subprocess(["make", "clean"], {cwd: path});
+    const {stdout} = await subprocess(["make"], {cwd: path});
+    Core.startGroup("Finished building Shards");
+    Core.info(stdout);
+    Core.endGroup();
 }
 
 const GitHubApiBase = "/repos/crystal-lang/crystal";

@@ -1,0 +1,44 @@
+.hljs-string, .hljs-literal, .hljs-number {
+    color: var(--md-code-hl-string-color);
+}
+.hljs-comment {
+    color: var(--md-code-hl-comment-color);
+}
+.hljs-bullet {
+    margin-top: 0.4em !important;
+    display: inline-block;
+}
+.hljs-attr + .hljs-bullet {
+    display: inline;
+}
+pre {
+    line-height: 1.5 !important;
+}
+
+.configurator {
+    line-height: 2;
+}
+.configurator hr {
+    margin: 0.5em 0 !important;
+}
+
+h1 {
+    color: var(--md-default-fg-color) !important;
+}
+.configurator input {
+    vertical-align: text-top;
+}
+input + label {
+    cursor: pointer;
+}
+
+.configurator input:not(:checked) + label {
+    opacity: 0.85;
+}
+.configurator label {
+    text-decoration: underline;
+    text-decoration-color: var(--md-default-fg-color--light);
+}
+.configurator input:not(:checked) + label {
+    text-decoration: none;
+}

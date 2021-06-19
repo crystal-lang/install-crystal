@@ -7,6 +7,6 @@ cd "$(dirname "$0")/.."
 rm -f package-lock.json
 
 ncu -u
-npm install
+npm update
 npm test
 git commit -a -m "Upgrade packages"

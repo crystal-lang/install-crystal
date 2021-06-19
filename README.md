@@ -5,18 +5,22 @@ install-crystal
 
 Works on Ubuntu, macOS, Windows.
 
+### Quickstart
+
+**[Configurator][]**: get a pre-made config for your exact use case!
+
 ## Examples
 
 ```yaml
 steps:
-  - uses: oprypin/install-crystal@v1
+  - uses: crystal-lang/install-crystal@v1
   - run: crystal eval "puts 1337"
 ```
 
 ```yaml
 steps:
   - uses: actions/checkout@v2
-  - uses: oprypin/install-crystal@v1
+  - uses: crystal-lang/install-crystal@v1
     with:
       crystal: 0.35.1
   - run: shards install
@@ -34,13 +38,13 @@ steps:
           - {os: windows-latest}
     runs-on: ${{matrix.os}}
     steps:
-      - uses: oprypin/install-crystal@v1
+      - uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{matrix.crystal}}
       - uses: actions/checkout@v2
       - run: shards install
       - run: crystal spec
-      - run: crystal tool format --check
+      - run: crystal tool format && git diff --exit-code
         if: matrix.crystal == 'latest'
 ```
 
@@ -52,64 +56,64 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
 ### Inputs
 
-* * **`crystal: 0.35.1`** (not supported on Windows)
+ *   *  **`crystal: 0.35.1`** (not supported on Windows)
 
-    Install a particular release of Crystal.
+        Install a particular release of Crystal.
 
-  * **`crystal: latest`** (default; not supported on Windows)
+     *  **`crystal: latest`** (default; not supported on Windows)
 
-    Install the latest released version of Crystal.
+        Install the latest released version of Crystal.
 
-  * **`crystal: nightly`** (default on Windows)
+     *  **`crystal: nightly`** (default on Windows)
 
-    Install Crystal from the latest continuous build on [crystal.git][] master.
+        Install Crystal from the latest continuous build on [crystal.git][] master.
 
-* * **`shards: true`** (default)
+ *   *  **`shards: true`** (default)
 
-    Ensure that *some* released version of [Shards][] is available.
-    This uses the build that's bundled with Crystal's releases. Other options are slower, as building Shards is a necessary step then.
+        Ensure that *some* released version of [Shards][] is available.
+        This uses the build that's bundled with Crystal's releases. Other options are slower, as building Shards is a necessary step then.
 
-  * **`shards: false`**
+     *  **`shards: false`**
 
-    Ensure that `shards` executable is *not* available.
+        Ensure that `shards` executable is *not* available.
 
-  * **`shards: latest`**
+     *  **`shards: latest`**
 
-    Build and install the latest released version of Shards.
+        Build and install the latest released version of Shards.
 
-  * **`shards: 0.13.0`**
+     *  **`shards: 0.13.0`**
 
-    Build and install a particular release of Shards.
+        Build and install a particular release of Shards.
 
-  * **`shards: nightly`**
+     *  **`shards: nightly`**
 
-    Build and install the latest commit of [shards.git][] master.
+        Build and install the latest commit of [shards.git][] master.
 
-* **`arch: x86_64`**, **`arch: x86`** (defaults to current OS arch)
+ *  **`arch: x86_64`**, **`arch: x86`** (defaults to current OS arch)
 
-  The architecture of the build of Crystal to download.
+    The architecture of the build of Crystal to download.
 
-* **`destination: some/path`**
+ *  **`destination: some/path`**
 
-  The directory to store Crystal in, after extracting. Will directly affect `outputs.path` (the default is in a temporary location).
+    The directory to store Crystal in, after extracting. Will directly affect `outputs.path` (the default is in a temporary location).
 
-* **`token: ${{ github.token }}`**
+ *  **`token: ${{ github.token }}`**
 
-  Personal access token (auto-populated).
+    Personal access token (auto-populated).
 
 ### Outputs
 
-* **`crystal`** (`${{ steps.some_step_id.outputs.crystal }}`)
+ *  **`crystal`** (`${{ steps.some_step_id.outputs.crystal }}`)
 
-  The actual version of Crystal (as a ref in crystal-lang/[crystal.git][]) that was installed.
+    The actual version of Crystal (as a ref in crystal-lang/[crystal.git][]) that was installed.
 
-* **`shards`** (`${{ steps.some_step_id.outputs.shards }}`)
+ *  **`shards`** (`${{ steps.some_step_id.outputs.shards }}`)
 
-  The actual version of Shards (as a ref in crystal-lang/[shards.git][]) that was installed.
+    The actual version of Shards (as a ref in crystal-lang/[shards.git][]) that was installed.
 
-* **`path`** (`${{ steps.some_step_id.outputs.path }}`)
+ *  **`path`** (`${{ steps.some_step_id.outputs.path }}`)
 
-  The path where Crystal was extracted to, so you can use '[path]/bin/crystal', '[path]/src' etc.
+    The path where Crystal was extracted to, so you can use '[path]/bin/crystal', '[path]/src' etc.
 
 [github action]: https://github.com/features/actions
 [crystal]: https://crystal-lang.org/
@@ -117,3 +121,4 @@ Alternatively, you can use the container-based approach [as in the starter workf
 [shards]: https://github.com/crystal-lang/shards
 [shards.git]: https://github.com/crystal-lang/shards
 [crystal-starter]: https://github.com/actions/starter-workflows/blob/master/ci/crystal.yml
+[configurator]: https://crystal-lang.github.io/install-crystal/configurator.html

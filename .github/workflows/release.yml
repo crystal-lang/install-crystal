@@ -2,8 +2,10 @@ name: CI (release)
 
 on:
   push:
-    branches:
-      - v1
+    branches: [v1]
+
+
+
   schedule:
     - cron: '0 6 * * 6'
 
@@ -34,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install --only=prod
-      - uses: oprypin/install-crystal@v1
+      - uses: crystal-lang/install-crystal@v1
         with: ${{ matrix.config }}
         id: install
       - run: |
