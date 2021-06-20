@@ -1,0 +1,29 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "crystal",
+            "pattern": [
+                {
+                    "regexp": "^In (.+):(\\d+):(\\d+)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3
+                },
+                {
+                    "regexp": "^$"
+                },
+                {
+                    "regexp": "^ +\\d+ \\|.*$"
+                },
+                {
+                    "regexp": "^ +\\^-*$"
+                },
+                {
+                    "regexp": "^(Error|Warning): (.+)$",
+                    "severity": 1,
+                    "message": 2
+                }
+            ]
+        }
+    ]
+}
