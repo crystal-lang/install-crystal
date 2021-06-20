@@ -4,24 +4,24 @@
             "owner": "crystal",
             "pattern": [
                 {
-                    "regexp": "^In (.+):(\\d+):(\\d+)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3
+                    "regexp": "^In (\\x1b\\[[0-9;]+m)?(.+):(\\d+):(\\d+)(\\x1b\\[[0-9;]+m)?$",
+                    "file": 2,
+                    "line": 3,
+                    "column": 4
                 },
                 {
                     "regexp": "^$"
                 },
                 {
-                    "regexp": "^ +.*$"
+                    "regexp": "^.+$"
                 },
                 {
-                    "regexp": "^ +.*$"
+                    "regexp": "^.+$"
                 },
                 {
-                    "regexp": "^(Error|Warning): (.+)$",
-                    "severity": 1,
-                    "message": 2
+                    "regexp": "^(\\x1b\\[[0-9;]+m)?(Error|Warning): (.+)(\\x1b\\[[0-9;]+m)?$",
+                    "severity": 2,
+                    "message": 3
                 }
             ]
         }
