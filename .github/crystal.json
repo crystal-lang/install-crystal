@@ -13,10 +13,10 @@
                     "regexp": "^$"
                 },
                 {
-                    "regexp": "^ +\\d+ \\|.*$"
+                    "regexp": "^ +.*$"
                 },
                 {
-                    "regexp": "^ +\\^-*$"
+                    "regexp": "^ +.*$"
                 },
                 {
                     "regexp": "^(Error|Warning): (.+)$",
