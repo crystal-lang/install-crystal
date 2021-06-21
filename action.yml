@@ -9,7 +9,7 @@ inputs:
     description: The architecture of the build of Crystal ("x86_64")
   destination:
     description: The directory to store Crystal in
-  annotatate:
+  annotate:
     description: Display compilation and spec errors as GitHub code annotations
     default: true
   token:
