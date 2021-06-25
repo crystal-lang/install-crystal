@@ -50,8 +50,8 @@ async function run() {
 
         if (Core.getBooleanInput("annotate")) {
             const matchersPath = Path.join(__dirname, ".github");
-            Core.info(`##[add-matcher]${Path.join(matchersPath, "crystal.json")}`);
-            Core.info(`##[add-matcher]${Path.join(matchersPath, "crystal-spec.json")}`);
+            Core.info(`::add-matcher::${Path.join(matchersPath, "crystal.json")}`);
+            Core.info(`::add-matcher::${Path.join(matchersPath, "crystal-spec.json")}`);
         }
     } catch (error) {
         Core.setFailed(error);
