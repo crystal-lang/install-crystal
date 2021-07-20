@@ -1,0 +1,29 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "crystal",
+            "pattern": [
+                {
+                    "regexp": "^In (\\x1b\\[[0-9;]+m)?(.+):(\\d+):(\\d+)",
+                    "file": 2,
+                    "line": 3,
+                    "column": 4
+                },
+                {
+                    "regexp": "^$"
+                },
+                {
+                    "regexp": "^.+$"
+                },
+                {
+                    "regexp": "^.+$"
+                },
+                {
+                    "regexp": "^(\\x1b\\[[0-9;]+m)?(Error|Warning): (.+)$",
+                    "severity": 2,
+                    "message": 3
+                }
+            ]
+        }
+    ]
+}

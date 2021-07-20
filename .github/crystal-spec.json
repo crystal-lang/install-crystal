@@ -1,0 +1,59 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "crystal-spec-multi-line",
+            "pattern": [
+                {
+                    "regexp": "^ {0,2}\\d+\\) (.+)$"
+                },
+                {
+                    "regexp": "^ {5}(.+)$"
+                },
+                {
+                    "regexp": "^$"
+                },
+                {
+                    "regexp": "^ {5}\\s*(.+)$"
+                },
+                {
+                    "regexp": "^ {5}\\s*(.+)$",
+                    "message": 1
+                },
+                {
+                    "regexp": "^$"
+                },
+                {
+                    "regexp": "^ {5}# (.+):(\\d+)$",
+                    "file": 1,
+                    "line": 2
+                }
+            ]
+        },
+        {
+            "owner": "crystal-spec-single-line",
+            "pattern": [
+                {
+                    "regexp": "^ {0,2}\\d+\\) (.+)$"
+                },
+                {
+                    "regexp": "^ {5}(.+)$"
+                },
+                {
+                    "regexp": "^$"
+                },
+                {
+                    "regexp": "^ {5}\\s*(.+)$",
+                    "message": 1
+                },
+                {
+                    "regexp": "^$"
+                },
+                {
+                    "regexp": "^ {5}# ([^\\s]+):(\\d+)$",
+                    "file": 1,
+                    "line": 2
+                }
+            ]
+        }
+    ]
+}

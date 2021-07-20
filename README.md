@@ -97,6 +97,10 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
     The directory to store Crystal in, after extracting. Will directly affect `outputs.path` (the default is in a temporary location).
 
+ *  **`annotate: true`** (default)
+
+    Display compilation and spec errors as GitHub code annotations.
+
  *  **`token: ${{ github.token }}`**
 
     Personal access token (auto-populated).

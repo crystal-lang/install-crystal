@@ -47,6 +47,12 @@ async function run() {
 
         const {stdout} = await subprocess(["crystal", "--version"]);
         Core.info(stdout);
+
+        if (Core.getBooleanInput("annotate")) {
+            const matchersPath = Path.join(__dirname, ".github");
+            Core.info(`::add-matcher::${Path.join(matchersPath, "crystal.json")}`);
+            Core.info(`::add-matcher::${Path.join(matchersPath, "crystal-spec.json")}`);
+        }
     } catch (error) {
         Core.setFailed(error);
         process.exit(1);

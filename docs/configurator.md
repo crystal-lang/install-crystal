@@ -33,6 +33,9 @@ Set up your Crystal project on GitHub for continuous testing.
 <p>Add this content to your GitHub repository as <code>.github/workflows/ci.yml</code>:</p>
 
 ```yaml
+# This CI job installs Crystal and shard dependencies, then executes `crystal spec` to run the test suite
+# More configuration options are available at https://crystal-lang.github.io/install-crystal/configurator.html
+
 on:
   push:
   pull_request:
@@ -53,7 +56,7 @@ jobs:
           - os: ubuntu-latest
           {%- if crystal_ver %}
           - os: ubuntu-latest
-            crystal: 0.35.1
+            crystal: 1.0.0
           {%- endif %}
           {%- if crystal_nightly %}
           - os: ubuntu-latest
@@ -70,7 +73,7 @@ jobs:
         os: [ubuntu-latest{% if os_mac %}, macos-latest{% endif %}{% if os_win %}, windows-latest{% endif %}]
         {%- endif %}
         {%- if crystal_nightly or crystal_ver %}
-        crystal: [{% if crystal_ver %}0.35.1, {% endif %}latest{% if crystal_nightly %}, nightly{% endif %}]
+        crystal: [{% if crystal_ver %}1.0.0, {% endif %}latest{% if crystal_nightly %}, nightly{% endif %}]
         {%- endif %}
         {%- endif %}
     {%- endif %}
