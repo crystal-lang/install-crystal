@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.3 - (2021-07-12)
+- Updated the dependency on the uuid package to v8 (PR [456](https://github.com/Azure/ms-rest-js/pull/456))
+
 ## 2.5.2 - (2021-06-15)
 - Fixed an issue where `proxySettings` does not work when there is username but no password (PR [453](https://github.com/Azure/ms-rest-js/pull/453))
 
