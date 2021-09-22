@@ -124,8 +124,13 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
 
 async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion]);
-    checkArch(arch, ["x86_64"]);
-    await installBinaryRelease({crystal, shards, suffix: "darwin-x86_64", path});
+    if (crystal === Nightly) {
+        checkArch(arch, ["universal", "x86_64", "aarch64"]);
+        await installBinaryRelease({crystal, shards, suffix: "darwin-universal", path});
+    } else {
+        checkArch(arch, ["x86_64"]);
+        await installBinaryRelease({crystal, shards, suffix: "darwin-x86_64", path});
+    }
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "embedded", "bin"));
