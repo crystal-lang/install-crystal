@@ -2,6 +2,7 @@ const Core = require("@actions/core");
 const ToolCache = require("@actions/tool-cache");
 const Cache = require("@actions/cache");
 const IO = require("@actions/io");
+const Glob = require("@actions/glob");
 const Octokit = require("@octokit/request");
 const fetch = require("node-fetch");
 const Path = require("path");
@@ -141,7 +142,11 @@ async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
         } catch (e) {}
     }
 
-    let pkgConfigPath = "/usr/local/opt/openssl/lib/pkgconfig";
+    const globber = await Glob.create([
+        "/usr/local/Cellar/openssl*/*/lib/pkgconfig",
+        "/usr/local/opt/openssl/lib/pkgconfig",
+    ].join("\n"));
+    let [pkgConfigPath] = await globber.glob();
     if (process.env["PKG_CONFIG_PATH"]) {
         pkgConfigPath += Path.delimiter + process.env["PKG_CONFIG_PATH"];
     }

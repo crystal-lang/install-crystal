@@ -57,9 +57,7 @@ jobs:
           crystal --version | grep "$v"
         if: ${{ contains(matrix.config.crystal, '.') }}
       - run: |
-          crystal eval 'require "yaml"'
-      - run: |
-          crystal eval 'require "openssl"; require "big"; require "xml"'
+          crystal eval 'require "openssl"; require "yaml"; require "xml"; require "big"'
         if: ${{ runner.os != 'Windows' }}
 
       - run: |
