@@ -1,0 +1,1 @@
+{"version":3,"file":"invalid-span-constants.js","sourceRoot":"","sources":["../../../src/trace/invalid-span-constants.ts"],"names":[],"mappings":";AAAA;;;;;;;;;;;;;;GAcG;;;AAGH,6CAA2C;AAE9B,QAAA,cAAc,GAAG,kBAAkB,CAAC;AACpC,QAAA,eAAe,GAAG,kCAAkC,CAAC;AACrD,QAAA,oBAAoB,GAAgB;IAC/C,OAAO,EAAE,uBAAe;IACxB,MAAM,EAAE,sBAAc;IACtB,UAAU,EAAE,wBAAU,CAAC,IAAI;CAC5B,CAAC"}

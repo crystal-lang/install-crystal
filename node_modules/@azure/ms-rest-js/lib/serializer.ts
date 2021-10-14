@@ -735,7 +735,11 @@ function deserializeCompositeType(
       // paging
       if (Array.isArray(responseBody[key]) && modelProps[key].serializedName === "") {
         propertyInstance = responseBody[key];
-        const arrayInstance = serializer.deserialize(propertyMapper, propertyInstance, propertyObjectName);
+        const arrayInstance = serializer.deserialize(
+          propertyMapper,
+          propertyInstance,
+          propertyObjectName
+        );
         // Copy over any properties that have already been added into the instance, where they do
         // not exist on the newly de-serialized array
         for (const [key, value] of Object.entries(instance)) {
