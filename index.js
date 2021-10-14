@@ -10,6 +10,7 @@ const ChildProcess = require("child_process");
 const Util = require("util");
 const FS = require("fs").promises;
 
+const {cmpTags} = require("tag-cmp");
 const exec = Util.promisify(ChildProcess.exec);
 const execFile = Util.promisify(ChildProcess.execFile);
 
@@ -125,7 +126,7 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
 
 async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion]);
-    if (crystal === Nightly) {
+    if (crystal === Latest || crystal === Nightly || cmpTags(crystal, "1.2") >= 0) {
         checkArch(arch, ["universal", "x86_64", "aarch64"]);
         await installBinaryRelease({crystal, shards, suffix: "darwin-universal", path});
     } else {
