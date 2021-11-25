@@ -46,6 +46,7 @@ jobs:
           crystal eval 'puts "test" + "ing"' | grep 'testing'
       - run: |
           '${{ steps.install.outputs.path }}/bin/crystal' --version
+        if: ${{ runner.os != 'Windows' }}
       - run: |
           ls '${{ steps.install.outputs.path }}/src/prelude.cr'
       - run: |

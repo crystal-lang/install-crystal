@@ -358,22 +358,10 @@ async function installCrystalForWindows({crystal, arch = "x86_64", path}) {
 
     Core.info("Setting up environment for Crystal");
     const vars = await variablesForVCBuildTools();
-    addPathToVars(vars, "PATH", Path.join(path, "bin"));
-    addPathToVars(vars, "LIB", Path.join(path, "bin"));
-    addPathToVars(vars, "CRYSTAL_PATH", Path.join(path, "src"));
-    addPathToVars(vars, "CRYSTAL_PATH", "lib");
     for (const [k, v] of vars.entries()) {
         Core.exportVariable(k, v);
     }
-}
-
-function addPathToVars(vars, key, value) {
-    for (const [k, v] of vars.entries()) {
-        if (k.toLowerCase() === key.toLowerCase()) {
-            return vars.set(k, value + Path.delimiter + v);
-        }
-    }
-    return vars.set(key, value);
+    Core.addPath(path);
 }
 
 const outputSep = "---";
@@ -419,28 +407,20 @@ async function downloadCrystalNightlyForWindows() {
     Core.info(`Found Crystal release ${workflowRun["html_url"]}`);
     Core.setOutput("crystal", ref);
 
-    const fetchSrcTask = downloadSource({name: "Crystal", apiBase: GitHubApiBase, ref});
-    const fetchExeTask = (async () => {
-        const artifactsResp = await githubGet({
-            url: GitHubApiBase + "/actions/runs/:run_id/artifacts",
-            "run_id": runId,
-        });
-        const artifact = artifactsResp.data["artifacts"].find((x) => x.name === "crystal");
+    const artifactsResp = await githubGet({
+        url: GitHubApiBase + "/actions/runs/:run_id/artifacts",
+        "run_id": runId,
+    });
+    const artifact = artifactsResp.data["artifacts"].find((x) => x.name === "crystal");
 
-        Core.info("Downloading Crystal build");
-        const downloadedPath = await githubDownloadViaRedirect({
-            url: GitHubApiBase + "/actions/artifacts/:artifact_id/zip",
-            "artifact_id": artifact.id,
-        });
+    Core.info("Downloading Crystal build");
+    const downloadedPath = await githubDownloadViaRedirect({
+        url: GitHubApiBase + "/actions/artifacts/:artifact_id/zip",
+        "artifact_id": artifact.id,
+    });
 
-        Core.info("Extracting Crystal build");
-        return ToolCache.extractZip(downloadedPath);
-    })();
-
-    const path = await fetchSrcTask;
-    await IO.rmRF(Path.join(path, "bin"));
-    await IO.mv(await fetchExeTask, Path.join(path, "bin"));
-    return path;
+    Core.info("Extracting Crystal build");
+    return ToolCache.extractZip(downloadedPath);
 }
 
 function githubGet(request) {
