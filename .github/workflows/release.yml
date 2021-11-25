@@ -35,7 +35,7 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v2
-      - run: npm install --only=prod
+
       - uses: crystal-lang/install-crystal@v1
         with: ${{ matrix.config }}
         id: install
@@ -57,7 +57,9 @@ jobs:
           crystal --version | grep "$v"
         if: ${{ contains(matrix.config.crystal, '.') }}
       - run: |
-          crystal eval 'require "openssl"; require "yaml"; require "xml"; require "big"'
+          crystal eval 'require "yaml"; require "xml"; require "big"'
+      - run: |
+          crystal eval 'require "openssl"'
         if: ${{ runner.os != 'Windows' }}
 
       - run: |
