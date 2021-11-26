@@ -100,7 +100,13 @@ function checkVersion(version, allowed) {
 async function subprocess(command, options) {
     Core.info("[command]" + command.join(" "));
     const [file, ...args] = command;
-    return execFile(file, args, options);
+    try {
+        return await execFile(file, args, options);
+    } catch (error) {
+        Core.info(error.stdout);
+        Core.info("---");
+        throw error;
+    }
 }
 
 async function installCrystalForLinux({crystal, shards, arch = getArch(), path}) {
@@ -251,9 +257,8 @@ async function installShards({shards, path}, crystalPromise) {
 async function rebuildShards({path}) {
     Core.info("Building Shards");
     await subprocess(["make", "clean"], {cwd: path});
-    const {stdout} = await subprocess(["make"], {cwd: path});
+    await subprocess(["make"], {cwd: path});
     Core.startGroup("Finished building Shards");
-    Core.info(stdout);
     Core.endGroup();
 }
 
