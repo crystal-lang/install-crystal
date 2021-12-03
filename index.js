@@ -11,7 +11,6 @@ const Util = require("util");
 const FS = require("fs").promises;
 
 const {cmpTags} = require("tag-cmp");
-const exec = Util.promisify(ChildProcess.exec);
 const execFile = Util.promisify(ChildProcess.execFile);
 
 async function run() {
@@ -362,42 +361,7 @@ async function installCrystalForWindows({crystal, arch = "x86_64", path}) {
     await IO.mv(await downloadCrystalNightlyForWindows(), path);
 
     Core.info("Setting up environment for Crystal");
-    const vars = await variablesForVCBuildTools();
-    for (const [k, v] of vars.entries()) {
-        Core.exportVariable(k, v);
-    }
     Core.addPath(path);
-}
-
-const outputSep = "---";
-const vcvarsPath = String.raw`C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat`;
-
-async function variablesForVCBuildTools() {
-    const command = `set && echo ${outputSep} && "${vcvarsPath}" >nul && set`;
-    Core.info(`[command]cmd /c "${command}"`);
-    const {stdout} = await exec(command, {shell: "cmd"});
-    Core.debug(JSON.stringify(stdout));
-    return new Map(getChangedVars(stdout.trimEnd().split(/\r?\n/)));
-}
-
-function* getChangedVars(lines) {
-    const vars = new Map();
-    lines = lines[Symbol.iterator]();
-    for (const line of lines) {
-        if (line.trimEnd() === outputSep) {
-            break;
-        }
-        const [key, value] = line.split(/=(.+)/, 2);
-        vars.set(key.toLowerCase(), value);
-    }
-    for (const line of lines) {
-        const [key, value] = line.split(/=(.+)/, 2);
-        if (vars.get(key.toLowerCase()) !== value) {
-            yield [key, value];
-        } else {
-            Core.debug("Unchanged: " + key);
-        }
-    }
 }
 
 async function downloadCrystalNightlyForWindows() {
