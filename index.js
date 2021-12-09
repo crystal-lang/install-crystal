@@ -25,6 +25,12 @@ async function run() {
                 params[key] = value;
             }
         }
+        if (params.crystal === "master") {
+            params.crystal = "nightly";
+        }
+        if (params.shards === "master") {
+            params.shards = "nightly";
+        }
         params.path = Core.getInput("destination") || Path.join(
             process.env["RUNNER_TEMP"], `crystal-${params.crystal}-${params.shards}-${params.arch}`,
         );
