@@ -8,11 +8,10 @@
       
       
       
-      
         <link rel="canonical" href="https://crystal-lang.github.io/install-crystal/configurator.html">
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.0">
     
     
       
@@ -20,10 +19,10 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ca7ac06f.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.82f3c0b9.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.f1a3b89f.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.9204c3b2.min.css">
         
           
           
@@ -37,16 +36,15 @@
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
     
       <link rel="stylesheet" href="assets/style.css">
     
+    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-
 
     
     
@@ -61,7 +59,6 @@
     <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="black" data-md-color-accent="purple">
   
     
-    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -78,7 +75,10 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+    
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="index.html" title="install-crystal action" class="md-header__button md-logo" aria-label="install-crystal action" data-md-component="logo">
       
@@ -111,19 +111,22 @@
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
-      </button>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
@@ -140,8 +143,7 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/crystal-lang/install-crystal/" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/crystal-lang/install-crystal/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
@@ -153,11 +155,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -183,8 +188,7 @@
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/crystal-lang/install-crystal/" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/crystal-lang/install-crystal/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
@@ -249,6 +253,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -266,12 +271,12 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/crystal-lang/install-crystal/blob/master/docs/configurator.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                <h1 id="quick-start-for-install-crystal-github-action">Quick start for <a href="https://github.com/crystal-lang/install-crystal/">install-crystal</a> GitHub Action<a class="headerlink" href="#quick-start-for-install-crystal-github-action" title="Permanent link">#</a></h1>
+<a href="https://github.com/crystal-lang/install-crystal/blob/master/docs/configurator.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="quick-start-for-install-crystal-github-action">Quick start for <a href="https://github.com/crystal-lang/install-crystal/">install-crystal</a> GitHub Action<a class="headerlink" href="#quick-start-for-install-crystal-github-action" title="Permanent link">#</a></h1>
 <p>Set up your Crystal project on GitHub for continuous testing.</p>
 <div class="configurator">
 <hr>
@@ -630,7 +635,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -666,7 +671,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -710,7 +715,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -749,7 +754,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -798,7 +803,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -834,7 +839,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -878,7 +883,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -917,7 +922,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -1303,7 +1308,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -1340,7 +1345,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -1385,7 +1390,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -1425,7 +1430,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -1477,7 +1482,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -1519,7 +1524,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -1569,7 +1574,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -1614,7 +1619,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -2029,7 +2034,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -2069,7 +2074,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -2117,7 +2122,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -2160,7 +2165,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -2213,7 +2218,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -2255,7 +2260,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -2305,7 +2310,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -2350,7 +2355,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -2771,7 +2776,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -2812,7 +2817,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -2861,7 +2866,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -2905,7 +2910,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -2959,7 +2964,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -3002,7 +3007,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -3053,7 +3058,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -3099,7 +3104,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -3482,7 +3487,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -3519,7 +3524,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -3563,7 +3568,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -3603,7 +3608,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -3654,7 +3659,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -3693,7 +3698,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -3739,7 +3744,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -3781,7 +3786,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        crystal: [1.0.0, latest, nightly]
+        crystal: [1.2, latest, nightly]
     runs-on: ubuntu-latest
     steps:
       - name: Download source
@@ -4179,7 +4184,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -4217,7 +4222,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -4262,7 +4267,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -4303,7 +4308,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        crystal: [1.0.0, latest]
+        crystal: [1.2, latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
@@ -4357,7 +4362,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -4402,7 +4407,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -4454,7 +4459,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -4502,7 +4507,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -4941,7 +4946,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -4982,7 +4987,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     defaults:
@@ -5033,7 +5038,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -5077,7 +5082,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: windows-latest
     runs-on: ${{ matrix.os }}
     defaults:
@@ -5135,7 +5140,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -5180,7 +5185,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -5235,7 +5240,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -5283,7 +5288,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: windows-latest
@@ -5731,7 +5736,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -5773,7 +5778,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -5825,7 +5830,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -5870,7 +5875,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
@@ -5929,7 +5934,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -5975,7 +5980,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -6031,7 +6036,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -6080,7 +6085,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
+            crystal: 1.2
           - os: ubuntu-latest
             crystal: nightly
           - os: macos-latest
@@ -6137,7 +6142,7 @@ var fixedRef = document.getElementById('fixed-ref');
 
 function fixedRefChange() {
     var codes = document.querySelectorAll('.configurator .hljs-string');
-    var rev = fixedRef.checked ? '31648d0e69d6c8eaccb0b483bb2283515b1153ae' : 'v1';
+    var rev = fixedRef.checked ? 'bf1b0576fd275460f9d3b034005d2d9a506fa274' : 'v1';
     for (var i = 0; i < codes.length; ++i) {
         if (codes[i].innerHTML.includes('install-crystal')) {
             codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+/g, '@' + rev);
@@ -6150,11 +6155,6 @@ if (fixedRef) {
     fixedRef.addEventListener('change', fixedRefChange);
 }
 </script>
-                
-              
-              
-                
-
 
               
             </article>
@@ -6163,8 +6163,7 @@ if (fixedRef) {
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
@@ -6188,14 +6187,15 @@ if (fixedRef) {
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-        
-      </div>
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
@@ -6205,10 +6205,10 @@ if (fixedRef) {
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.cefbb252.min.js"}</script>
     
     
-      <script src="assets/javascripts/bundle.82b56eb2.min.js"></script>
+      <script src="assets/javascripts/bundle.17f42bbf.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
       
