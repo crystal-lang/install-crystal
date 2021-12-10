@@ -11,7 +11,6 @@ inputs:
     description: The directory to store Crystal in
   annotate:
     description: Display compilation and spec errors as GitHub code annotations
-    default: true
   token:
     description: Personal access token (auto-populated)
     default: ${{ github.token }}

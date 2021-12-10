@@ -22,7 +22,7 @@ steps:
   - uses: actions/checkout@v2
   - uses: crystal-lang/install-crystal@v1
     with:
-      crystal: 0.35.1
+      crystal: 1.2
   - run: shards install
   - run: crystal spec
 ```
@@ -56,9 +56,9 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
 ### Inputs
 
- *   *  **`crystal: 0.35.1`** (not supported on Windows)
+ *   *  **`crystal: 1.1.0`**, **`crystal: 1.2`** (not supported on Windows)
 
-        Install a particular release of Crystal.
+        Install a particular release of Crystal (if the full version is specified), or the latest patch version of a release series.
 
      *  **`crystal: latest`** (default; not supported on Windows)
 
@@ -81,9 +81,9 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
         Build and install the latest released version of Shards.
 
-     *  **`shards: 0.13.0`**
+     *  **`shards: 0.14.0`**, **`shards: 0.16`**
 
-        Build and install a particular release of Shards.
+        Build and install a particular release of Shards (if the full version is specified), or the latest patch version of a release series.
 
      *  **`shards: nightly`**
 
