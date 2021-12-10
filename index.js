@@ -87,7 +87,7 @@ const Latest = "latest";
 const Nightly = "nightly";
 const Any = "true";
 const None = "false";
-const NumericVersion = /^\d[.\d]+\d$/;
+const NumericVersion = /^\d([.\d]*\d)?$/;
 
 function checkVersion(version, allowed) {
     const numericVersion = NumericVersion.test(version) && version;
@@ -272,13 +272,43 @@ const RepoShards = {owner: "crystal-lang", repo: "shards"};
 const CircleApiBase = "https://circleci.com/api/v1.1/project/github/crystal-lang/crystal";
 
 async function findRelease({name, repo, tag}) {
-    Core.info(`Looking for ${name} release (${tag || "latest"})`);
-    const releasesResp = await (tag
-        ? github.rest.repos.getReleaseByTag({...repo, tag})
-        : github.rest.repos.getLatestRelease(repo));
+    if (!(/^\d+\.\d+\.\d\w*$/.test(tag))) {
+        tag = await getLatestTag({repo, prefix: tag});
+    }
+    Core.info(`Getting ${name} release (${tag})`);
+    const releasesResp = await github.rest.repos.getReleaseByTag({...repo, tag});
     const release = releasesResp.data;
     Core.info(`Found ${name} release ${release["html_url"]}`);
     return release;
+}
+
+async function getLatestTag({repo, prefix}) {
+    Core.info(`Looking for ${repo.owner}/${repo.owner} release (${prefix || "latest"})`);
+    const pages = github.repos.listReleases.endpoint.merge({
+        ...repo, "per_page": 50,
+    });
+
+    const tags = [];
+    let assurance = 25;
+    for await (const item of getItemsFromPages(pages)) {
+        const tag = item["tag_name"];
+        if (!prefix || tag === prefix || tag.startsWith(prefix + ".")) {
+            tags.push(tag);
+        }
+        if (tags.length) {
+            if (--assurance <= 0) {
+                break;
+            }
+        }
+    }
+    if (tags.length === 0) {
+        let error = `The repository "${repo.owner}/${repo.repo}" has no releases matching "${prefix}.*"`;
+        throw error;
+    }
+    tags.sort(cmpTags);
+    tags.reverse();
+    Core.debug(`Considered tags ${tags.join("|")}`);
+    return tags[0];
 }
 
 async function findLatestCommit({name, repo, branch = "master"}) {
@@ -312,11 +342,14 @@ async function downloadCrystalRelease(suffix, version = null) {
 }
 
 async function findRef({name, repo, version}) {
+    const v = version.replace(/^v/, "");
     if (version === Nightly) {
         return findLatestCommit({name, repo});
     } else if (version === Latest) {
         const release = await findRelease({name, repo});
         return release["tag_name"];
+    } else if (NumericVersion.test(v) && !(/^\d+\.\d+\.\d\w*$/.test(v))) {
+        return getLatestTag({repo, prefix: version});
     }
     return version;
 }
