@@ -399,13 +399,18 @@ async function downloadCrystalNightly(suffix) {
     return onlySubdir(extractedPath);
 }
 
-async function installCrystalForWindows({crystal, arch = "x86_64", path}) {
+async function installCrystalForWindows({crystal, shards, arch = "x86_64", path}) {
     checkVersion(crystal, [Nightly]);
     checkArch(arch, ["x86_64"]);
     await IO.mv(await downloadCrystalNightlyForWindows(), path);
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(path);
+    if (shards !== Any) {
+        try {
+            await FS.unlink(Path.join(path, "shards.exe"));
+        } catch (e) {}
+    }
 }
 
 async function downloadCrystalNightlyForWindows() {
