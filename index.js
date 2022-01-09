@@ -16,7 +16,7 @@ const execFile = Util.promisify(ChildProcess.execFile);
 async function run() {
     try {
         const params = {
-            "crystal": getPlatform() === Windows ? "nightly" : "latest",
+            "crystal": "latest",
             "shards": "true",
         };
         for (const key of ["crystal", "shards", "arch"]) {
@@ -86,9 +86,11 @@ const Any = "true";
 const None = "false";
 const NumericVersion = /^\d([.\d]*\d)?$/;
 
-function checkVersion(version, allowed) {
+function checkVersion(version, allowed, earliestAllowed = null) {
     const numericVersion = NumericVersion.test(version) && version;
-    allowed[allowed.indexOf(NumericVersion)] = numericVersion;
+    if (numericVersion && (!earliestAllowed || cmpTags(numericVersion, earliestAllowed) >= 0)) {
+        allowed[allowed.indexOf(NumericVersion)] = numericVersion;
+    }
 
     if (allowed.includes(version)) {
         return version;
@@ -334,7 +336,8 @@ async function downloadCrystalRelease(filePattern, version = null) {
 
     const downloadedPath = await ToolCache.downloadTool(url);
     Core.info("Extracting Crystal build");
-    const extractedPath = await ToolCache.extractTar(downloadedPath);
+    const dl = (asset["name"].endsWith(".zip") ? ToolCache.extractZip : ToolCache.extractTar);
+    const extractedPath = await dl(downloadedPath);
     return onlySubdir(extractedPath);
 }
 
@@ -397,9 +400,15 @@ async function downloadCrystalNightly(filePattern) {
 }
 
 async function installCrystalForWindows({crystal, shards, arch = "x86_64", path}) {
-    checkVersion(crystal, [Nightly]);
+    checkVersion(crystal, [Latest, Nightly, NumericVersion], "1.3");
     checkArch(arch, ["x86_64"]);
-    await IO.mv(await downloadCrystalNightlyForWindows(), path);
+
+    if (crystal === Nightly) {
+        await IO.mv(await downloadCrystalNightlyForWindows(), path);
+    } else {
+        const filePattern = /-windows-x86_64-msvc(-unsupported)?\.zip$/;
+        await installBinaryRelease({crystal, shards, filePattern, path});
+    }
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(path);
@@ -450,8 +459,11 @@ async function* getItemsFromPages(pages) {
 }
 
 async function onlySubdir(path) {
-    const [subDir] = await FS.readdir(path);
-    return Path.join(path, subDir);
+    const subDirs = await FS.readdir(path);
+    if (subDirs.length === 1) {
+        path = Path.join(path, subDirs[0]);
+    }
+    return path;
 }
 
 if (require.main === module) {

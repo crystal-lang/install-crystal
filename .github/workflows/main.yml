@@ -20,16 +20,12 @@ jobs:
           - {shards: false}
           - {shards: true}
           - {shards: '0.12.0', crystal: '0.35.1'}
-          - {shards: '0.14', crystal: '1.2'}
+          - {shards: '0.14', crystal: '1.3'}
           - {shards: latest, crystal: latest}
           - {shards: nightly, crystal: nightly}
         exclude:
           - os: windows-latest
             config: {shards: '0.12.0', crystal: '0.35.1'}
-          - os: windows-latest
-            config: {shards: '0.14', crystal: '1.2'}
-          - os: windows-latest
-            config: {shards: latest, crystal: latest}
 
     name: crystal ${{ matrix.config.crystal }} + shards ${{ matrix.config.shards }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}

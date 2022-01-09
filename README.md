@@ -56,15 +56,15 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
 ### Inputs
 
- *   *  **`crystal: 1.1.0`**, **`crystal: 1.2`** (not supported on Windows)
+ *   *  **`crystal: 1.1.0`**, **`crystal: 1.2`**
 
         Install a particular release of Crystal (if the full version is specified), or the latest patch version of a release series.
 
-     *  **`crystal: latest`** (default; not supported on Windows)
+     *  **`crystal: latest`** (default)
 
         Install the latest released version of Crystal.
 
-     *  **`crystal: nightly`** (default on Windows)
+     *  **`crystal: nightly`**
 
         Install Crystal from the latest continuous build on [crystal.git][] master.
 
