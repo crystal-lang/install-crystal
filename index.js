@@ -34,9 +34,6 @@ async function run() {
         params.path = Core.getInput("destination") || Path.join(
             process.env["RUNNER_TEMP"], `crystal-${params.crystal}-${params.shards}-${params.arch}`,
         );
-        if (params.shards === Any && getPlatform() === Windows) {
-            params.shards = Latest;
-        }
         Core.setOutput("path", params.path);
 
         const func = {
