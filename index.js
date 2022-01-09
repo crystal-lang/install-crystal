@@ -113,13 +113,13 @@ async function subprocess(command, options) {
 
 async function installCrystalForLinux({crystal, shards, arch = getArch(), path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion]);
-    const suffixes = {"x86_64": "linux-x86_64", "x86": "linux-i686"};
-    checkArch(arch, Object.keys(suffixes));
+    const filePatterns = {"x86_64": /-linux-x86_64\.tar\.gz$/, "x86": /-linux-i686\.tar\.gz$/};
+    checkArch(arch, Object.keys(filePatterns));
 
     const depsTask = installAptPackages(
         "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
     );
-    await installBinaryRelease({crystal, shards, suffix: suffixes[arch], path});
+    await installBinaryRelease({crystal, shards, filePattern: filePatterns[arch], path});
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "bin"));
@@ -136,11 +136,11 @@ async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion]);
     if (crystal === Latest || crystal === Nightly || cmpTags(crystal, "1.2") >= 0) {
         checkArch(arch, ["universal", "x86_64", "aarch64"]);
-        await installBinaryRelease({crystal, shards, suffix: "darwin-universal", path});
     } else {
         checkArch(arch, ["x86_64"]);
-        await installBinaryRelease({crystal, shards, suffix: "darwin-x86_64", path});
     }
+    const filePattern = /-darwin-(universal|x86_64)\.tar\.gz$/;
+    await installBinaryRelease({crystal, shards, filePattern, path});
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "embedded", "bin"));
@@ -176,14 +176,14 @@ async function installAptPackages(packages) {
     Core.endGroup();
 }
 
-async function installBinaryRelease({crystal, suffix, path}) {
+async function installBinaryRelease({crystal, filePattern, path}) {
     if (crystal === Nightly) {
-        await IO.mv(await downloadCrystalNightly(suffix), path);
+        await IO.mv(await downloadCrystalNightly(filePattern), path);
     } else {
         if (crystal === Latest) {
             crystal = null;
         }
-        await IO.mv(await downloadCrystalRelease(suffix, crystal), path);
+        await IO.mv(await downloadCrystalRelease(filePattern, crystal), path);
     }
 }
 
@@ -318,11 +318,11 @@ async function findLatestCommit({name, repo, branch = "master"}) {
     return commit["sha"];
 }
 
-async function downloadCrystalRelease(suffix, version = null) {
+async function downloadCrystalRelease(filePattern, version = null) {
     const release = await findRelease({name: "Crystal", repo: RepoCrystal, tag: version});
     Core.setOutput("crystal", release["tag_name"]);
 
-    const asset = release["assets"].find((a) => a["name"].endsWith([`-${suffix}.tar.gz`]));
+    const asset = release["assets"].find((a) => filePattern.test(a["name"]));
 
     Core.info(`Downloading Crystal build from ${asset["url"]}`);
     const resp = await github.request({
@@ -364,7 +364,7 @@ async function downloadSource({name, repo, ref}) {
     return onlySubdir(await ToolCache.extractZip(downloadedPath));
 }
 
-async function downloadCrystalNightly(suffix) {
+async function downloadCrystalNightly(filePattern) {
     Core.info("Looking for latest Crystal build");
 
     let build;
@@ -387,7 +387,7 @@ async function downloadCrystalNightly(suffix) {
     const req = `/${build["build_num"]}/artifacts`;
     const resp = await fetch(CircleApiBase + req);
     const artifacts = await resp.json();
-    const artifact = artifacts.find((a) => a["path"].endsWith(`-${suffix}.tar.gz`));
+    const artifact = artifacts.find((a) => filePattern.test(a["path"]));
 
     Core.info(`Downloading Crystal build from ${artifact["url"]}`);
     const downloadedPath = await ToolCache.downloadTool(artifact["url"]);
