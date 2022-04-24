@@ -2,6 +2,7 @@
   "name": "install-crystal",
   "description": "GitHub Action: Install Crystal programming language",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "lint": "eslint .",

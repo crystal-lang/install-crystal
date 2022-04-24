@@ -1,16 +1,17 @@
-const Core = require("@actions/core");
-const ToolCache = require("@actions/tool-cache");
-const Cache = require("@actions/cache");
-const IO = require("@actions/io");
-const Glob = require("@actions/glob");
-const {Octokit} = require("@octokit/rest");
-const fetch = require("node-fetch");
-const Path = require("path");
-const ChildProcess = require("child_process");
-const Util = require("util");
-const FS = require("fs").promises;
+import Core from "@actions/core";
+import ToolCache from "@actions/tool-cache";
+import Cache from "@actions/cache";
+import IO from "@actions/io";
+import Glob from "@actions/glob";
+import {Octokit} from "@octokit/rest";
+import fetch from "node-fetch";
+import Path from "path";
+import ChildProcess from "child_process";
+import Util from "util";
+import URL from "url";
+import {promises as FS} from "fs";
 
-const {cmpTags} = require("tag-cmp");
+import {cmpTags} from "tag-cmp";
 const execFile = Util.promisify(ChildProcess.execFile);
 
 async function run() {
@@ -53,7 +54,8 @@ async function run() {
         Core.info(stdout);
 
         if (!Core.getInput("annotate") || Core.getBooleanInput("annotate")) {
-            const matchersPath = Path.join(__dirname, ".github");
+            const scriptDir = Path.dirname(URL.fileURLToPath(import.meta.url));
+            const matchersPath = Path.join(scriptDir, ".github");
             Core.info(`::add-matcher::${Path.join(matchersPath, "crystal.json")}`);
             Core.info(`::add-matcher::${Path.join(matchersPath, "crystal-spec.json")}`);
         }
@@ -466,6 +468,4 @@ async function onlySubdir(path) {
     return path;
 }
 
-if (require.main === module) {
-    run();
-}
+run();
