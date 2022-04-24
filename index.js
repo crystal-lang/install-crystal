@@ -1,17 +1,17 @@
-import Core from "@actions/core";
-import ToolCache from "@actions/tool-cache";
 import Cache from "@actions/cache";
-import IO from "@actions/io";
-import Glob from "@actions/glob";
-import {Octokit} from "@octokit/rest";
-import fetch from "node-fetch";
-import Path from "path";
 import ChildProcess from "child_process";
-import Util from "util";
-import URL from "url";
+import Core from "@actions/core";
 import {promises as FS} from "fs";
-
+import Glob from "@actions/glob";
+import IO from "@actions/io";
+import {Octokit} from "@octokit/rest";
+import Path from "path";
+import ToolCache from "@actions/tool-cache";
+import URL from "url";
+import Util from "util";
 import {cmpTags} from "tag-cmp";
+import fetch from "node-fetch";
+
 const execFile = Util.promisify(ChildProcess.execFile);
 
 async function run() {
