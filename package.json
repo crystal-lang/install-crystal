@@ -25,16 +25,16 @@
   },
   "homepage": "https://github.com/crystal-lang/install-crystal",
   "dependencies": {
-    "@actions/cache": "^1.0.7",
+    "@actions/cache": "^2.0.2",
     "@actions/core": "^1.6.0",
-    "@actions/glob": "^0.2.0",
-    "@actions/io": "^1.1.1",
-    "@actions/tool-cache": "^1.7.1",
+    "@actions/glob": "^0.3.0",
+    "@actions/io": "^1.1.2",
+    "@actions/tool-cache": "^1.7.2",
     "@octokit/rest": "^18.12.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.2.3",
     "tag-cmp": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "^8.14.0"
   }
 }
