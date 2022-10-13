@@ -107,9 +107,9 @@ jobs:
       {%- endif %}
       - name: Install shards
         {%- if is_app %}
-        run: {% if cache_shards %}shards check || {% endif %}shards install --ignore-crystal-version
+        run: {% if cache_shards %}shards check || {% endif %}shards install{% if crystal_ver %} --ignore-crystal-version{% endif %}
         {%- else %}
-        run: shards update --ignore-crystal-version
+        run: shards update{% if crystal_ver %} --ignore-crystal-version{% endif %}
         {%- endif %}
       - name: Run tests
         run: crystal spec --order=random

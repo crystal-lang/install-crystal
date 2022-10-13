@@ -1,22 +1,23 @@
-const Core = require("@actions/core");
-const ToolCache = require("@actions/tool-cache");
-const Cache = require("@actions/cache");
-const IO = require("@actions/io");
-const Glob = require("@actions/glob");
-const {Octokit} = require("@octokit/rest");
-const fetch = require("node-fetch");
-const Path = require("path");
-const ChildProcess = require("child_process");
-const Util = require("util");
-const FS = require("fs").promises;
+import Cache from "@actions/cache";
+import ChildProcess from "child_process";
+import Core from "@actions/core";
+import {promises as FS} from "fs";
+import Glob from "@actions/glob";
+import IO from "@actions/io";
+import {Octokit} from "@octokit/rest";
+import Path from "path";
+import ToolCache from "@actions/tool-cache";
+import URL from "url";
+import Util from "util";
+import {cmpTags} from "tag-cmp";
+import fetch from "node-fetch";
 
-const {cmpTags} = require("tag-cmp");
 const execFile = Util.promisify(ChildProcess.execFile);
 
 async function run() {
     try {
         const params = {
-            "crystal": getPlatform() === Windows ? "nightly" : "latest",
+            "crystal": "latest",
             "shards": "true",
         };
         for (const key of ["crystal", "shards", "arch"]) {
@@ -34,9 +35,6 @@ async function run() {
         params.path = Core.getInput("destination") || Path.join(
             process.env["RUNNER_TEMP"], `crystal-${params.crystal}-${params.shards}-${params.arch}`,
         );
-        if (params.shards === Any && getPlatform() === Windows) {
-            params.shards = Latest;
-        }
         Core.setOutput("path", params.path);
 
         const func = {
@@ -56,7 +54,8 @@ async function run() {
         Core.info(stdout);
 
         if (!Core.getInput("annotate") || Core.getBooleanInput("annotate")) {
-            const matchersPath = Path.join(__dirname, ".github");
+            const scriptDir = Path.dirname(URL.fileURLToPath(import.meta.url));
+            const matchersPath = Path.join(scriptDir, ".github");
             Core.info(`::add-matcher::${Path.join(matchersPath, "crystal.json")}`);
             Core.info(`::add-matcher::${Path.join(matchersPath, "crystal-spec.json")}`);
         }
@@ -89,9 +88,11 @@ const Any = "true";
 const None = "false";
 const NumericVersion = /^\d([.\d]*\d)?$/;
 
-function checkVersion(version, allowed) {
+function checkVersion(version, allowed, earliestAllowed = null) {
     const numericVersion = NumericVersion.test(version) && version;
-    allowed[allowed.indexOf(NumericVersion)] = numericVersion;
+    if (numericVersion && (!earliestAllowed || cmpTags(numericVersion, earliestAllowed) >= 0)) {
+        allowed[allowed.indexOf(NumericVersion)] = numericVersion;
+    }
 
     if (allowed.includes(version)) {
         return version;
@@ -116,13 +117,13 @@ async function subprocess(command, options) {
 
 async function installCrystalForLinux({crystal, shards, arch = getArch(), path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion]);
-    const suffixes = {"x86_64": "linux-x86_64", "x86": "linux-i686"};
-    checkArch(arch, Object.keys(suffixes));
+    const filePatterns = {"x86_64": /-linux-x86_64\.tar\.gz$/, "x86": /-linux-i686\.tar\.gz$/};
+    checkArch(arch, Object.keys(filePatterns));
 
     const depsTask = installAptPackages(
         "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
     );
-    await installBinaryRelease({crystal, shards, suffix: suffixes[arch], path});
+    await installBinaryRelease({crystal, shards, filePattern: filePatterns[arch], path});
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "bin"));
@@ -139,11 +140,11 @@ async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion]);
     if (crystal === Latest || crystal === Nightly || cmpTags(crystal, "1.2") >= 0) {
         checkArch(arch, ["universal", "x86_64", "aarch64"]);
-        await installBinaryRelease({crystal, shards, suffix: "darwin-universal", path});
     } else {
         checkArch(arch, ["x86_64"]);
-        await installBinaryRelease({crystal, shards, suffix: "darwin-x86_64", path});
     }
+    const filePattern = /-darwin-(universal|x86_64)\.tar\.gz$/;
+    await installBinaryRelease({crystal, shards, filePattern, path});
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(Path.join(path, "embedded", "bin"));
@@ -179,14 +180,14 @@ async function installAptPackages(packages) {
     Core.endGroup();
 }
 
-async function installBinaryRelease({crystal, suffix, path}) {
+async function installBinaryRelease({crystal, filePattern, path}) {
     if (crystal === Nightly) {
-        await IO.mv(await downloadCrystalNightly(suffix), path);
+        await IO.mv(await downloadCrystalNightly(filePattern), path);
     } else {
         if (crystal === Latest) {
             crystal = null;
         }
-        await IO.mv(await downloadCrystalRelease(suffix, crystal), path);
+        await IO.mv(await downloadCrystalRelease(filePattern, crystal), path);
     }
 }
 
@@ -321,11 +322,11 @@ async function findLatestCommit({name, repo, branch = "master"}) {
     return commit["sha"];
 }
 
-async function downloadCrystalRelease(suffix, version = null) {
+async function downloadCrystalRelease(filePattern, version = null) {
     const release = await findRelease({name: "Crystal", repo: RepoCrystal, tag: version});
     Core.setOutput("crystal", release["tag_name"]);
 
-    const asset = release["assets"].find((a) => a["name"].endsWith([`-${suffix}.tar.gz`]));
+    const asset = release["assets"].find((a) => filePattern.test(a["name"]));
 
     Core.info(`Downloading Crystal build from ${asset["url"]}`);
     const resp = await github.request({
@@ -337,7 +338,8 @@ async function downloadCrystalRelease(suffix, version = null) {
 
     const downloadedPath = await ToolCache.downloadTool(url);
     Core.info("Extracting Crystal build");
-    const extractedPath = await ToolCache.extractTar(downloadedPath);
+    const dl = (asset["name"].endsWith(".zip") ? ToolCache.extractZip : ToolCache.extractTar);
+    const extractedPath = await dl(downloadedPath);
     return onlySubdir(extractedPath);
 }
 
@@ -367,7 +369,7 @@ async function downloadSource({name, repo, ref}) {
     return onlySubdir(await ToolCache.extractZip(downloadedPath));
 }
 
-async function downloadCrystalNightly(suffix) {
+async function downloadCrystalNightly(filePattern) {
     Core.info("Looking for latest Crystal build");
 
     let build;
@@ -390,7 +392,7 @@ async function downloadCrystalNightly(suffix) {
     const req = `/${build["build_num"]}/artifacts`;
     const resp = await fetch(CircleApiBase + req);
     const artifacts = await resp.json();
-    const artifact = artifacts.find((a) => a["path"].endsWith(`-${suffix}.tar.gz`));
+    const artifact = artifacts.find((a) => filePattern.test(a["path"]));
 
     Core.info(`Downloading Crystal build from ${artifact["url"]}`);
     const downloadedPath = await ToolCache.downloadTool(artifact["url"]);
@@ -399,13 +401,24 @@ async function downloadCrystalNightly(suffix) {
     return onlySubdir(extractedPath);
 }
 
-async function installCrystalForWindows({crystal, arch = "x86_64", path}) {
-    checkVersion(crystal, [Nightly]);
+async function installCrystalForWindows({crystal, shards, arch = "x86_64", path}) {
+    checkVersion(crystal, [Latest, Nightly, NumericVersion], "1.3");
     checkArch(arch, ["x86_64"]);
-    await IO.mv(await downloadCrystalNightlyForWindows(), path);
+
+    if (crystal === Nightly) {
+        await IO.mv(await downloadCrystalNightlyForWindows(), path);
+    } else {
+        const filePattern = /-windows-x86_64-msvc(-unsupported)?\.zip$/;
+        await installBinaryRelease({crystal, shards, filePattern, path});
+    }
 
     Core.info("Setting up environment for Crystal");
     Core.addPath(path);
+    if (shards !== Any) {
+        try {
+            await FS.unlink(Path.join(path, "shards.exe"));
+        } catch (e) {}
+    }
 }
 
 async function downloadCrystalNightlyForWindows() {
@@ -448,10 +461,11 @@ async function* getItemsFromPages(pages) {
 }
 
 async function onlySubdir(path) {
-    const [subDir] = await FS.readdir(path);
-    return Path.join(path, subDir);
+    const subDirs = await FS.readdir(path);
+    if (subDirs.length === 1) {
+        path = Path.join(path, subDirs[0]);
+    }
+    return path;
 }
 
-if (require.main === module) {
-    run();
-}
+run();
