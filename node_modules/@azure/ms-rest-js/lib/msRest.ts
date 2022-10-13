@@ -15,8 +15,9 @@ export {
   AbortSignalLike,
 } from "./webResource";
 export { DefaultHttpClient } from "./defaultHttpClient";
+export { CommonRequestInfo, CommonRequestInit, CommonResponse } from "./fetchHttpClient";
 export { HttpClient } from "./httpClient";
-export { HttpHeaders, HttpHeadersLike } from "./httpHeaders";
+export { HttpHeader, HttpHeaders, HttpHeadersLike, RawHttpHeaders } from "./httpHeaders";
 export { HttpOperationResponse, HttpResponse, RestResponse } from "./httpOperationResponse";
 export { HttpPipelineLogger } from "./httpPipelineLogger";
 export { HttpPipelineLogLevel } from "./httpPipelineLogLevel";
@@ -26,10 +27,17 @@ export {
   OperationParameter,
   OperationQueryParameter,
   OperationURLParameter,
+  ParameterPath,
 } from "./operationParameter";
 export { OperationResponse } from "./operationResponse";
 export { OperationSpec } from "./operationSpec";
-export { ServiceClient, ServiceClientOptions, flattenResponse } from "./serviceClient";
+export {
+  AgentSettings,
+  ProxySettings,
+  ServiceClient,
+  ServiceClientOptions,
+  flattenResponse,
+} from "./serviceClient";
 export { QueryCollectionFormat } from "./queryCollectionFormat";
 export { Constants } from "./util/constants";
 export { logPolicy } from "./policies/logPolicy";
@@ -46,10 +54,18 @@ export { systemErrorRetryPolicy } from "./policies/systemErrorRetryPolicy";
 export { throttlingRetryPolicy } from "./policies/throttlingRetryPolicy";
 export { agentPolicy } from "./policies/agentPolicy";
 export { getDefaultProxySettings, proxyPolicy } from "./policies/proxyPolicy";
-export { redirectPolicy } from "./policies/redirectPolicy";
+export { RedirectOptions, redirectPolicy } from "./policies/redirectPolicy";
 export { signingPolicy } from "./policies/signingPolicy";
-export { userAgentPolicy, getDefaultUserAgentValue } from "./policies/userAgentPolicy";
-export { deserializationPolicy, deserializeResponseBody } from "./policies/deserializationPolicy";
+export {
+  TelemetryInfo,
+  userAgentPolicy,
+  getDefaultUserAgentValue,
+} from "./policies/userAgentPolicy";
+export {
+  DeserializationContentTypes,
+  deserializationPolicy,
+  deserializeResponseBody,
+} from "./policies/deserializationPolicy";
 export {
   MapperType,
   SimpleMapperType,
@@ -88,6 +104,7 @@ export { URLBuilder, URLQuery } from "./url";
 
 // Credentials
 export { TokenCredentials } from "./credentials/tokenCredentials";
+export { TokenResponse } from "./credentials/tokenResponse";
 export { BasicAuthenticationCredentials } from "./credentials/basicAuthenticationCredentials";
 export { ApiKeyCredentials, ApiKeyCredentialOptions } from "./credentials/apiKeyCredentials";
 export { ServiceClientCredentials } from "./credentials/serviceClientCredentials";
