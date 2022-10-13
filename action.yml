@@ -22,7 +22,7 @@ outputs:
   path:
     description: The directory where Crystal was installed
 runs:
-  using: node12
+  using: node16
   main: index.js
 branding:
   icon: octagon
