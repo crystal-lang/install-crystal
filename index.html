@@ -403,7 +403,7 @@
   - uses: crystal-lang/install-crystal@v1
   - run: crystal eval "puts 1337"</code></pre>
 <pre class="highlight"><code class="language-yaml">steps:
-  - uses: actions/checkout@v2
+  - uses: actions/checkout@v3
   - uses: crystal-lang/install-crystal@v1
     with:
       crystal: 1.2
@@ -422,7 +422,7 @@
       - uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{matrix.crystal}}
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: shards install
       - run: crystal spec
       - run: crystal tool format &amp;&amp; git diff --exit-code
