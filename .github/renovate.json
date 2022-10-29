@@ -3,7 +3,7 @@
   "extends": [
     "config:base"
   ],
-  "schedule": ["before 7am on the first day of the month"],
+  "schedule": ["after 5am and before 8am on the first day of the month"],
   "pip-compile": {
     "fileMatch": ["(^|/)requirements\\.in$"]
   },
