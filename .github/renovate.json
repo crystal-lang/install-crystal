@@ -3,7 +3,25 @@
   "extends": [
     "config:base"
   ],
+  "schedule": ["before 7am on the first day of the month"],
   "pip-compile": {
     "fileMatch": ["(^|/)requirements\\.in$"]
-  }
+  },
+  "pip_requirements": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "groupName": "Main dependencies (NPM)",
+      "matchPaths": ["+(package*.json)"]
+    },
+    {
+      "groupName": "Docs dependencies (Python)",
+      "matchPaths": ["+(docs/requirements.in)"]
+    },
+    {
+      "groupName": "GitHub Actions",
+      "matchPaths": ["+(.github/**/*.yml)"]
+    }
+  ]
 }
