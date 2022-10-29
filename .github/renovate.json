@@ -12,15 +12,16 @@
   },
   "packageRules": [
     {
-      "groupName": "Main dependencies (NPM)",
-      "matchPaths": ["+(package*.json)"]
+      "groupName": "Main (NPM)",
+      "matchPaths": ["+(package*.json)"],
+      "lockFileMaintenance": {"enabled": true}
     },
     {
-      "groupName": "Docs dependencies (Python)",
+      "groupName": "Docs (Python)",
       "matchPaths": ["+(docs/requirements.in)"]
     },
     {
-      "groupName": "GitHub Actions",
+      "groupName": "GH Actions",
       "matchPaths": ["+(.github/**/*.yml)"]
     }
   ]
