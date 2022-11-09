@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
+  "separateMajorMinor": false,
   "schedule": ["after 5am and before 8am on the first day of the month"],
   "pip-compile": {
     "fileMatch": ["(^|/)requirements\\.in$"]
@@ -10,14 +11,14 @@
   },
   "packageRules": [
     {
-      "groupName": "Main (NPM)",
+      "groupName": "Main NPM deps",
       "matchPaths": ["+(package*.json)"],
       "lockFileMaintenance": {"enabled": true}
     },
     {
-      "groupName": "Docs (Python)",
+      "groupName": "Docs Python deps",
       "matchManagers": ["pip-compile"],
-      "matchPaths": ["+(docs/requirements.in)"]
+      "matchFiles": ["docs/requirements.in"]
     },
     {
       "groupName": "GH Actions",
