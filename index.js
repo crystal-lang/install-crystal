@@ -391,6 +391,8 @@ async function downloadCrystalNightly(filePattern) {
 
     const req = `/${build["build_num"]}/artifacts`;
     const resp = await fetch(CircleApiBase + req);
+    Core.info("\x1b[3m\x1b[38;2;0;0;255mTesting\x1b[0m");
+    Core.info(resp);
     const artifacts = await resp.json();
     const artifact = artifacts.find((a) => filePattern.test(a["path"]));
 
