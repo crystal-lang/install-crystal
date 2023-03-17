@@ -1,3 +1,4 @@
+name: Test Action
 on: workflow_dispatch
 jobs:
   test:
@@ -13,7 +14,3 @@ jobs:
         uses: ./
         with:
           crystal: ${{ matrix.crystal }}
-      - name: Install shards
-        run: shards update
-      - name: Run tests
-        run: crystal spec --order=random
