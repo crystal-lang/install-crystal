@@ -270,7 +270,8 @@ async function rebuildShards({path}) {
 
 const RepoCrystal = {owner: "crystal-lang", repo: "crystal"};
 const RepoShards = {owner: "crystal-lang", repo: "shards"};
-const CircleApiBase = "https://circleci.com/api/v2/project/github/crystal-lang/crystal";
+const CircleApiBase = "https://circleci.com/api/v1.1/project/github/crystal-lang/crystal";
+const CircleApiBasev2 = "https://circleci.com/api/v2/project/github/crystal-lang/crystal";
 
 async function findRelease({name, repo, tag}) {
     if (!(/^\d+\.\d+\.\d\w*$/.test(tag))) {
@@ -390,7 +391,7 @@ async function downloadCrystalNightly(filePattern) {
     Core.setOutput("crystal", build["vcs_revision"]);
 
     const req = `/${build["build_num"]}/artifacts`;
-    const resp = await fetch(CircleApiBase + req);
+    const resp = await fetch(CircleApiBasev2 + req);
     const artifacts = await resp.json();
     const artifact = artifacts.find((a) => filePattern.test(a["path"]));
 
