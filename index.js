@@ -376,7 +376,7 @@ async function downloadCrystalNightly(filePattern) {
     let build;
     for (let offset = 0; ;) {
         const req = `/tree/master?filter=successful&shallow=true&limit=100&offset=${offset}`;
-        const resp = await fetch(CircleApiBase + req);
+        const resp = await fetch(CircleApiBasev2 + req);
         const builds = await resp.json();
         build = builds.find((b) => b["workflows"]["job_name"] === "dist_artifacts");
         if (build) {
