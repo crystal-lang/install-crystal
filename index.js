@@ -270,7 +270,7 @@ async function rebuildShards({path}) {
 
 const RepoCrystal = {owner: "crystal-lang", repo: "crystal"};
 const RepoShards = {owner: "crystal-lang", repo: "shards"};
-const CircleApiBase = "https://circleci.com/api/v1.1/project/github/crystal-lang/crystal";
+const CircleApiBase = "https://circleci.com/api/v2/project/github/crystal-lang/crystal";
 
 async function findRelease({name, repo, tag}) {
     if (!(/^\d+\.\d+\.\d\w*$/.test(tag))) {
