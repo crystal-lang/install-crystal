@@ -120,9 +120,15 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
     const filePatterns = {"x86_64": /-linux-x86_64\.tar\.gz$/, "x86": /-linux-i686\.tar\.gz$/};
     checkArch(arch, Object.keys(filePatterns));
 
-    const depsTask = installAptPackages(
-        "libevent-dev libgmp-dev libpcre2-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
-    );
+    libs = "libevent-dev libgmp-dev libssl-dev libxml2-dev libyaml-dev".split(" ");
+    if (crystal === Latest || crystal === Nightly || cmpTags(crystal, "1.2") >= 0) {
+        libs.push("libpcre2-dev");
+    } else {
+        libs.push("libpcre3-dev");
+    }
+    
+    const depsTask = installAptPackages(libs);
+
     await installBinaryRelease({crystal, shards, filePattern: filePatterns[arch], path});
 
     Core.info("Setting up environment for Crystal");
