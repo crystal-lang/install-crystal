@@ -121,7 +121,7 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
     checkArch(arch, Object.keys(filePatterns));
 
     const depsTask = installAptPackages(
-        "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
+        "libevent-dev libgmp-dev libpcre2-dev libssl-dev libxml2-dev libyaml-dev".split(" "),
     );
     await installBinaryRelease({crystal, shards, filePattern: filePatterns[arch], path});
 
