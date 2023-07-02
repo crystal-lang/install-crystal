@@ -23,6 +23,7 @@ jobs:
           - {shards: '0.14', crystal: '1.3'}
           - {shards: latest, crystal: latest}
           - {shards: nightly, crystal: nightly}
+          - {crystal: 'branch:master'}
         exclude:
           - os: windows-latest
             config: {shards: '0.12.0', crystal: '0.35.1'}
