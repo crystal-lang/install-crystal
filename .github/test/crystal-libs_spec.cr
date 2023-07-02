@@ -19,19 +19,17 @@ it "xml" do
   end
 
   document = XML.parse(string)
-  person = document.first_element_child
-  if person
-    person["id"].should eq "1"
+  person = document.first_element_child.should_not be_nil
+  person["id"].should eq "1"
 
-    props = {} of String => String
-    person.children.select(&.element?).each do |child|
-      props[child.name] = child.content
-    end
-    props.should eq({
-      "firstname" => "Jane",
-      "lastname" => "Doe",
-    })
+  props = {} of String => String
+  person.children.select(&.element?).each do |child|
+    props[child.name] = child.content
   end
+  props.should eq({
+    "firstname" => "Jane",
+    "lastname" => "Doe",
+  })
 end
 
 require "big"
