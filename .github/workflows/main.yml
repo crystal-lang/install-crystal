@@ -57,7 +57,7 @@ jobs:
           crystal --version | grep -E "${v}\\b"
         if: ${{ contains(matrix.config.crystal, '.') }}
       - run: |
-          crystal eval 'require "yaml"; require "xml"; require "big"; require "openssl"'
+          crystal spec .github/test/crystal-libs_spec.cr
 
       - run: |
           shards --version
