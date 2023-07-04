@@ -56,7 +56,7 @@ jobs:
       - run: |
           v='${{ matrix.config.crystal }}'
           crystal --version | grep -E "${v}\\b"
-        if: ${{ contains(matrix.config.crystal, '.') }}
+        if: ${{ contains(matrix.config.crystal, '.') && !contains(matrix.config.crystal, 'branch:') }}
       - run: |
           crystal spec .github/test/crystal-libs_spec.cr
       - run: |
