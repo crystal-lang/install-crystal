@@ -23,6 +23,7 @@ jobs:
           - {shards: '0.14', crystal: '1.3'}
           - {shards: latest, crystal: latest}
           - {shards: nightly, crystal: nightly}
+          - {crystal: 'branch:master'}
         exclude:
           - os: windows-latest
             config: {shards: '0.12.0', crystal: '0.35.1'}
@@ -55,7 +56,7 @@ jobs:
       - run: |
           v='${{ matrix.config.crystal }}'
           crystal --version | grep -E "${v}\\b"
-        if: ${{ contains(matrix.config.crystal, '.') }}
+        if: ${{ contains(matrix.config.crystal, '.') && !contains(matrix.config.crystal, 'branch:') }}
       - run: |
           crystal spec .github/test/crystal-libs_spec.cr
       - run: |

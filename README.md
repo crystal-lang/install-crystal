@@ -68,6 +68,10 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
         Install Crystal from the latest continuous build on [crystal.git][] master.
 
+     *  **`crystal: "branch:foo/bar"`**
+
+        Install Crystal from the latest maintenance build on [crystal.git][] branch specified after `branch:`.
+
  *   *  **`shards: true`** (default)
 
         Ensure that *some* released version of [Shards][] is available.
