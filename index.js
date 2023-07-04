@@ -396,7 +396,7 @@ async function downloadCrystalNightly(filePattern, branch) {
             break;
         }
         offset += builds.length;
-        if (offset >= 1000 || builds.length == 0) {
+        if (offset >= 1000 || builds.length === 0) {
             throw `Could not find a matching build for branch '${branch}'`;
         }
     }
@@ -407,8 +407,8 @@ async function downloadCrystalNightly(filePattern, branch) {
     const resp = await fetch(CircleApiBase + req);
     const artifacts = await resp.json();
     const artifact = artifacts.find((a) => filePattern.test(a["path"]));
-    if(artifact === undefined) {
-        throw `Could not find build artifacts for build ${build["build_num"]}`
+    if (artifact === undefined) {
+        throw `Could not find build artifacts for build ${build["build_num"]}`;
     }
 
     Core.info(`Downloading Crystal build from ${artifact["url"]}`);
