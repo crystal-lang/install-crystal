@@ -346,7 +346,7 @@ async function downloadCrystalRelease(filePattern, version = null) {
     const resp = await github.request({
         url: asset["url"],
         headers: {"accept": "application/octet-stream"},
-        request: {redirect: "manual"},
+        request: {fetch: fetchWithManualRedirect},
     });
     const url = resp.headers["location"];
 
@@ -375,7 +375,7 @@ async function downloadSource({name, repo, ref}) {
 
     const resp = await github.rest.repos.downloadZipballArchive({
         ...repo, ref,
-        request: {redirect: "manual"},
+        request: {fetch: fetchWithManualRedirect},
     });
     const url = resp.headers["location"];
     const downloadedPath = await ToolCache.downloadTool(url);
@@ -463,7 +463,7 @@ async function downloadCrystalNightlyForWindows(branch) {
     Core.info("Downloading Crystal build");
     const resp = await github.rest.actions.downloadArtifact({
         ...RepoCrystal, "artifact_id": artifact.id, "archive_format": "zip",
-        request: {redirect: "manual"},
+        request: {fetch: fetchWithManualRedirect},
     });
     const url = resp.headers["location"];
     const downloadedPath = await ToolCache.downloadTool(url);
@@ -473,6 +473,10 @@ async function downloadCrystalNightlyForWindows(branch) {
 }
 
 const github = new Octokit({auth: Core.getInput("token") || null});
+
+function fetchWithManualRedirect(url, options) {
+    return fetch(url, {...options, redirect: "manual"});
+}
 
 async function* getItemsFromPages(pages) {
     for await (const page of github.paginate.iterator(pages)) {
