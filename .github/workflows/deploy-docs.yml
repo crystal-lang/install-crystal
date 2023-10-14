@@ -22,8 +22,7 @@ jobs:
       - name: Fetch branch
         run: git fetch origin v1:v1
       - name: Build site
-        run: mkdocs build
-        working-directory: docs
+        run: mkdocs build -f docs/mkdocs.yml
       - name: Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
