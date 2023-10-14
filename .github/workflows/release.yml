@@ -23,6 +23,7 @@ jobs:
           - {shards: '0.14', crystal: '1.3'}
           - {shards: latest, crystal: latest}
           - {shards: nightly, crystal: nightly}
+          - {crystal: 'branch:master'}
         exclude:
           - os: windows-latest
             config: {shards: '0.12.0', crystal: '0.35.1'}
@@ -33,7 +34,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: crystal-lang/install-crystal@v1
         with: ${{ matrix.config }}
@@ -55,10 +56,9 @@ jobs:
       - run: |
           v='${{ matrix.config.crystal }}'
           crystal --version | grep -E "${v}\\b"
-        if: ${{ contains(matrix.config.crystal, '.') }}
+        if: ${{ contains(matrix.config.crystal, '.') && !contains(matrix.config.crystal, 'branch:') }}
       - run: |
-          crystal eval 'require "yaml"; require "xml"; require "big"; require "openssl"'
-
+          crystal spec .github/test/crystal-libs_spec.cr
       - run: |
           shards --version
         if: ${{ !contains('false', matrix.config.shards) }}
