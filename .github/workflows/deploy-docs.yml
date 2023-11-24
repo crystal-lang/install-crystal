@@ -16,13 +16,13 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: Install dependencies
-        run: pip install --no-deps -r docs/requirements.txt
+        run: pip install --no-deps -r requirements/requirements-docs.txt
       - name: Fetch branch
         run: git fetch origin v1:v1
       - name: Build site
-        run: mkdocs build -f docs/mkdocs.yml
+        run: mkdocs build -f docs/mkdocs.yml --strict
       - name: Upload to GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
