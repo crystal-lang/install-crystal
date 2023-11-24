@@ -159,7 +159,7 @@ var fixedRef = document.getElementById('fixed-ref');
 
 function fixedRefChange() {
     var codes = document.querySelectorAll('.configurator .hljs-string');
-    var rev = fixedRef.checked ? '{{ latest_rev }}' : 'v1';
+    var rev = fixedRef.checked ? '{{ latest_rev }} # {{ latest_tag }}' : 'v1';
     for (var i = 0; i < codes.length; ++i) {
         if (codes[i].innerHTML.includes('install-crystal')) {
             codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+/g, '@' + rev);
