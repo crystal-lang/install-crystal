@@ -8,4 +8,3 @@ requires = [
 path = "docs/mkdocs.yml"
 [envs.docs]
 type = "pip-compile"
-pip-compile-hashes = false

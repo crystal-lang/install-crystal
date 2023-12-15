@@ -25,7 +25,6 @@ extra_javascript:
 
 plugins:
   - search
-  - macros
   - same-dir
   - gen-files:
       scripts:
