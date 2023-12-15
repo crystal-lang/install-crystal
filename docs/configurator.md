@@ -162,7 +162,7 @@ function fixedRefChange() {
     var rev = fixedRef.checked ? '{{ latest_rev }} # {{ latest_tag }}' : 'v1';
     for (var i = 0; i < codes.length; ++i) {
         if (codes[i].innerHTML.includes('install-crystal')) {
-            codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+/g, '@' + rev);
+            codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+.*/g, '@' + rev);
         }
     }
 }
