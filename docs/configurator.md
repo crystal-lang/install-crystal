@@ -85,7 +85,7 @@ jobs:
     {%- endif %}
     steps:
       - name: Download source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         {%- if crystal_nightly or crystal_ver %}
@@ -94,7 +94,7 @@ jobs:
         {%- endif %}
       {%- if cache_shards %}
       - name: Cache shards
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           {%- if is_app %}
           path: lib
