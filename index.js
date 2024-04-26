@@ -164,8 +164,10 @@ async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
         } catch (e) {}
     }
 
+    const {stdout} = await subprocess(["brew", "--prefix"]);
+    const homebrewPrefix = stdout.trim();
     const globber = await Glob.create([
-        "/usr/local/Cellar/openssl*/*/lib/pkgconfig",
+        `${homebrewPrefix}/Cellar/openssl*/*/lib/pkgconfig`,
         "/usr/local/opt/openssl/lib/pkgconfig",
     ].join("\n"));
     let [pkgConfigPath] = await globber.glob();
