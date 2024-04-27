@@ -1,0 +1,10 @@
+[env]
+requires = [
+    "hatch-mkdocs",
+    "hatch-pip-compile",
+]
+
+[env.collectors.mkdocs.docs]
+path = "docs/mkdocs.yml"
+[envs.docs]
+type = "pip-compile"

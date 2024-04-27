@@ -27,6 +27,8 @@ jobs:
         exclude:
           - os: windows-latest
             config: {shards: '0.12.0', crystal: '0.35.1'}
+          - os: macos-latest
+            config: {shards: '0.12.0', crystal: '0.35.1'}
 
     name: crystal ${{ matrix.config.crystal }} + shards ${{ matrix.config.shards }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -34,7 +36,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: npm install --only=prod
       - uses: ./
         with: ${{ matrix.config }}

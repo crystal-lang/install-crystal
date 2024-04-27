@@ -85,7 +85,7 @@ jobs:
     {%- endif %}
     steps:
       - name: Download source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         {%- if crystal_nightly or crystal_ver %}
@@ -94,7 +94,7 @@ jobs:
         {%- endif %}
       {%- if cache_shards %}
       - name: Cache shards
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           {%- if is_app %}
           path: lib
@@ -159,10 +159,10 @@ var fixedRef = document.getElementById('fixed-ref');
 
 function fixedRefChange() {
     var codes = document.querySelectorAll('.configurator .hljs-string');
-    var rev = fixedRef.checked ? '{{ latest_rev }}' : 'v1';
+    var rev = fixedRef.checked ? '{{ latest_rev }} # {{ latest_tag }}' : 'v1';
     for (var i = 0; i < codes.length; ++i) {
         if (codes[i].innerHTML.includes('install-crystal')) {
-            codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+/g, '@' + rev);
+            codes[i].innerHTML = codes[i].innerHTML.replace(/@\w+.*/g, '@' + rev);
         }
     }
 }

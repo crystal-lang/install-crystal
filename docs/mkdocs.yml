@@ -14,6 +14,8 @@ theme:
     scheme: preference
     primary: black
     accent: purple
+  features:
+    - content.action.edit
 
 extra_css:
   - assets/style.css
@@ -23,7 +25,6 @@ extra_javascript:
 
 plugins:
   - search
-  - macros
   - same-dir
   - gen-files:
       scripts:
@@ -37,6 +38,9 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.snippets:
       check_paths: true
+      restrict_base_path: false
+      base_path:
+        - !relative $docs_dir
   - admonition
   - def_list
   - toc:

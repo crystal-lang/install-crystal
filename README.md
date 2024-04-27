@@ -19,10 +19,10 @@ steps:
 
 ```yaml
 steps:
-  - uses: actions/checkout@v3
+  - uses: actions/checkout@v4
   - uses: crystal-lang/install-crystal@v1
     with:
-      crystal: 1.2
+      crystal: 1.11
   - run: shards install
   - run: crystal spec
 ```
@@ -41,7 +41,7 @@ steps:
       - uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{matrix.crystal}}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: shards install
       - run: crystal spec
       - run: crystal tool format && git diff --exit-code
