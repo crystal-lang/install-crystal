@@ -1,6 +1,6 @@
 {
   "name": "install-crystal",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "GitHub Action: Install Crystal programming language",
   "main": "index.js",
   "type": "module",
