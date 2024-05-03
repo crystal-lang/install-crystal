@@ -56,7 +56,7 @@ jobs:
           - os: ubuntu-latest
           {%- if crystal_ver %}
           - os: ubuntu-latest
-            crystal: 1.2
+            crystal: "1.12"
           {%- endif %}
           {%- if crystal_nightly %}
           - os: ubuntu-latest
@@ -73,7 +73,7 @@ jobs:
         os: [ubuntu-latest{% if os_mac %}, macos-latest{% endif %}{% if os_win %}, windows-latest{% endif %}]
         {%- endif %}
         {%- if crystal_nightly or crystal_ver %}
-        crystal: [{% if crystal_ver %}1.2, {% endif %}latest{% if crystal_nightly %}, nightly{% endif %}]
+        crystal: [{% if crystal_ver %}"1.12", {% endif %}latest{% if crystal_nightly %}, nightly{% endif %}]
         {%- endif %}
         {%- endif %}
     {%- endif %}
