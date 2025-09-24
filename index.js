@@ -125,7 +125,7 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
     const filePatterns = {"x86_64": /-linux-x86_64\.tar\.gz$/, "x86": /-linux-i686\.tar\.gz$/};
     checkArch(arch, Object.keys(filePatterns));
 
-    let packages = "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" ");
+    const packages = "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" ");
     if (crystal === Latest || crystal === Nightly || cmpTags(crystal, "1.8") >= 0) {
         packages.push("libpcre2-dev");
     }
@@ -319,7 +319,7 @@ async function getLatestTag({repo, prefix}) {
         }
     }
     if (tags.length === 0) {
-        let error = `The repository "${repo.owner}/${repo.repo}" has no releases matching "${prefix}.*"`;
+        const error = `The repository "${repo.owner}/${repo.repo}" has no releases matching "${prefix}.*"`;
         throw error;
     }
     tags.sort(cmpTags);

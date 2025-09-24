@@ -23,3 +23,6 @@ content = jinja2.Template(content).render(
 )
 with mkdocs_gen_files.open("configurator.md", "w") as f:
     f.write(content)
+
+mkdocs_gen_files.set_edit_path("configurator.md", "configurator.md")
+mkdocs_gen_files.set_edit_path("index.md", "../README.md")

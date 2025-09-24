@@ -1,21 +1,26 @@
-{
+import {FlatCompat} from "@eslint/eslintrc";
+import js from "@eslint/js";
+
+const config = {
     "env": {
         "commonjs": true,
         "es6": true,
-        "node": true
+        "node": true,
     },
     "ignorePatterns": ["docs/", "site/"],
     "extends": "eslint:recommended",
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "SharedArrayBuffer": "readonly",
     },
     "parserOptions": {
         "ecmaVersion": 2020,
-        "sourceType": "module"
+        "sourceType": "module",
     },
     "rules": {
         "no-empty": ["error", {"allowEmptyCatch": true}],
+        "no-unused-vars": ["error", {"caughtErrors": "none"}],
+        "prefer-const": "error",
 
         "block-scoped-var": "error",
         "consistent-return": "error",
@@ -59,7 +64,7 @@
         "semi-spacing": "error",
         "semi-style": "error",
         "space-before-function-paren": ["error", {
-            "anonymous": "always", "named": "never", "asyncArrow": "always"
+            "anonymous": "always", "named": "never", "asyncArrow": "always",
         }],
         "space-infix-ops": "error",
         "space-unary-ops": "error",
@@ -81,6 +86,9 @@
         "rest-spread-spacing": "error",
         "sort-imports": "error",
         "template-curly-spacing": "error",
-        "yield-star-spacing": "error"
-    }
-}
+        "yield-star-spacing": "error",
+    },
+};
+
+const compat = new FlatCompat({recommendedConfig: js.configs.recommended});
+export default compat.config(config);
