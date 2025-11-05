@@ -17,7 +17,7 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest  # arm64
-          - macos-13  # x64
+          - macos-15-intel  # x64
           - windows-latest
         config:
           - {}
