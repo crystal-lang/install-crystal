@@ -73,7 +73,7 @@ function getPlatform() {
 }
 
 function getArch() {
-    return {"ia32": "x86", "x64": "x86_64"}[process.arch] || process.arch;
+    return {"arm64": "aarch64", "ia32": "x86", "x64": "x86_64"}[process.arch] || process.arch;
 }
 
 function checkArch(arch, allowed) {
@@ -122,7 +122,11 @@ async function subprocess(command, options) {
 
 async function installCrystalForLinux({crystal, shards, arch = getArch(), path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion, BranchVersion]);
-    const filePatterns = {"x86_64": /-linux-x86_64\.tar\.gz$/, "x86": /-linux-i686\.tar\.gz$/};
+    const filePatterns = {
+      "aarch64": /-linux-aarch64\.tar\.gz$/,
+      "x86_64": /-linux-x86_64\.tar\.gz$/,
+      "x86": /-linux-i686\.tar\.gz$/
+    };
     checkArch(arch, Object.keys(filePatterns));
 
     const packages = "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" ");
