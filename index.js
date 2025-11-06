@@ -123,9 +123,9 @@ async function subprocess(command, options) {
 async function installCrystalForLinux({crystal, shards, arch = getArch(), path}) {
     checkVersion(crystal, [Latest, Nightly, NumericVersion, BranchVersion]);
     const filePatterns = {
-      "aarch64": /-linux-aarch64\.tar\.gz$/,
-      "x86_64": /-linux-x86_64\.tar\.gz$/,
-      "x86": /-linux-i686\.tar\.gz$/
+        "aarch64": /-linux-aarch64\.tar\.gz$/,
+        "x86_64": /-linux-x86_64\.tar\.gz$/,
+        "x86": /-linux-i686\.tar\.gz$/,
     };
     checkArch(arch, Object.keys(filePatterns));
 
