@@ -30,10 +30,10 @@ jobs:
           - {crystal: 'branch:master'}
         exclude:
           - os: ubuntu-24.04-arm
-          - config: {shards: '0.14', crystal: '1.3'}
+            config: {shards: '0.14', crystal: '1.3'}
         include:
           - os: ubuntu-24.04-arm
-          - config: {shards: '0.19', crystal: '1.18'}
+            config: {shards: '0.19', crystal: '1.18'}
 
     name: crystal ${{ matrix.config.crystal }} + shards ${{ matrix.config.shards }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
