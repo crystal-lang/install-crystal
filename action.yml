@@ -6,7 +6,7 @@ inputs:
   shards:
     description: The version of Shards to install (true, "latest", "nightly", "0.13.0" etc)
   arch:
-    description: The architecture of the build of Crystal ("x86_64")
+    description: The architecture of the build of Crystal ("x86_64", "aarch64")
   destination:
     description: The directory to store Crystal in
   annotate:
