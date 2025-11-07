@@ -2,10 +2,10 @@ name: CI (release)
 
 on:
   push:
+    paths-ignore: ['docs/**', '*.md']
+
+
     branches: [v1]
-
-
-
   schedule:
     - cron: '0 6 * * *'
 

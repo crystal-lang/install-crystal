@@ -1,0 +1,21 @@
+# Checks that the files 'main.yml' and 'release.yml' are exactly in sync
+
+name: Check workflow configs
+on:
+  pull_request:
+jobs:
+  check_configs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download source
+        uses: actions/checkout@v5
+      - name: Apply the edits
+        run: |
+          python3 .github/generate_release_yml.py
+      - name: Check if any edits are necessary
+        id: diff
+        run: |
+          git diff --color --exit-code
+      - name: Apply automatic fixes using pre-commit-ci-lite
+        if: failure() && steps.diff.outcome == 'failure'
+        uses: pre-commit-ci/lite-action@5d6cc0eb514c891a40562a58a8e71576c5c7fb43 # v1.1.0
