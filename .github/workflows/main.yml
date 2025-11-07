@@ -17,7 +17,7 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest  # arm64
-          - macos-13  # x64
+          - macos-15-intel  # x64
           - windows-latest
         config:
           - {}
@@ -34,7 +34,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: npm install --only=prod
       - uses: ./
         with: ${{ matrix.config }}
@@ -82,6 +82,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: npm install
       - run: npm test
