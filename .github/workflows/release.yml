@@ -2,10 +2,10 @@ name: CI (release)
 
 on:
   push:
+    paths-ignore: ['docs/**', '*.md']
+
+
     branches: [v1]
-
-
-
   schedule:
     - cron: '0 6 * * *'
 
@@ -28,6 +28,12 @@ jobs:
           - {shards: latest, crystal: latest}
           - {shards: nightly, crystal: nightly}
           - {crystal: 'branch:master'}
+        exclude:
+          - os: ubuntu-24.04-arm
+            config: {shards: '0.14', crystal: '1.3'}
+        include:
+          - os: ubuntu-24.04-arm
+            config: {shards: '0.19', crystal: '1.18'}
 
     name: crystal ${{ matrix.config.crystal }} + shards ${{ matrix.config.shards }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}

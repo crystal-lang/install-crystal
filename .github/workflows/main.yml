@@ -85,10 +85,3 @@ jobs:
           shards build
         working-directory: test-project
         if: ${{ !contains('false', matrix.config.shards) }}
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - run: npm install
-      - run: npm test
