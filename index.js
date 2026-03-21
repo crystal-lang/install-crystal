@@ -222,7 +222,7 @@ async function maybeInstallShards({shards, path, allowCache = true}, crystalProm
         if (shards === Any) {
             await crystalPromise;
         }
-        let result = null;
+        let result;
         try {
             result = await subprocess(["shards", "--version"]);
         } catch (error) {
