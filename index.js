@@ -1,12 +1,12 @@
-import Cache from "@actions/cache";
+import * as Cache from "@actions/cache";
+import * as Core from "@actions/core";
+import * as Glob from "@actions/glob";
+import * as IO from "@actions/io";
+import * as ToolCache from "@actions/tool-cache";
 import ChildProcess from "child_process";
-import Core from "@actions/core";
 import {promises as FS} from "fs";
-import Glob from "@actions/glob";
-import IO from "@actions/io";
 import {Octokit} from "@octokit/rest";
 import Path from "path";
-import ToolCache from "@actions/tool-cache";
 import URL from "url";
 import Util from "util";
 import {cmpTags} from "tag-cmp";
