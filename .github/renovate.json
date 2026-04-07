@@ -1,9 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "separateMajorMinor": false,
   "pip-compile": {
-    "fileMatch": ["(^|/)requirements\\.in$"]
+    "managerFilePatterns": [
+      "/(^|/)requirements\\.txt$/"
+    ]
   },
   "pip_requirements": {
     "enabled": false
@@ -11,20 +15,36 @@
   "packageRules": [
     {
       "groupName": "Main NPM deps",
-      "matchPaths": ["+(package*.json)"],
-      "lockFileMaintenance": {"enabled": true},
-      "schedule": ["after 5am and before 8am on the first day of the month"]
+      "matchFileNames": [
+        "+(package*.json)"
+      ],
+      "lockFileMaintenance": {
+        "enabled": true
+      },
+      "schedule": [
+        "after 5am and before 8am on the first day of the month"
+      ]
     },
     {
       "groupName": "Docs Python deps",
-      "matchManagers": ["pip-compile"],
-      "matchFiles": ["docs/requirements.in"],
-      "schedule": ["after 5am and before 8am on the first day of the month"]
+      "matchManagers": [
+        "pip-compile"
+      ],
+      "matchFileNames": [
+        "docs/requirements.in"
+      ],
+      "schedule": [
+        "after 5am and before 8am on the first day of the month"
+      ]
     },
     {
       "groupName": "GH Actions",
-      "matchManagers": ["github-actions"],
-      "schedule": ["after 5am and before 8am on the first day of the month"]
+      "matchManagers": [
+        "github-actions"
+      ],
+      "schedule": [
+        "after 5am and before 8am on the first day of the month"
+      ]
     }
   ]
 }
