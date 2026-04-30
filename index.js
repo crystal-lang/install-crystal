@@ -435,7 +435,7 @@ async function installCrystalForWindows({crystal, shards, arch = "x86_64", path}
         if (version) {
             await IO.mv(await downloadCrystalNightlyForWindows(version[1]), path);
         } else {
-            const filePattern = /-windows-x86_64-msvc(-unsupported)?\.zip$/;
+            const filePattern = /-windows-(x86_64-)?msvc(-unsupported)?\.zip$/;
             await installBinaryRelease({crystal, shards, filePattern, path});
         }
     }
