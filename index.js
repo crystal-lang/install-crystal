@@ -347,6 +347,10 @@ async function downloadCrystalRelease(filePattern, version = null) {
     Core.setOutput("crystal", release["tag_name"]);
 
     const asset = release["assets"].find((a) => filePattern.test(a["name"]));
+    if (!asset) {
+        Core.error("No asset found!");
+        process.exit(1);
+    }
 
     Core.info(`Downloading Crystal build from ${asset["url"]}`);
     const resp = await github.request({
