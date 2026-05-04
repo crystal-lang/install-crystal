@@ -348,7 +348,7 @@ async function downloadCrystalRelease(filePattern, version = null) {
 
     const asset = release["assets"].find((a) => filePattern.test(a["name"]));
     if (!asset) {
-        Core.error("No asset found!");
+        Core.error(`No asset found matching "${filePattern}" for Crystal release ${release["tag_name"]}!`);
         process.exit(1);
     }
 
