@@ -292,18 +292,22 @@ const RepoCrystal = {owner: "crystal-lang", repo: "crystal"};
 const RepoShards = {owner: "crystal-lang", repo: "shards"};
 const CircleApiBase = "https://circleci.com/api/v1.1/project/github/crystal-lang/crystal";
 
-async function findRelease({name, repo, tag}) {
-    if (!(/^\d+\.\d+\.\d\w*$/.test(tag))) {
-        tag = await getLatestTag({repo, prefix: tag});
+// Yield releases that match the tag, most recent first. In case of an exact tag, only 1 release will be yielded.
+async function* findReleases({name, repo, tag}) {
+    const tags = /^\d+\.\d+\.\d\w*$/.test(tag)
+        ? [tag]
+        : await getLatestTags({repo, prefix: tag});
+    for (const tag of tags) {
+        Core.info(`Getting ${name} release (${tag})`);
+        const releasesResp = await github.rest.repos.getReleaseByTag({...repo, tag});
+        const release = releasesResp.data;
+        Core.info(`Found ${name} release ${release["html_url"]}`);
+        yield release;
     }
-    Core.info(`Getting ${name} release (${tag})`);
-    const releasesResp = await github.rest.repos.getReleaseByTag({...repo, tag});
-    const release = releasesResp.data;
-    Core.info(`Found ${name} release ${release["html_url"]}`);
-    return release;
 }
 
-async function getLatestTag({repo, prefix}) {
+// Return a list of up to 25 latest tags, with the very latest ones being first in the list.
+async function getLatestTags({repo, prefix}) {
     Core.info(`Looking for ${repo.owner}/${repo.owner} release (${prefix || "latest"})`);
     const pages = github.repos.listReleases.endpoint.merge({
         ...repo, "per_page": 50,
@@ -329,7 +333,7 @@ async function getLatestTag({repo, prefix}) {
     tags.sort(cmpTags);
     tags.reverse();
     Core.debug(`Considered tags ${tags.join("|")}`);
-    return tags[0];
+    return tags;
 }
 
 async function findLatestCommit({name, repo, branch = "master"}) {
@@ -342,16 +346,33 @@ async function findLatestCommit({name, repo, branch = "master"}) {
     return commit["sha"];
 }
 
+// Download the file that matches the pattern from the latest Crystal release that matches the version and has that file
 async function downloadCrystalRelease(filePattern, version = null) {
-    const release = await findRelease({name: "Crystal", repo: RepoCrystal, tag: version});
-    Core.setOutput("crystal", release["tag_name"]);
+    let skippedReleases = 0;
+    for await (const release of findReleases({name: "Crystal", repo: RepoCrystal, tag: version})) {
+        const asset = release["assets"].find((a) => filePattern.test(a["name"]));
+        if (asset) {
+            Core.setOutput("crystal", release["tag_name"]);
+            return downloadCrystalAsset(asset);
+        }
 
-    const asset = release["assets"].find((a) => filePattern.test(a["name"]));
-    if (!asset) {
-        Core.error(`No asset found matching "${filePattern}" for Crystal release ${release["tag_name"]}!`);
-        process.exit(1);
+        Core.warning("Did not find a matching build artifact. Is this a very recent release?");
+        // Consider up to 3 latest releases, in case the latest one has no artifacts yet.
+        skippedReleases += 1;
+        if (skippedReleases === 3) {
+            break;
+        }
+        // Allow skipping only releases that were published in the last day.
+        // Otherwise we risk concealing systemic problems.
+        const oneDayInMs = 24 * 60 * 60 * 1000;
+        if (new Date() - new Date(release["published_at"]) > oneDayInMs) {
+            break;
+        }
     }
+    throw `Failed to find a release of Crystal with build artifacts matching "${filePattern}"`;
+}
 
+async function downloadCrystalAsset(asset) {
     Core.info(`Downloading Crystal build from ${asset["url"]}`);
     const resp = await github.request({
         url: asset["url"],
@@ -372,10 +393,12 @@ async function findRef({name, repo, version}) {
     if (version === Nightly) {
         return findLatestCommit({name, repo});
     } else if (version === Latest) {
-        const release = await findRelease({name, repo});
-        return release["tag_name"];
+        for await (const release of findReleases({name, repo})) {
+            return release["tag_name"];
+        }
     } else if (NumericVersion.test(v) && !(/^\d+\.\d+\.\d\w*$/.test(v))) {
-        return getLatestTag({repo, prefix: version});
+        const [tag] = await getLatestTags({repo, prefix: version});
+        return tag;
     }
     return version;
 }
