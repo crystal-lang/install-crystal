@@ -16,6 +16,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
+          - ubuntu-26.04
           - ubuntu-24.04-arm
           - macos-latest  # arm64
           - macos-15-intel  # x64
@@ -29,6 +30,8 @@ jobs:
           - {shards: nightly, crystal: nightly}
           - {crystal: 'branch:master'}
         exclude:
+          - os: ubuntu-26.04
+            config: {shards: '0.14', crystal: '1.3'}
           - os: ubuntu-24.04-arm
             config: {shards: '0.14', crystal: '1.3'}
         include:

@@ -129,9 +129,13 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
     };
     checkArch(arch, Object.keys(filePatterns));
 
-    const packages = "libevent-dev libgmp-dev libpcre3-dev libssl-dev libxml2-dev libyaml-dev".split(" ");
-    if (crystal === Latest || crystal === Nightly || cmpTags(crystal, "1.8") >= 0) {
+    const packages = "libevent-dev libgmp-dev libssl-dev libxml2-dev libyaml-dev".split(" ");
+    const usesPcre2 = crystal === Latest || crystal === Nightly ||
+        BranchVersion.test(crystal) || cmpTags(crystal, "1.8") >= 0;
+    if (usesPcre2) {
         packages.push("libpcre2-dev");
+    } else {
+        packages.push("libpcre3-dev");
     }
 
     const depsTask = installAptPackages(packages);
