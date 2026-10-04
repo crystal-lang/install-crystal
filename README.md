@@ -93,7 +93,7 @@ Alternatively, you can use the container-based approach [as in the starter workf
 
         Build and install the latest commit of [shards.git][] master.
 
- *  **`arch: x86_64`**, **`arch: x86`** (defaults to current OS arch)
+ *  **`arch: x86_64`**, **`arch: x86`**, **`arch: aarch64`** (defaults to current OS arch)
 
     The architecture of the build of Crystal to download.
 
