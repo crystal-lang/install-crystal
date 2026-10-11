@@ -273,7 +273,7 @@ async function installShards({shards, path}, crystalPromise) {
     }
     if (!restored) {
         Core.info(`Cache not found for key '${cacheKey}'`);
-        downloadSource({name: "Shards", repo: RepoShards, ref}, path);
+        await downloadSource({name: "Shards", repo: RepoShards, ref}, path);
         await crystalPromise;
         await rebuildShards({path});
     }
