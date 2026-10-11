@@ -518,8 +518,14 @@ async function* getItemsFromPages(pages) {
 
 async function onlySubdir(path) {
     const subDirs = await FS.readdir(path);
+    const originalPath = path;
     if (subDirs.length === 1) {
         path = Path.join(path, subDirs[0]);
+    }
+    if (originalPath !== path) {
+        Core.info(`Only subdirectory found ${originalPath} -> ${path}`);
+    }else{
+        Core.info(`No single subdirectory found in ${originalPath}`);
     }
     return path;
 }
