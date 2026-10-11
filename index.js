@@ -209,16 +209,16 @@ async function installAptPackages(packages) {
 
 async function installBinaryRelease({crystal, filePattern, path}) {
     if (crystal === Nightly) {
-        await IO.mv(await downloadCrystalNightly(filePattern, "master"), path);
+        await downloadCrystalNightly(filePattern, path, "master");
     } else {
         const version = BranchVersion.exec(crystal);
         if (version) {
-            await IO.mv(await downloadCrystalNightly(filePattern, version[1]), path);
+            await downloadCrystalNightly(filePattern, path, version[1]);
         } else {
             if (crystal === Latest) {
                 crystal = null;
             }
-            await IO.mv(await downloadCrystalRelease(filePattern, crystal), path);
+            await downloadCrystalRelease(filePattern, path, crystal);
         }
     }
 }
@@ -273,8 +273,7 @@ async function installShards({shards, path}, crystalPromise) {
     }
     if (!restored) {
         Core.info(`Cache not found for key '${cacheKey}'`);
-        const fetchSrcTask = downloadSource({name: "Shards", repo: RepoShards, ref});
-        await IO.mv(await fetchSrcTask, path);
+        downloadSource({name: "Shards", repo: RepoShards, ref}, path);
         await crystalPromise;
         await rebuildShards({path});
     }
@@ -354,7 +353,7 @@ async function findLatestCommit({name, repo, branch = "master"}) {
     return commit["sha"];
 }
 
-async function downloadCrystalRelease(filePattern, version = null) {
+async function downloadCrystalRelease(filePattern, path, version = null) {
     const release = await findRelease({name: "Crystal", repo: RepoCrystal, tag: version});
     Core.setOutput("crystal", release["tag_name"]);
 
@@ -374,9 +373,9 @@ async function downloadCrystalRelease(filePattern, version = null) {
 
     const downloadedPath = await ToolCache.downloadTool(url);
     Core.info("Extracting Crystal build");
-    const dl = (asset["name"].endsWith(".zip") ? ToolCache.extractZip : ToolCache.extractTar);
-    const extractedPath = await dl(downloadedPath);
-    return onlySubdir(extractedPath);
+    const extract = (asset["name"].endsWith(".zip") ? ToolCache.extractZip : ToolCache.extractTar);
+    await extract(downloadedPath, path);
+    await onlySubdir(path);
 }
 
 async function findRef({name, repo, version}) {
@@ -392,7 +391,7 @@ async function findRef({name, repo, version}) {
     return version;
 }
 
-async function downloadSource({name, repo, ref}) {
+async function downloadSource({name, repo, ref}, path) {
     Core.info(`Downloading ${name} source for ${ref}`);
 
     const resp = await github.rest.repos.downloadZipballArchive({
@@ -402,10 +401,11 @@ async function downloadSource({name, repo, ref}) {
     const url = resp.headers["location"];
     const downloadedPath = await ToolCache.downloadTool(url);
     Core.info(`Extracting ${name} source`);
-    return onlySubdir(await ToolCache.extractZip(downloadedPath));
+    await ToolCache.extractZip(downloadedPath, path);
+    await onlySubdir(path);
 }
 
-async function downloadCrystalNightly(filePattern, branch) {
+async function downloadCrystalNightly(filePattern, path, branch) {
     Core.info(`Looking for latest Crystal build of branch '${branch}'`);
 
     let build;
@@ -436,8 +436,8 @@ async function downloadCrystalNightly(filePattern, branch) {
     Core.info(`Downloading Crystal build from ${artifact["url"]}`);
     const downloadedPath = await ToolCache.downloadTool(artifact["url"]);
     Core.info("Extracting Crystal build");
-    const extractedPath = await ToolCache.extractTar(downloadedPath);
-    return onlySubdir(extractedPath);
+    await ToolCache.extractTar(downloadedPath, path);
+    await onlySubdir(path);
 }
 
 async function installCrystalForWindows({crystal, shards, arch = getArch(), path}) {
@@ -451,11 +451,11 @@ async function installCrystalForWindows({crystal, shards, arch = getArch(), path
     }
 
     if (crystal === Nightly) {
-        await IO.mv(await downloadCrystalNightlyForWindows("master", arch), path);
+        await downloadCrystalNightlyForWindows("master", path, arch);
     } else {
         const version = BranchVersion.exec(crystal);
         if (version) {
-            await IO.mv(await downloadCrystalNightlyForWindows(version[1], arch), path);
+            await downloadCrystalNightlyForWindows(version[1], path, arch);
         } else {
             const filePattern = new RegExp(`-windows-${arch}-msvc(-unsupported)?\\.zip$`);
             await installBinaryRelease({crystal, shards, filePattern, path});
@@ -471,7 +471,7 @@ async function installCrystalForWindows({crystal, shards, arch = getArch(), path
     }
 }
 
-async function downloadCrystalNightlyForWindows(branch, arch) {
+async function downloadCrystalNightlyForWindows(branch, path, arch) {
     Core.info(`Looking for latest Crystal build of branch '${branch}'`);
 
     const runsResp = await github.rest.actions.listWorkflowRuns({
@@ -499,7 +499,8 @@ async function downloadCrystalNightlyForWindows(branch, arch) {
     const downloadedPath = await ToolCache.downloadTool(url);
 
     Core.info("Extracting Crystal build");
-    return ToolCache.extractZip(downloadedPath);
+    await ToolCache.extractZip(downloadedPath, path);
+    await onlySubdir(path);
 }
 
 const github = new Octokit({auth: Core.getInput("token") || null});
@@ -517,11 +518,18 @@ async function* getItemsFromPages(pages) {
 }
 
 async function onlySubdir(path) {
-    const subDirs = await FS.readdir(path);
-    if (subDirs.length === 1) {
-        path = Path.join(path, subDirs[0]);
+    const children = await FS.readdir(path);
+    if (children.length !== 1) {
+        return;
     }
-    return path;
+    const subdir = Path.join(path, children[0]);
+    if (!(await FS.stat(subdir)).isDirectory()) {
+        return;
+    }
+    for (const child of await FS.readdir(subdir)) {
+        await IO.mv(Path.join(subdir, child), Path.join(path, child));
+    }
+    await IO.rmRF(subdir);
 }
 
 run();
