@@ -376,7 +376,7 @@ async function downloadCrystalRelease(filePattern, version = null) {
     Core.info("Extracting Crystal build");
     const dl = (asset["name"].endsWith(".zip") ? ToolCache.extractZip : ToolCache.extractTar);
     const extractedPath = await dl(downloadedPath);
-    return onlySubdir(extractedPath);
+    return extractedPath;
 }
 
 async function findRef({name, repo, version}) {
@@ -402,7 +402,7 @@ async function downloadSource({name, repo, ref}) {
     const url = resp.headers["location"];
     const downloadedPath = await ToolCache.downloadTool(url);
     Core.info(`Extracting ${name} source`);
-    return onlySubdir(await ToolCache.extractZip(downloadedPath));
+    return await ToolCache.extractZip(downloadedPath);
 }
 
 async function downloadCrystalNightly(filePattern, branch) {
@@ -437,7 +437,7 @@ async function downloadCrystalNightly(filePattern, branch) {
     const downloadedPath = await ToolCache.downloadTool(artifact["url"]);
     Core.info("Extracting Crystal build");
     const extractedPath = await ToolCache.extractTar(downloadedPath);
-    return onlySubdir(extractedPath);
+    return extractedPath;
 }
 
 async function installCrystalForWindows({crystal, shards, arch = getArch(), path}) {
@@ -514,14 +514,6 @@ async function* getItemsFromPages(pages) {
             yield item;
         }
     }
-}
-
-async function onlySubdir(path) {
-    const subDirs = await FS.readdir(path);
-    if (subDirs.length === 1) {
-        path = Path.join(path, subDirs[0]);
-    }
-    return path;
 }
 
 run();
