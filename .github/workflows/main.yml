@@ -35,6 +35,8 @@ jobs:
             config: {shards: '0.14', crystal: '1.3'}
           - os: ubuntu-24.04-arm
             config: {shards: '0.14', crystal: '1.3'}
+          - os: windows-11-arm
+            config: {shards: '0.14', crystal: '1.3'}
         include:
           - os: ubuntu-24.04-arm
             config: {shards: '0.19', crystal: '1.18'}
