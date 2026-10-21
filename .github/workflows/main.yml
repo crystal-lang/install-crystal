@@ -21,6 +21,7 @@ jobs:
           - macos-latest  # arm64
           - macos-15-intel  # x64
           - windows-latest
+          - windows-11-arm
         config:
           - {}
           - {shards: false}
@@ -37,10 +38,6 @@ jobs:
         include:
           - os: ubuntu-24.04-arm
             config: {shards: '0.19', crystal: '1.18'}
-          - os: windows-11-arm
-            config: {shards: nightly, crystal: nightly}
-          - os: windows-11-arm
-            config: {crystal: 'branch:master'}
 
     name: crystal ${{ matrix.config.crystal }} + shards ${{ matrix.config.shards }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
