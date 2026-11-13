@@ -137,7 +137,7 @@ async function installCrystalForLinux({crystal, shards, arch = getArch(), path})
     } else {
         packages.push("libpcre3-dev");
     }
-    const usesLibevent = NumericVersion.test(crystal) && cmpTags(crystal, "1.22") < 0;
+    const usesLibevent = NumericVersion.test(crystal) && cmpTags(crystal, "1.15") < 0;
     if (usesLibevent) {
         packages.push("libevent-dev");
     }
