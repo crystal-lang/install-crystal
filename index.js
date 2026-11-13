@@ -190,6 +190,25 @@ async function installCrystalForMac({crystal, shards, arch = "x86_64", path}) {
 }
 
 async function installAptPackages(packages) {
+    const missingPackages = [];
+    for (const pkg of packages) {
+        try {
+            const {stdout} = await execFile("dpkg", ["--status", pkg]);
+            if (/^Status: \S+ ok installed$/m.test(stdout)) {
+                continue;
+            }
+        } catch (error) {
+            if (error.code !== 1) {
+                throw error;
+            }
+        }
+        missingPackages.push(pkg);
+    }
+    if (missingPackages.length === 0) {
+        Core.info("Package dependencies are already installed");
+        return;
+    }
+
     Core.info("Installing package dependencies");
     const sudo = (await IO.which("sudo")) ? ["sudo", "-n"] : [];
 
@@ -203,7 +222,7 @@ async function installAptPackages(packages) {
     const installCommand = [
         ...sudo,
         "apt-get", "install", "-qy", "--no-install-recommends", "--no-upgrade", "--",
-        ...packages,
+        ...missingPackages,
     ];
     const {stdout} = await subprocess(installCommand);
     Core.startGroup("Finished installing package dependencies");
